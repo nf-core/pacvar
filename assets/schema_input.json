@@ -21,22 +21,14 @@
                 ]
             },
             "bam": {
-                "errorMessage": "Tumor BAM or CRAM file cannot contain spaces and must have extension '.bam' or '.cram'",
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+\\.(bam|cram)$"
-                    },
-                    {
-                        "type": "string",
-                        "maxLength": 0
-                    }
-                ],
+                "errorMessage": "BAM or CRAM file cannot contain spaces and must have extension '.bam' or '.cram'",
+                "type": "string",
+                "pattern": "^\\S+\\.(bam|cram)$",
                 "format": "file-path",
                 "exists": true
             },
             "pbi": {
-                "errorMessage": "Tumor BAI or CRAI index file cannot contain spaces and must have extension '.bai', '.crai' or '.pbi'",
+                "errorMessage": "PBI or BAI index file cannot contain spaces and must have extension '.bai', '.crai' or '.pbi'",
                 "anyOf": [
                     {
                         "type": "string",

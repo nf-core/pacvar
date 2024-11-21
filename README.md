@@ -60,7 +60,6 @@ Now, you can run the pipeline using:
 nextflow run nf-core/pacvar \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --outdir <OUTDIR> \
    --workflow <wgs/repeat> \
    --barcodes barcode.fasta \
    --intervals intervals.bed \
