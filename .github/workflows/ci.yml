@@ -8,7 +8,6 @@ on:
   release:
     types: [published]
   workflow_dispatch:
-
 env:
   NXF_ANSI_LOG: false
   NXF_SINGULARITY_CACHEDIR: ${{ github.workspace }}/.singularity
@@ -27,6 +26,7 @@ jobs:
     strategy:
       matrix:
         NXF_VER:
+          - "24.04.2"
           - "24.04.2"
           - "latest-everything"
         profile:
@@ -53,6 +53,31 @@ jobs:
         uses: nf-core/setup-nextflow@v2
         with:
           version: "${{ matrix.NXF_VER }}"
+
+      - name: Set up Apptainer
+        if: matrix.profile == 'singularity'
+        uses: eWaterCycle/setup-apptainer@main
+
+      - name: Set up Singularity
+        if: matrix.profile == 'singularity'
+        run: |
+          mkdir -p $NXF_SINGULARITY_CACHEDIR
+          mkdir -p $NXF_SINGULARITY_LIBRARYDIR
+
+      - name: Set up Miniconda
+        if: matrix.profile == 'conda'
+        uses: conda-incubator/setup-miniconda@a4260408e20b96e80095f42ff7f1a15b27dd94ca # v3
+        with:
+          miniconda-version: "latest"
+          auto-update-conda: true
+          conda-solver: libmamba
+          channels: conda-forge,bioconda
+
+      - name: Set up Conda
+        if: matrix.profile == 'conda'
+        run: |
+          echo $(realpath $CONDA)/condabin >> $GITHUB_PATH
+          echo $(realpath python) >> $GITHUB_PATH
 
       - name: Set up Apptainer
         if: matrix.profile == 'singularity'

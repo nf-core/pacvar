@@ -10,6 +10,7 @@
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -19,17 +20,31 @@
 
 ## Introduction
 
-**nf-core/pacvar** is a bioinformatics pipeline that ...
+nf-core/pacvar is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
 
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+![nf-core/pacvar metro map](docs/images/pacvar_white_background.png)
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+Workflow Overview
+
+1. Demultiplex reads ([`lima`](https://lima.how))
+2. Align reads ([`pbmm2`](https://github.com/PacificBiosciences/pbmm2))
+3. Sort and index alignments ([`SAMtools`](https://sourceforge.net/projects/samtools/files/samtools/))
+
+WGS Workflow Overview
+
+1. Choice of SNP calling routes:
+   a. ([`deepvariant`](https://github.com/google/deepvariant))
+   b. ([`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller))
+2. Call SVs ([`pbsv`](https://github.com/PacificBiosciences/pbsv))
+3. Index VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+4. Phase SNPs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
+
+Tandem Repeat Workflow Overview
+
+1. Genotype tandem repeats - produce spanning bams and vcf ([`TRGT`](https://github.com/PacificBiosciences/trgt))
+2. Index and Sort tandem tepeat spanning bam ([`SAMtools`](https://sourceforge.net/projects/samtools/files/samtools/))
+3. Plot repeat motif plots ([`TRGT`](https://github.com/PacificBiosciences/trgt))
+4. Sort spanning VCF ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 
 ## Usage
 
@@ -44,26 +59,36 @@ First, prepare a samplesheet with your input data that looks as follows:
 `samplesheet.csv`:
 
 ```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+sample,bam,pbi
+CONTROL,AEG588A1_S1_L002_R1_001.bam,AEG588A1_S1_L002_R1_001.pbi
 ```
 
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
+Note that the `.pbi` file is not required. If you choose not to include it, your input file might look like this:
 
--->
+```csv
+sample,bam,pbi
+CONTROL,AEG588A1_S1_L002_R1_001.bam
+```
 
-Now, you can run the pipeline using:
+Each row represents an unaligned bam file and their associated index (optional).
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+Now, you can run the pipeline. Below is an example
 
 ```bash
 nextflow run nf-core/pacvar \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
+   --workflow <wgs/repeat> \
+   --barcodes barcodes.bed \
+   --intervals intervals.bed \
+   --genome <GENOME NAME (e.g. GATK.GRCh38)> \
    --outdir <OUTDIR>
 ```
 
+optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`.
+
 > [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
 For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/pacvar/usage) and the [parameter documentation](https://nf-co.re/pacvar/parameters).
@@ -80,8 +105,6 @@ nf-core/pacvar was originally written by Tanya Sarkin Jain.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
-
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
@@ -93,7 +116,7 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 <!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
 <!-- If you use nf-core/pacvar for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
 
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 

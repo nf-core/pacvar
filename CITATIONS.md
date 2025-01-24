@@ -18,6 +18,34 @@
 
 > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
 
+- [lima](https://github.com/PacificBiosciences/barcoding)
+
+- [pbmm2](https://github.com/PacificBiosciences/pbmm2)
+
+- [SAMtools](https://pubmed.ncbi.nlm.nih.gov/19505943/)
+
+  > Li H, Handsaker B, Wysoker A, Fennell T, Ruan J, Homer N, Marth G, Abecasis G, Durbin R; 1000 Genome Project Data Processing Subgroup. The Sequence Alignment/Map format and SAMtools. Bioinformatics. 2009 Aug 15;25(16):2078-9. doi: 10.1093/bioinformatics/btp352. Epub 2009 Jun 8. PubMed PMID: 19505943; PubMed Central PMCID: PMC2723002.
+
+- [deepvariant](https://www.nature.com/articles/nbt.4235)
+
+  > Poplin, R., Chang, PC., Alexander, D. et al. A universal SNP and small-indel variant caller using deep neural networks. Nat Biotechnol 36, 983–987 (2018). https://doi.org/10.1038/nbt.4235
+
+- [HaplotypeCaller](https://pubmed.ncbi.nlm.nih.gov/27312411/)
+
+  > Poplin R, Ruano-Rubio V, DePristo MA, Fennell TJ, Carneiro MO, Van der Auwera GA, Kling DE, Gauthier LD, Levy-Moonshine A, Roazen D, Shakir K, Thibault J, Chandran S, Whelan C, Lek M, Gabriel S, Daly MJ, Neale B, MacArthur DG, Banks E. (2017). Scaling accurate genetic variant discovery to tens of thousands of samples bioRxiv, 201178. DOI: 10.1101/201178
+
+- [bcftools](https://pubmed.ncbi.nlm.nih.gov/33590861/)
+
+  > Danecek P, Bonfield JK, Liddle J, Marshall J, Ohan V, Pollard MO, Whitwham A, Keane T, McCarthy SA, Davies RM, Li H. Twelve years of SAMtools and BCFtools. Gigascience. 2021 Feb 16;10(2):giab008. doi: 10.1093/gigascience/giab008. PMID: 33590861; PMCID: PMC7931819.
+
+- [HiPhase](https://pubmed.ncbi.nlm.nih.gov/38269623/)
+
+  > Holt JM, Saunders CT, Rowell WJ, Kronenberg Z, Wenger AM, Eberle M. HiPhase: jointly phasing small, structural, and tandem repeat variants from HiFi sequencing. Bioinformatics. 2024 Feb 1;40(2):btae042. doi: 10.1093/bioinformatics/btae042. PMID: 38269623; PMCID: PMC10868326.
+
+- [pbsv](https://github.com/PacificBiosciences/pbsv)
+
+- [TRGT](https://github.com/PacificBiosciences/trgt)
+
 ## Software packaging/containerisation tools
 
 - [Anaconda](https://anaconda.com)

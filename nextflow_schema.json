@@ -79,6 +79,22 @@
                     "fa_icon": "fas fa-ban",
                     "hidden": true,
                     "default": "s3://ngi-igenomes/igenomes/"
+                },
+                "fasta_fai": {
+                    "type": "string",
+                    "description": "Path to FASTA index"
+                },
+                "dbsnp": {
+                    "type": "string",
+                    "description": "Path to dbsnp VCF file"
+                },
+                "dbsnp_tbi": {
+                    "type": "string",
+                    "description": "Path to index file of the dbsnp VCF file"
+                },
+                "dict": {
+                    "type": "string",
+                    "description": "Path to dict for variant calling"
                 }
             }
         },
@@ -127,6 +143,82 @@
                     "description": "Institutional config URL link.",
                     "hidden": true,
                     "fa_icon": "fas fa-users-cog"
+                }
+            }
+        },
+        "variant": {
+            "title": "Variant Calling options",
+            "type": "object",
+            "description": "Options for alignment specification",
+            "help_text": "These options are specific to pacvar and allow customization of alignment and phasing of the variants",
+            "properties": {
+                "snv_caller": {
+                    "type": "string",
+                    "enum": ["deepvariant", "gatk4"],
+                    "default": "deepvariant",
+                    "description": "variant calling tool - can either be deepvariant or gatk4"
+                },
+                "skip_snp": {
+                    "type": "boolean",
+                    "description": "Option to skip SNP variant calling"
+                },
+                "skip_sv": {
+                    "type": "boolean",
+                    "description": "Option to skip SV variant calling"
+                },
+                "skip_phase": {
+                    "type": "boolean",
+                    "description": "Option to skip phasing"
+                }
+            }
+        },
+        "repeat": {
+            "title": "options specific to the repeat workflow",
+            "type": "object",
+            "description": "Options for repeat specification",
+            "help_text": "These options are important for the repeat-characterization step of the workflow",
+            "properties": {
+                "repeat_id": {
+                    "type": "string",
+                    "description": "id for repeat"
+                },
+                "karyotype": {
+                    "type": "string",
+                    "description": "karyotype for repeat"
+                }
+            }
+        },
+        "pre_processing": {
+            "title": "Pre-processing options that are not workflow specific",
+            "type": "object",
+            "description": "Options for pre-processing specification",
+            "help_text": "These options are important for the pre-processign step of the workflow which includes skip_demultiplexing",
+            "properties": {
+                "barcodes": {
+                    "type": "string",
+                    "description": "Fasta file of barcodes"
+                },
+                "skip_demultiplexing": {
+                    "type": "boolean",
+                    "description": "Option to skip demultiplexing"
+                },
+                "intervals": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "Path to BED file containing intervals for either variant calling or for repeat expansion characterization"
+                }
+            }
+        },
+        "general_workflow_options": {
+            "title": "General workflow options",
+            "type": "object",
+            "description": "Options for specifying workflow type",
+            "help_text": "These options are important for the specifying which workflow runs",
+            "properties": {
+                "workflow": {
+                    "type": "string",
+                    "default": "wgs",
+                    "description": "workflow type - can either be PureTarget or wgs"
                 }
             }
         },
@@ -216,7 +308,7 @@
                     "type": "string",
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
-                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "default": "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/",
                     "hidden": true
                 },
                 "trace_report_suffix": {
@@ -240,6 +332,18 @@
         },
         {
             "$ref": "#/$defs/generic_options"
+        },
+        {
+            "$ref": "#/$defs/general_workflow_options"
+        },
+        {
+            "$ref": "#/$defs/variant"
+        },
+        {
+            "$ref": "#/$defs/pre_processing"
+        },
+        {
+            "$ref": "#/$defs/repeat"
         }
     ]
 }

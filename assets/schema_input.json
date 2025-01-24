@@ -8,26 +8,41 @@
         "type": "object",
         "properties": {
             "sample": {
-                "type": "string",
-                "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces",
-                "meta": ["id"]
+                "errorMessage": "Sample ID must be provided and cannot contain spaces",
+                "meta": ["id"],
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "pattern": "^\\S+$"
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
             },
-            "fastq_1": {
+            "bam": {
+                "errorMessage": "BAM or CRAM file cannot contain spaces and must have extension '.bam' or '.cram'",
                 "type": "string",
+                "pattern": "^\\S+\\.(bam|cram)$",
                 "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "exists": true
             },
-            "fastq_2": {
-                "type": "string",
+            "pbi": {
+                "errorMessage": "BAI or CRAI index file cannot contain spaces and must have extension '.bai', '.crai' or '.pbi'",
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "pattern": "^\\S+\\.(bai|crai|pbi)$"
+                    },
+                    {
+                        "type": "string",
+                        "maxLength": 0
+                    }
+                ],
                 "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "exists": true
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["sample", "bam"]
     }
 }

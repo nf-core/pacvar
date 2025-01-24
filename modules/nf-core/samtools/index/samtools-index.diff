@@ -1,0 +1,14 @@
+Changes in module 'nf-core/samtools/index'
+--- modules/nf-core/samtools/index/main.nf
++++ modules/nf-core/samtools/index/main.nf
+@@ -27,7 +27,7 @@
+         -@ ${task.cpus-1} \\
+         $args \\
+         $input
+-
++       
+     cat <<-END_VERSIONS > versions.yml
+     "${task.process}":
+         samtools: \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//')
+
+************************************************************
