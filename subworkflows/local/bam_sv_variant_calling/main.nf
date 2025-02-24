@@ -1,7 +1,9 @@
+
 include { PBSV_DISCOVER     } from '../../../modules/nf-core/pbsv/discover/main'
 include { PBSV_CALL         } from '../../../modules/nf-core/pbsv/call/main'
 include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
 include { TABIX_BGZIP       } from '../../../modules/nf-core/tabix/bgzip/main'
+
 
 workflow BAM_SV_VARIANT_CALLING {
     take:
@@ -33,3 +35,4 @@ workflow BAM_SV_VARIANT_CALLING {
     versions       = ch_versions
 
 }
+
