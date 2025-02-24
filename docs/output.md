@@ -105,7 +105,7 @@ Note:
 
 - `hiphase/`
   - `<basename>.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
-  - `<basename>.pbsv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV 
+  - `<basename>.pbsv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV
   - `<basename>.phased.vcf`: The phased Variant File (SNV) (Zipped)
   - `<basename>.pbsv.phased.vcf`: The phased Variant File (SV) (Zipped)
   - `<basename>.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
