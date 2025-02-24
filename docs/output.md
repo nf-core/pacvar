@@ -104,9 +104,12 @@ Note:
 <summary>Output files</summary>
 
 - `hiphase/`
-  - `<basename>.phased.bam`: Haplotagged BAM
-  - `<basename>.phased.vcf`: The phased Variant File
-  - `<basename>.phased.vcf`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase.
+  - `<basename>.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
+  - `<basename>.pbsv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV 
+  - `<basename>.phased.vcf`: The phased Variant File (SNV) (Zipped)
+  - `<basename>.pbsv.phased.vcf`: The phased Variant File (SV) (Zipped)
+  - `<basename>.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
+  - `<basename>.pbsv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SV)
 
 </details>
 
@@ -118,7 +121,7 @@ Note:
 <summary>Output files</summary>
 
 - `tabix/`
-  - `<basename>.vcf.gz`: Zipped PBSV VCF files
+  - `<basename>.pbsv.vcf.gz`: Zipped PBSV VCF files
 
 </details>
 
@@ -130,7 +133,7 @@ Note:
 <summary>Output files</summary>
 
 - `BCFTOOLS/`
-  - `<basename>.vcf.gz.csi`: Index of PBSV VCF files
+  - `<basename>.pbsv.vcf.gz.csi`: Index of PBSV VCF files
 
 </details>
 
