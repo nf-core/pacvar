@@ -119,14 +119,18 @@ workflow PACVAR {
 
             //join the bam and bai and vcf based off the meta id (ensure correct order)
             bam_bai_vcf_ch = bam_bai_ch.join(BAM_SNP_VARIANT_CALLING.out.vcf_ch)
-            ordered_bam_bai_ch = bam_bai_vcf_ch.map { meta, bam, bai, vcf, tbi-> [meta, bam, bai] }
-            ordered_vcf_ch = bam_bai_vcf_ch.map { meta, bam, bai, vcf, tbi -> [meta, vcf, tbi] }
 
+            bam_bai_vcf_ch
+            .multiMap { meta, bam, bai, vcf, tbi ->
+                bam_bai: [meta, bam, bai]
+                vcf_tbi: [meta, vcf, tbi]
+            }
+            .set { orderd_bam_bai_vcf_tbi }
 
             if (!params.skip_phase) {
                 //phase snp files
-                HIPHASE_SNP(ordered_vcf_ch,
-                    ordered_bam_bai_ch,
+                HIPHASE_SNP(orderd_bam_bai_vcf_tbi.vcf_tbi,
+                    orderd_bam_bai_vcf_tbi.bam_bai,
                     fasta)
                 ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions)
             }
@@ -143,14 +147,18 @@ workflow PACVAR {
 
             //join the bam and bai and vcf based off the meta id (ensure correct order)
             bam_bai_vcf_ch = bam_bai_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
-            ordered_bam_bai_ch = bam_bai_vcf_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai] }
-            ordered_vcf_ch = bam_bai_vcf_ch.map { meta, bam, bai, vcf, tbi -> [meta, vcf, tbi] }
 
+            bam_bai_vcf_ch
+            .multiMap { meta, bam, bai, vcf, tbi ->
+                bam_bai: [meta, bam, bai]
+                vcf_tbi: [meta, vcf, tbi]
+            }
+            .set { orderd_bam_bai_vcf_tbi }
 
             //phase sv files
             if (!params.skip_phase) {
-                HIPHASE_SV(ordered_vcf_ch,
-                    ordered_bam_bai_ch,
+                HIPHASE_SV( orderd_bam_bai_vcf_tbi.vcf_tbi,
+                    orderd_bam_bai_vcf_tbi.bam_bai,
                     fasta)
 
                 ch_versions = ch_versions.mix(HIPHASE_SV.out.versions)
