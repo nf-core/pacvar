@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v1.0.0 - Goldfish [01/31/2025]
 
-Initial release of nf-core/pacnnvar, created with the [nf-core](https://nf-co.re/) template.
+Initial release of nf-core/pacvar, created with the [nf-core](https://nf-co.re/) template.
 
 ### `Added`
 
