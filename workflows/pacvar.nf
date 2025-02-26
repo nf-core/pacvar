@@ -118,9 +118,16 @@ workflow PACVAR {
             ch_versions = ch_versions.mix(BAM_SNP_VARIANT_CALLING.out.versions)
 
             if (!params.skip_phase) {
+		// ensure bam and vcf order
+                combined_bam_vcf_ch = bam_bai_ch
+                                        .combine(BAM_SNP_VARIANT_CALLING.out.vcf_ch, by: 0)
+                                        .map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi] }
+                ordered_bam_bai_ch = combined_bam_vcf_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai] }
+                ordered_vcf_tbi_ch = combined_bam_vcf_ch.map { meta, bam, bai, vcf, tbi -> [meta, vcf, tbi] }
+
                 //phase snp files
-                HIPHASE_SNP(BAM_SNP_VARIANT_CALLING.out.vcf_ch,
-                    bam_bai_ch,
+                HIPHASE_SNP(ordered_vcf_tbi_ch,
+                    ordered_bam_bai_ch,
                     fasta)
                 ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions)
             }
@@ -135,10 +142,17 @@ workflow PACVAR {
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
 
+	    // ensure bam and vcf SV order
+            combined_bam_vcfgz_sv_ch = bam_bai_ch
+                                        .combine(BAM_SV_VARIANT_CALLING.out.vcf_ch, by: 0)
+                                        .map { meta, bam, bai, vcfgz, csi -> [meta, bam, bai, vcfgz, csi] }
+            ordered_bam_bai_ch = combined_bam_vcfgz_sv_ch.map { meta, bam, bai, vcfgz, csi -> [meta, bam, bai] }
+            ordered_vcfgz_csi_ch = combined_bam_vcfgz_sv_ch.map { meta, bam, bai, vcfgz, csi -> [meta, vcfgz, csi] }
+
             //phase sv files
             if (!params.skip_phase) {
-                HIPHASE_SV(BAM_SV_VARIANT_CALLING.out.vcf_ch,
-                    bam_bai_ch,
+                HIPHASE_SV(ordered_vcfgz_csi_ch,
+                    ordered_bam_bai_ch,
                     fasta)
 
                 ch_versions = ch_versions.mix(HIPHASE_SV.out.versions)
