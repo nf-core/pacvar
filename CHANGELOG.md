@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Initial release of nf-core/pacvar, created with the [nf-core](https://nf-co.re/) template.
 
-## v1.0.1 - Sardine [01/31/2025]
+## v1.0.1 - Sardine [02/26/2025]
 
 ### `Added`
 
