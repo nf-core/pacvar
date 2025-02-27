@@ -78,8 +78,8 @@ Note:
 <summary>Output files</summary>
 
 - `gatk4/`
-  - `<basename>.vcf.gz`: VCF of the SNV
-  - `<basename>.vcf.gz.tbi`: Associated indexes for the VCF files
+  - `<basename>.snv.vcf.gz`: VCF of the SNV
+  - `<basename>.snv.vcf.gz.tbi`: Associated indexes for the VCF files
 
 </details>
 
@@ -91,7 +91,7 @@ Note:
 <summary>Output files</summary>
 
 - `pbsv/`
-  - `<basename>.pbsv.vcf`: VCF of SV
+  - `<basename>.sv.vcf`: VCF of SV
   - `<basename>.svsig.gz`: File containing signatures of structural variants
 
 </details>
@@ -104,12 +104,12 @@ Note:
 <summary>Output files</summary>
 
 - `hiphase/`
-  - `<basename>.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
-  - `<basename>.pbsv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV
-  - `<basename>.phased.vcf`: The phased Variant File (SNV) (Zipped)
-  - `<basename>.pbsv.phased.vcf`: The phased Variant File (SV) (Zipped)
-  - `<basename>.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
-  - `<basename>.pbsv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SV)
+  - `<basename>.snv.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
+  - `<basename>.sv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV
+  - `<basename>.snv.phased.vcf`: The phased Variant File (SNV) (Zipped)
+  - `<basename>.sv.phased.vcf`: The phased Variant File (SV) (Zipped)
+  - `<basename>.snv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
+  - `<basename>.sv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SV)
 
 </details>
 
@@ -121,7 +121,7 @@ Note:
 <summary>Output files</summary>
 
 - `tabix/`
-  - `<basename>.pbsv.vcf.gz`: Zipped PBSV VCF files
+  - `<basename>.sv.vcf.gz`: Zipped PBSV VCF files
 
 </details>
 
@@ -133,7 +133,7 @@ Note:
 <summary>Output files</summary>
 
 - `BCFTOOLS/`
-  - `<basename>.pbsv.vcf.gz.csi`: Index of PBSV VCF files
+  - `<basename>.sv.vcf.gz.csi`: Index of PBSV VCF files
 
 </details>
 
@@ -145,8 +145,8 @@ Note:
 <summary>Output files</summary>
 
 - `deepvariant/`
-  - `<basename>.vcf.gz`: Zipped VCF file
-  - `<basename>.vcf.gz.tbi`: Associated index to zipped VCF file
+  - `<basename>.snv.vcf.gz`: Zipped VCF file
+  - `<basename>.snv.vcf.gz.tbi`: Associated index to zipped VCF file
 
 </details>
 
