@@ -1,0 +1,2 @@
+block_index,sample_name,chrom,start,end,num_variants,num_reads,skipped_reads,num_alleles,allele_matches,allele_partials,allele_failures,allele0_assigned,allele1_assigned,global_aligned,local_aligned,pruned_solutions,estimated_cost,actual_cost,cost_ratio,phased_variants,homozygous_variants,skipped_variants
+0,Bio Sample 1,c9small,0,0,0,,,,,,,,,,,,,,,,,

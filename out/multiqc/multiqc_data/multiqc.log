@@ -1,0 +1,5 @@
+[2025-02-27 19:21:58,613] multiqc.config                                     [INFO   ]  Loading config settings from: multiqc_config.yml
+[2025-02-27 19:22:00,388] multiqc.core.file_search                           [INFO   ]  Search path: /Users/tanyajain/Desktop/nextflow_fun/pacvar_again/fork/pacvar/work/74/e5a64d9e5b8d5c0f1c308f50a26ba3
+[2025-02-27 19:22:00,453] multiqc.modules.custom_content.custom_content      [INFO   ]  nf-core-pacvar-methods-description: Found 1 sample (html)
+[2025-02-27 19:22:00,453] multiqc.modules.custom_content.custom_content      [INFO   ]  nf-core-pacvar-summary: Found 1 sample (html)
+[2025-02-27 19:22:00,456] multiqc.core.write_results                         [INFO   ]  Rendering plots. Export plots to formats png, svg, pdf is requested, so it might take a while. To disable plot export, set `export_plots: false` in config, or remove the `--export-plots` command line flag

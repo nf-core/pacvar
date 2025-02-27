@@ -147,7 +147,7 @@ workflow PACVAR {
             //join the bam and bai and vcf based off the meta id (ensure correct order)
             bam_bai_vcf_sv_ch = bam_bai_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
 
-            orderd_bam_bai_vcf_tbi_s = bam_bai_vcf_sv_ch
+            orderd_bam_bai_vcf_tbi_sv = bam_bai_vcf_sv_ch
             .multiMap { meta, bam, bai, vcf, tbi ->
                 bam_bai: [meta, bam, bai]
                 vcf_tbi: [meta, vcf, tbi]

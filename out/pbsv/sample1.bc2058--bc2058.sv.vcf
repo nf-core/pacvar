@@ -1,0 +1,27 @@
+##fileformat=VCFv4.2
+##fileDate=2025-02-27T19:21:52.905Z
+##source=pbsv 2.9.0 (commit v2.9.0-2-gce1559a)
+##PG="pbsv call -j 4 C9ORF72-12.fa sample1.bc2058--bc2058.svsig.gz sample1.bc2058--bc2058.sv.vcf"
+##INFO=<ID=SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the structural variant described in this record">
+##INFO=<ID=SVLEN,Number=.,Type=Integer,Description="Difference in length between REF and ALT alleles">
+##INFO=<ID=SVANN,Number=.,Type=String,Description="Repeat annotation of structural variant">
+##INFO=<ID=CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS for imprecise variants">
+##INFO=<ID=MATEID,Number=.,Type=String,Description="ID of mate breakends">
+##INFO=<ID=MATEDIST,Number=1,Type=Integer,Description="Distance to the mate breakend for mates on the same contig">
+##INFO=<ID=IMPRECISE,Number=0,Type=Flag,Description="Imprecise structural variation">
+##ALT=<ID=INV,Description="Inversion">
+##ALT=<ID=DUP,Description="Duplication">
+##FILTER=<ID=Decoy,Description="Variant involves a decoy sequence">
+##FILTER=<ID=NearReferenceGap,Description="Variant is near (< 1000 bp) from a gap (run of >= 50 Ns) in the reference assembly">
+##FILTER=<ID=NearContigEnd,Description="Variant is near (< 1000 bp) from the end of a contig">
+##FILTER=<ID=InsufficientStrandEvidence,Description="Variant has insufficient number of reads per strand (< 1).">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Read depth per allele">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read depth at this position for this sample">
+##FORMAT=<ID=SAC,Number=.,Type=Integer,Description="Number of reads on the forward and reverse strand supporting each allele including reference">
+##FORMAT=<ID=CN,Number=1,Type=Integer,Description="Copy number genotype for imprecise events">
+##INFO=<ID=NotFullySpanned,Number=0,Type=Flag,Description="Duplication variant does not have any fully spanning reads">
+##reference=file://C9ORF72-12.fa
+##contig=<ID=c9small,length=5072>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Bio Sample 1

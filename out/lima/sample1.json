@@ -1,0 +1,43 @@
+{
+  "createdAt": "2025-02-27T19:21:23.210Z",
+  "files": [
+    {
+      "createdAt": "2025-02-27T19:21:23.181Z",
+      "description": "Split BAM file by lima",
+      "fileSize": 930722,
+      "fileTypeId": "PacBio.DataSet.ConsensusReadSet",
+      "isChunked": false,
+      "modifiedAt": "2025-02-27T19:21:23.181Z",
+      "name": "Barcodes bc2026--bc2026",
+      "path": "sample1.bc2026--bc2026.consensusreadset.xml",
+      "sourceId": "barcoding.tasks.lima-0",
+      "uniqueId": "be65a100-f94e-4c9e-a509-5a026575cebb"
+    },
+    {
+      "createdAt": "2025-02-27T19:21:23.195Z",
+      "description": "Split BAM file by lima",
+      "fileSize": 4023,
+      "fileTypeId": "PacBio.DataSet.ConsensusReadSet",
+      "isChunked": false,
+      "modifiedAt": "2025-02-27T19:21:23.195Z",
+      "name": "Barcodes bc2026--bc2058",
+      "path": "sample1.bc2026--bc2058.consensusreadset.xml",
+      "sourceId": "barcoding.tasks.lima-0",
+      "uniqueId": "1692c204-246a-4b3a-aa2d-49f44945d0c6"
+    },
+    {
+      "createdAt": "2025-02-27T19:21:23.210Z",
+      "description": "Split BAM file by lima",
+      "fileSize": 891043,
+      "fileTypeId": "PacBio.DataSet.ConsensusReadSet",
+      "isChunked": false,
+      "modifiedAt": "2025-02-27T19:21:23.210Z",
+      "name": "Barcodes bc2058--bc2058",
+      "path": "sample1.bc2058--bc2058.consensusreadset.xml",
+      "sourceId": "barcoding.tasks.lima-0",
+      "uniqueId": "9c6e2942-c411-44d3-a218-c3836c5381a1"
+    }
+  ],
+  "updatedAt": "2025-02-27T19:21:23.210Z",
+  "version": "0.2.2"
+}

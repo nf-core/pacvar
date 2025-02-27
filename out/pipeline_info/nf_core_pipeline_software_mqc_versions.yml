@@ -1,0 +1,25 @@
+BCFTOOLS_INDEX:
+  bcftools: 1.2
+GATK4_HAPLOTYPECALLER:
+  gatk4: 4.5.0.0
+HIPHASE_SNP:
+  hiphase: 1.4.5-578e159
+HIPHASE_SV:
+  hiphase: 1.4.5-578e159
+LIMA:
+  lima: 2.9.0
+PBMM2_ALIGN:
+  pbmm2: 1.14.99
+PBSV_CALL:
+  pbsv: 2.9.0 (commit v2.9.0-2-gce1559a)
+PBSV_DISCOVER:
+  pbsv: 2.9.0 (commit v2.9.0-2-gce1559a)
+SAMTOOLS_INDEX:
+  samtools: 1.21
+SAMTOOLS_SORT:
+  samtools: 1.21
+TABIX_BGZIP:
+  tabix: 1.2
+Workflow:
+    nf-core/pacvar: v1.0.1
+    Nextflow: 24.04.4
