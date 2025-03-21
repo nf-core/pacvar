@@ -17,8 +17,7 @@
                     "format": "file-path",
                     "exists": true,
                     "schema": "assets/schema_input.json",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.csv$",
+                    "pattern": "^\\S+\\.(csv|tsv|json|yaml|yml)$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pacvar/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
@@ -82,21 +81,33 @@
                 },
                 "fasta_fai": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.fai$",
                     "description": "Path to FASTA index",
                     "fa_icon": "far fa-file-code"
                 },
                 "dbsnp": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.vcf\\.gz$",
                     "description": "Path to dbsnp VCF file",
                     "fa_icon": "far fa-file-code"
                 },
                 "dbsnp_tbi": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.vcf\\.gz\\.tbi$",
                     "description": "Path to index file of the dbsnp VCF file",
                     "fa_icon": "far fa-file-code"
                 },
                 "dict": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.dict$",
                     "description": "Path to dict for variant calling",
                     "fa_icon": "far fa-file-code"
                 }
@@ -160,7 +171,7 @@
                     "type": "string",
                     "enum": ["deepvariant", "gatk4"],
                     "default": "deepvariant",
-                    "description": "variant calling tool - can either be deepvariant or gatk4",
+                    "description": "The tool to use for calling variants",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_snp": {
@@ -181,7 +192,7 @@
             }
         },
         "repeat": {
-            "title": "options specific to the repeat workflow",
+            "title": "Options specific to the repeat workflow",
             "type": "object",
             "description": "Options for repeat specification",
             "help_text": "These options are important for the repeat-characterization step of the workflow",
@@ -208,6 +219,9 @@
             "properties": {
                 "barcodes": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
                     "description": "Fasta file of barcodes",
                     "fa_icon": "far fa-file-code"
                 },
@@ -219,6 +233,8 @@
                 "intervals": {
                     "type": "string",
                     "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.bed$",
                     "description": "Path to BED file containing intervals for either variant calling or for repeat expansion characterization",
                     "fa_icon": "far fa-file-code"
                 }
@@ -234,7 +250,7 @@
                 "workflow": {
                     "type": "string",
                     "default": "wgs",
-                    "description": "Workflow type - can either be PureTarget or wgs",
+                    "description": "Option to choose which workflow type to run",
                     "enum": ["wgs", "repeat"],
                     "fa_icon": "fas fa-map-signs"
                 }
