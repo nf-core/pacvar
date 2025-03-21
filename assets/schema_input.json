@@ -8,37 +8,22 @@
         "type": "object",
         "properties": {
             "sample": {
-                "errorMessage": "Sample ID must be provided and cannot contain spaces",
+                "errorMessage": "Sample ID must be provided and must be an integer or string that cannot contain spaces",
                 "meta": ["id"],
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+$"
-                    },
-                    {
-                        "type": "integer"
-                    }
-                ]
+                "type": ["string", "integer"],
+                "pattern": "^\\S+$"
             },
             "bam": {
-                "errorMessage": "BAM or CRAM file cannot contain spaces and must have extension '.bam' or '.cram'",
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This also is a required input.",
                 "type": "string",
                 "pattern": "^\\S+\\.(bam|cram)$",
                 "format": "file-path",
                 "exists": true
             },
             "pbi": {
-                "errorMessage": "BAI or CRAI index file cannot contain spaces and must have extension '.bai', '.crai' or '.pbi'",
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+\\.(bai|crai|pbi)$"
-                    },
-                    {
-                        "type": "string",
-                        "maxLength": 0
-                    }
-                ],
+                "errorMessage": "BAI or CRAI index file cannot contain spaces, must exist and has the extension '.bai', '.crai' or '.pbi'",
+                "type": "string",
+                "pattern": "^\\S+\\.(bai|crai|pbi)$",
                 "format": "file-path",
                 "exists": true
             }
