@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Fixed`
 
-- [#]() Updated the JSON schema to make input validation stricter, thus preventing more errors during the pipeline run.
+- [#28](https://github.com/nf-core/pacvar/pull/28) Updated the JSON schema to make input validation stricter, thus preventing more errors during the pipeline run.
 
 ### `Dependencies`
 
