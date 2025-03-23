@@ -14,7 +14,7 @@
                 "pattern": "^\\S+$"
             },
             "bam": {
-                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This also is a required input.",
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This is a required input.",
                 "type": "string",
                 "pattern": "^\\S+\\.(bam|cram)$",
                 "format": "file-path",
