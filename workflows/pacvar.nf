@@ -20,7 +20,6 @@ include { BAM_SNP_VARIANT_CALLING as BAM_SNP_VARIANT_CALLING    } from '../subwo
 include { BAM_SV_VARIANT_CALLING as BAM_SV_VARIANT_CALLING      } from '../subworkflows/local/bam_sv_variant_calling'
 include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subworkflows/local/repeat_characterization'
 
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
@@ -35,8 +34,8 @@ include { GATK4_HAPLOTYPECALLER                                 } from '../modul
 include { PBMM2_ALIGN                                           } from '../modules/nf-core/pbmm2/align/main'
 include { HIPHASE as HIPHASE_SNP                                } from '../modules/nf-core/hiphase/main'
 include { HIPHASE as HIPHASE_SV                                 } from '../modules/nf-core/hiphase/main'
-
-
+include { HIPHASE as HIPHASE_CNV                                } from '../modules/nf-core/hiphase/main'
+include { HIFICNV                                               } from '../modules/local/hificnv/main'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -131,6 +130,44 @@ workflow PACVAR {
                     fasta)
                 ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions)
             }
+        }
+
+        if (!params.skip_cnv) {
+            // CNV calling with HiFiCNV (after DeepVariant)
+            // Prepare MAF input: use DeepVariant VCF if SNP calling was done, otherwise empty
+            if (!params.skip_snp) {
+              // Join bam_bai with DeepVariant VCF output by meta.id
+                bam_bai_maf_ch = bam_bai_ch.join(deepvariant_vcf_ch, by: 0)
+                    .map { meta, bam, bai, vcf -> 
+                        [meta, bam, bai, vcf]
+                    }
+            } else {
+                // Use empty list for MAF when SNP calling is skipped
+                bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai -> 
+                    [meta, bam, bai, []]
+                }
+            }
+        
+            // Prepare reference channel
+            ref_ch = Channel.value([[:], fasta])
+        
+            // Prepare optional input channels  
+            exclude_ch = params.cnv_exclude_regions ? 
+                Channel.value([[:], file(params.cnv_exclude_regions)]) : 
+                Channel.value([[:], []])
+            
+            expected_cn_ch = params.cnv_expected_cn_file ? 
+                Channel.value([[:], file(params.cnv_expected_cn_file)]) : 
+                Channel.value([[:], []])
+        
+            // Run HiFiCNV
+            HIFICNV(
+                bam_bai_maf_ch,
+                ref_ch,
+                exclude_ch,
+                expected_cn_ch
+            )
+            ch_versions = ch_versions.mix(HIFICNV.out.versions)
         }
 
         if (!params.skip_sv) {
