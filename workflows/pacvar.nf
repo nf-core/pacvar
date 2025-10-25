@@ -135,27 +135,18 @@ workflow PACVAR {
         if (!params.skip_cnv) {
             // CNV calling with HiFiCNV (after DeepVariant)
             // Prepare MAF input: use DeepVariant VCF if SNP calling was done, otherwise empty
-            if (!params.skip_snp) {
-              // Join bam_bai with DeepVariant VCF output by meta.id
-                bam_bai_maf_ch = bam_bai_ch.join(deepvariant_vcf_ch, by: 0)
-                    .map { meta, bam, bai, vcf -> 
-                        [meta, bam, bai, vcf]
-                    }
-            } else {
-                // Use empty list for MAF when SNP calling is skipped
-                bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai -> 
-                    [meta, bam, bai, []]
+            bam_bai_maf_ch = params.skip_snp ? 
+                bam_bai_ch.map { meta, bam, bai -> [meta, bam, bai, []] } :
+                bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi -> 
+                    [meta, bam, bai, vcf] 
                 }
-            }
         
-            // Prepare reference channel
-            ref_ch = Channel.value([[:], fasta])
-        
+            
             // Prepare optional input channels  
             exclude_ch = params.cnv_exclude_regions ? 
                 Channel.value([[:], file(params.cnv_exclude_regions)]) : 
                 Channel.value([[:], []])
-            
+    
             expected_cn_ch = params.cnv_expected_cn_file ? 
                 Channel.value([[:], file(params.cnv_expected_cn_file)]) : 
                 Channel.value([[:], []])
@@ -163,7 +154,7 @@ workflow PACVAR {
             // Run HiFiCNV
             HIFICNV(
                 bam_bai_maf_ch,
-                ref_ch,
+                fasta,
                 exclude_ch,
                 expected_cn_ch
             )
