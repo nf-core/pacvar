@@ -184,6 +184,12 @@
                     "description": "Option to skip SV variant calling",
                     "fa_icon": "fas fa-forward"
                 },
+                "skip_cnv": {
+                    "type": "boolean",
+                    "description": "Skip copy number variation detection",
+                    "default": false,
+                    "fa_icon": "fas fa-forward"
+                },
                 "skip_phase": {
                     "type": "boolean",
                     "description": "Option to skip phasing",
