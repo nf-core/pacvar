@@ -44,6 +44,9 @@
 
 - [pbsv](https://github.com/PacificBiosciences/pbsv)
 
+- [HiFiCNV](https://github.com/PacificBiosciences/hificnv)
+  > Author et al. HiFiCNV: Copy number variation detection for PacBio HiFi data. Journal Year;Volume:Pages.
+
 - [TRGT](https://github.com/PacificBiosciences/trgt)
 
 ## Software packaging/containerisation tools
