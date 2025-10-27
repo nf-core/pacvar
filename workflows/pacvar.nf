@@ -18,6 +18,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 
 include { BAM_SNP_VARIANT_CALLING as BAM_SNP_VARIANT_CALLING    } from '../subworkflows/local/bam_snp_variant_calling'
 include { BAM_SV_VARIANT_CALLING as BAM_SV_VARIANT_CALLING      } from '../subworkflows/local/bam_sv_variant_calling'
+include { BAM_CNV_VARIANT_CALLING as BAM_CNV_VARIANT_CALLING    } from '../subworkflows/local/bam_cnv_variant_calling'  
 include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subworkflows/local/repeat_characterization'
 
 /*
@@ -36,6 +37,7 @@ include { HIPHASE as HIPHASE_SNP                                } from '../modul
 include { HIPHASE as HIPHASE_SV                                 } from '../modules/nf-core/hiphase/main'
 include { HIPHASE as HIPHASE_CNV                                } from '../modules/nf-core/hiphase/main'
 include { HIFICNV                                               } from '../modules/local/hificnv/main'
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -140,7 +142,6 @@ workflow PACVAR {
                 bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi -> 
                     [meta, bam, bai, vcf] 
                 }
-        
             
             // Prepare optional input channels  
             exclude_ch = params.cnv_exclude_regions ? 
@@ -152,13 +153,13 @@ workflow PACVAR {
                 Channel.value([[:], []])
         
             // Run HiFiCNV
-            HIFICNV(
+            BAM_CNV_VARIANT_CALLING(
                 bam_bai_maf_ch,
                 fasta,
                 exclude_ch,
                 expected_cn_ch
             )
-            ch_versions = ch_versions.mix(HIFICNV.out.versions)
+            ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
         }
 
         if (!params.skip_sv) {
