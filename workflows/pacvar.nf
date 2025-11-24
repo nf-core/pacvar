@@ -17,7 +17,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 */
 
 include { BAM_SNP_VARIANT_CALLING as BAM_SNP_VARIANT_CALLING    } from '../subworkflows/local/bam_snp_variant_calling'
-include { BAM_SV_VARIANT_CALLING as BAM_SV_VARIANT_CALLING      } from '../subworkflows/local/bam_sv_variant_calling'
+include { BAM_SV_VARIANT_CALLING  as BAM_SV_VARIANT_CALLING     } from '../subworkflows/local/bam_sv_variant_calling'
 include { BAM_CNV_VARIANT_CALLING as BAM_CNV_VARIANT_CALLING    } from '../subworkflows/local/bam_cnv_variant_calling'  
 include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subworkflows/local/repeat_characterization'
 
@@ -36,7 +36,7 @@ include { PBMM2_ALIGN                                           } from '../modul
 include { HIPHASE as HIPHASE_SNP                                } from '../modules/nf-core/hiphase/main'
 include { HIPHASE as HIPHASE_SV                                 } from '../modules/nf-core/hiphase/main'
 include { HIPHASE as HIPHASE_CNV                                } from '../modules/nf-core/hiphase/main'
-include { HIFICNV                                               } from '../modules/local/hificnv/main'
+include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                      } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

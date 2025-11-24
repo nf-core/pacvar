@@ -1,4 +1,4 @@
-include { HIFICNV        } from '../../../modules/local/hificnv/main'
+include { HIFICNV        } from '../../../modules/nf-core/hificnv/main'
 include { BCFTOOLS_INDEX } from '../../../modules/nf-core/bcftools/index/main'
 
 workflow BAM_CNV_VARIANT_CALLING {
