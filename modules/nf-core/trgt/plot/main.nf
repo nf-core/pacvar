@@ -23,18 +23,60 @@ process TRGT_PLOT {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}_${repeat_id}"
-    // If user didn't specify an output path, plot to PNG
-    def output_arg = args.contains("--image") || args.contains("-o") ? "" : "--image ${prefix}.png"
 
     """
-    trgt plot \\
-        $args \\
-        --genome ${fasta} \\
-        --repeats ${repeats} \\
-        --spanning-reads ${bam} \\
-        --vcf ${vcf} \\
-        --repeat-id ${repeat_id} \\
-        $output_arg
+    if [ -z "${repeat_id}" ]; then
+    
+        for repeat_id_bed in \$(awk -F '\\t' '{ split(\$4,a,";"); gsub("ID=","",a[1]); print a[1] }' ${repeats}); do
+            out_png_motifs="${meta.id}_\${repeat_id_bed}_motifs.png"
+            out_png_meth="${meta.id}_\${repeat_id_bed}_meth.png"
+
+            trgt plot \\
+                $args \\
+                --genome ${fasta} \\
+                --repeats ${repeats} \\
+                --spanning-reads ${bam} \\
+                --vcf ${vcf} \\
+                --repeat-id "\${repeat_id_bed}" \\
+                --show motifs \\
+                --image \$out_png_motifs
+
+            trgt plot \\
+                $args \\
+                --genome ${fasta} \\
+                --repeats ${repeats} \\
+                --spanning-reads ${bam} \\
+                --vcf ${vcf} \\
+                --repeat-id "\${repeat_id_bed}" \\
+                --show meth \\
+                --image \$out_png_meth
+        done
+
+    else
+
+        out_png_motifs="${meta.id}_${repeat_id}_motifs.png"
+        out_png_meth="${meta.id}_${repeat_id}_meth.png"
+
+        trgt plot \\
+            $args \\
+            --genome ${fasta} \\
+            --repeats ${repeats} \\
+            --spanning-reads ${bam} \\
+            --vcf ${vcf} \\
+            --repeat-id ${repeat_id} \\
+            --show motifs \\
+            --image \$out_png_motifs   
+
+        trgt plot \\
+            $args \\
+            --genome ${fasta} \\
+            --repeats ${repeats} \\
+            --spanning-reads ${bam} \\
+            --vcf ${vcf} \\
+            --repeat-id ${repeat_id} \\
+            --show meth \\
+            --image \$out_png_meth    
+    fi
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

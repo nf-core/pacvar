@@ -165,8 +165,6 @@ workflow PACVAR {
     }
 
     if (params.workflow == 'repeat') {
-        id_ch = Channel.fromPath(params.repeat_id).map { file ->[file.baseName, file] }
-
         // characterize repeats
         REPEAT_CHARACTERIZATION(ordered_bam_ch,
             ordered_bai_ch,

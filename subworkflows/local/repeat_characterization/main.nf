@@ -39,14 +39,19 @@ workflow  REPEAT_CHARACTERIZATION{
     //sort the resulting vcf
     BCFTOOLS_SORT(TRGT_GENOTYPE.out.vcf)
 
-    //Index the VCF file
+    //index the VCF file
     BCFTOOLS_INDEX(BCFTOOLS_SORT.out.vcf)
 
     bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai)
     bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
-    //add the repeat id to the channel
-    repeat_values = repeat_id.map { tuple -> tuple[1] }
+    //allow repeat_id to be optional
+    if (params.repeat_id) {
+        repeat_values = repeat_id.map { tuple -> tuple[1] }
+    }
+    else {
+        repeat_values = Channel.value("")
+    }
 
     bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.combine(repeat_values)
 
