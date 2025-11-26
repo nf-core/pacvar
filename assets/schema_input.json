@@ -26,6 +26,13 @@
                 "pattern": "^\\S+\\.(bai|crai|pbi)$",
                 "format": "file-path",
                 "exists": true
+            },
+            "karyotype": {
+                "errorMessage": "Karyotype must be equal to XX or XY",
+                "meta": ["karyotype"],
+                "type": ["string"],
+                "enum": ["XX","XY"],
+                "default": ""
             }
         },
         "required": ["sample", "bam"]
