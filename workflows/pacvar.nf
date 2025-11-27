@@ -35,7 +35,6 @@ include { GATK4_HAPLOTYPECALLER                                 } from '../modul
 include { PBMM2_ALIGN                                           } from '../modules/nf-core/pbmm2/align/main'
 include { HIPHASE as HIPHASE_SNP                                } from '../modules/nf-core/hiphase/main'
 include { HIPHASE as HIPHASE_SV                                 } from '../modules/nf-core/hiphase/main'
-include { HIPHASE as HIPHASE_CNV                                } from '../modules/nf-core/hiphase/main'
 include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                      } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
 
 /*
@@ -182,7 +181,7 @@ workflow PACVAR {
 
             //phase sv files
             if (!params.skip_phase) {
-                HIPHASE_SV( orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
+                HIPHASE_SV(orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_sv.bam_bai,
                     fasta)
 
