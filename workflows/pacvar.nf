@@ -27,15 +27,17 @@ include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subwo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { LIMA                                                  } from '../modules/nf-core/lima/main'
-include { DEEPVARIANT_RUNDEEPVARIANT                            } from '../modules/nf-core/deepvariant/rundeepvariant/main'
-include { SAMTOOLS_INDEX                                        } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_SORT                                         } from '../modules/nf-core/samtools/sort/main'
-include { GATK4_HAPLOTYPECALLER                                 } from '../modules/nf-core/gatk4/haplotypecaller/main'
-include { PBMM2_ALIGN                                           } from '../modules/nf-core/pbmm2/align/main'
-include { HIPHASE as HIPHASE_SNP                                } from '../modules/nf-core/hiphase/main'
-include { HIPHASE as HIPHASE_SV                                 } from '../modules/nf-core/hiphase/main'
-include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                      } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
+include { LIMA                                                   } from '../modules/nf-core/lima/main'
+include { DEEPVARIANT_RUNDEEPVARIANT                             } from '../modules/nf-core/deepvariant/rundeepvariant/main'
+include { SAMTOOLS_INDEX                                         } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_SORT                                          } from '../modules/nf-core/samtools/sort/main'
+include { GATK4_HAPLOTYPECALLER                                  } from '../modules/nf-core/gatk4/haplotypecaller/main'
+include { PBMM2_ALIGN                                            } from '../modules/nf-core/pbmm2/align/main'
+include { HIPHASE                          as HIPHASE_SNP        } from '../modules/nf-core/hiphase/main'
+include { HIPHASE                          as HIPHASE_SV         } from '../modules/nf-core/hiphase/main'
+include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                       } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
+include { SAMTOOLS_INDEX                   as SAMTOOLS_INDEX_SNV } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_INDEX                   as SAMTOOLS_INDEX_SV  } from '../modules/nf-core/samtools/index/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
