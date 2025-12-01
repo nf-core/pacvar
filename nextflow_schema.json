@@ -171,7 +171,14 @@
                     "type": "string",
                     "enum": ["deepvariant", "gatk4"],
                     "default": "deepvariant",
-                    "description": "The tool to use for calling variants",
+                    "description": "The tool to use for calling SNP variants",
+                    "fa_icon": "fas fa-forward"
+                },
+                "sv_caller": {
+                    "type": "string",
+                    "enum": ["pbsv", "sawfish"],
+                    "default": "pbsv",
+                    "description": "The tool to use for calling structural variants",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_snp": {
@@ -187,7 +194,6 @@
                 "skip_cnv": {
                     "type": "boolean",
                     "description": "Skip copy number variation detection",
-                    "default": false,
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_phase": {
@@ -380,5 +386,16 @@
         {
             "$ref": "#/$defs/repeat"
         }
-    ]
+    ],
+    "properties": {
+        "skip_cpg": {
+            "type": "boolean"
+        },
+        "cnv_exclude_regions": {
+            "type": "string"
+        },
+        "cnv_expected_cn_file": {
+            "type": "string"
+        }        
+    }
 }
