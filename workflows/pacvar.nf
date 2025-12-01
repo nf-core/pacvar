@@ -137,7 +137,7 @@ workflow PACVAR {
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
                 ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
 
-                // phased_snp_bam_bai_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
+                phased_snp_bam_bai_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
         }
 
@@ -152,12 +152,12 @@ workflow PACVAR {
             
             // Prepare optional input channels  
             exclude_ch = params.cnv_exclude_regions ? 
-                Channel.value([[:], file(params.cnv_exclude_regions)]) : 
-                Channel.value([[:], []])
+                channel.value([[:], file(params.cnv_exclude_regions)]) : 
+                channel.value([[:], []])
     
             expected_cn_ch = params.cnv_expected_cn_file ? 
-                Channel.value([[:], file(params.cnv_expected_cn_file)]) : 
-                Channel.value([[:], []])
+                channel.value([[:], file(params.cnv_expected_cn_file)]) : 
+                channel.value([[:], []])
         
             // Run HiFiCNV
             BAM_CNV_VARIANT_CALLING(
@@ -198,9 +198,28 @@ workflow PACVAR {
                 // Index the phased BAM from HIPHASE_SV
                 SAMTOOLS_INDEX_HIPHASE_SV(HIPHASE_SV.out.bam)
                 ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SV.out.versions)
-
-                // phased_sv_bam_bai_ch = HIPHASE_SV.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SV.out.bai)
             }
+        }
+
+        // CpG methylation scoring with pbcpgtools
+        if (!params.skip_cpg) {
+            // Determine which BAM to use based on phasing and SNV calling
+            if (!params.skip_snv && !params.skip_phase) {
+                // Use phased BAM from HIPHASE_SNV
+                cpg_bam_bai_ch = phased_snp_bam_bai_ch
+            } else {
+                // Use original sorted BAM
+                cpg_bam_bai_ch = bam_bai_ch
+            }
+    
+            // Call pbcpgtools alignedbamtocpgscores
+            PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
+                cpg_bam_bai_ch,
+                fasta,
+                fasta_fai
+            )
+    
+            ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }
     }
 
