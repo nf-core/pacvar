@@ -204,7 +204,7 @@ workflow PACVAR {
         // CpG methylation scoring with pbcpgtools
         if (!params.skip_cpg) {
             // Determine which BAM to use based on phasing and SNV calling
-            if (!params.skip_snv && !params.skip_phase) {
+            if (!params.skip_snp && !params.skip_phase) {
                 // Use phased BAM from HIPHASE_SNV
                 cpg_bam_bai_ch = phased_snp_bam_bai_ch
             } else {
@@ -214,10 +214,7 @@ workflow PACVAR {
     
             // Call pbcpgtools alignedbamtocpgscores
             PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
-                cpg_bam_bai_ch,
-                fasta,
-                fasta_fai
-            )
+                cpg_bam_bai_ch)
     
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }
