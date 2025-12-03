@@ -1,0 +1,98 @@
+{
+    "Params: default": {
+        "content": [
+            10,
+            {
+                "BCFTOOLS_SORT": {
+                    "bcftools": 1.2
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "1.14.99"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_INDEX_TRGT": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_SORT_TRGT": {
+                    "samtools": 1.21
+                },
+                "TRGT_GENOTYPE": {
+                    "trgt": "1.2.0-9eda4dd"
+                },
+                "TRGT_PLOT": {
+                    "trgt": "1.2.0-9eda4dd"
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.0.1"
+                }
+            },
+            [
+                "bcftools",
+                "bcftools/sample1.sorted.vcf.gz",
+                "bcftools/sample1.sorted.vcf.gz.csi",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbmm2",
+                "pbmm2/sample1.aligned.bam",
+                "pipeline_info",
+                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "samtools",
+                "samtools/sample1.sorted.bam",
+                "samtools/sample1.sorted.bam.bai",
+                "samtools/sample1.trgt.sorted.bam",
+                "samtools/sample1.trgt.sorted.bam.bai",
+                "trgt",
+                "trgt/sample1.spanning.bam",
+                "trgt/sample1.vcf.gz",
+                "trgt/sample1_C9ORF72_meth.png",
+                "trgt/sample1_C9ORF72_motifs.png"
+            ],
+            [
+                "sample1.sorted.vcf.gz:md5,11b71be3ad730a89434df6e2c7a7efbc",
+                "sample1.sorted.vcf.gz.csi:md5,ba55b9af97fcfbc3b962631f74af09e5",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "sample1.aligned.bam:md5,de474ce5643dca426e6188c993dc0770",
+                "sample1.sorted.bam:md5,521a5953352482218b671ef5ede8b33f",
+                "sample1.sorted.bam.bai:md5,3806978185623ab2e73836223be76b62",
+                "sample1.trgt.sorted.bam:md5,7f32685c7031f483862b46c493218f1b",
+                "sample1.trgt.sorted.bam.bai:md5,1e235919acbe3ed2e7a78ef7eb71ff27",
+                "sample1.spanning.bam:md5,899f52ec4e14a4bba7baa2285d50f82b",
+                "sample1.vcf.gz:md5,11b71be3ad730a89434df6e2c7a7efbc"
+            ],
+            [
+                [
+                    "sample1.aligned.bam",
+                    "992d0f01cc85d4da5e64155d21c22fa5"
+                ],
+                [
+                    "sample1.sorted.bam",
+                    "174b1fdf8bc976be284f9f77a0aaff86"
+                ],
+                [
+                    "sample1.trgt.sorted.bam",
+                    "d93ca8d5e6c5cb1345430a287477fa70"
+                ],
+                [
+                    "sample1.spanning.bam",
+                    "a47326ee35681550c59183d640ae4ded"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-12-03T13:27:16.489277909"
+    }
+}
