@@ -1,0 +1,132 @@
+{
+    "Params: karyotype in samplesheet": {
+        "content": [
+            19,
+            {
+                "BCFTOOLS_SORT": {
+                    "bcftools": 1.2
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "1.14.99"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_INDEX_TRGT": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_SORT_TRGT": {
+                    "samtools": 1.21
+                },
+                "TRGT_GENOTYPE": {
+                    "trgt": "1.2.0-9eda4dd"
+                },
+                "TRGT_PLOT": {
+                    "trgt": "1.2.0-9eda4dd"
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.0.1"
+                }
+            },
+            [
+                "bcftools",
+                "bcftools/sample1.sorted.vcf.gz",
+                "bcftools/sample1.sorted.vcf.gz.csi",
+                "bcftools/sample2.sorted.vcf.gz",
+                "bcftools/sample2.sorted.vcf.gz.csi",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbmm2",
+                "pbmm2/sample1.aligned.bam",
+                "pbmm2/sample2.aligned.bam",
+                "pipeline_info",
+                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "samtools",
+                "samtools/sample1.sorted.bam",
+                "samtools/sample1.sorted.bam.bai",
+                "samtools/sample1.trgt.sorted.bam",
+                "samtools/sample1.trgt.sorted.bam.bai",
+                "samtools/sample2.sorted.bam",
+                "samtools/sample2.sorted.bam.bai",
+                "samtools/sample2.trgt.sorted.bam",
+                "samtools/sample2.trgt.sorted.bam.bai",
+                "trgt",
+                "trgt/sample1.spanning.bam",
+                "trgt/sample1.vcf.gz",
+                "trgt/sample1_C9ORF72.png",
+                "trgt/sample2.spanning.bam",
+                "trgt/sample2.vcf.gz",
+                "trgt/sample2_C9ORF72.png"
+            ],
+            [
+                "sample1.sorted.vcf.gz:md5,1d2e24ffe7a14a116ec95ebad14f3964",
+                "sample1.sorted.vcf.gz.csi:md5,ed3b18bde6c3272add6e4cdbe88d338e",
+                "sample2.sorted.vcf.gz:md5,df5f445ed85442aacb2cbdda79e7e60e",
+                "sample2.sorted.vcf.gz.csi:md5,ed3b18bde6c3272add6e4cdbe88d338e",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "sample1.aligned.bam:md5,12f03b6c61f93514b3709b4b14694a12",
+                "sample2.aligned.bam:md5,eddf785f8ccbaf3f05647b3c50af98b6",
+                "sample1.sorted.bam:md5,2ed47fad89a886a219bbd72f6f48270c",
+                "sample1.sorted.bam.bai:md5,f1b18536af780080e9b2b6c9b11dd379",
+                "sample1.trgt.sorted.bam:md5,b13546aa666cb3175ed9681ae4832e63",
+                "sample1.trgt.sorted.bam.bai:md5,9f8a5332fb6d7c62057e26a5f2f9a663",
+                "sample2.sorted.bam:md5,cbe4493bba24bea62cabf6e8a01d7940",
+                "sample2.sorted.bam.bai:md5,1b0b3c7a570eed488c8600d3c2e2b775",
+                "sample2.trgt.sorted.bam:md5,2128d3f6b709f6b661b30ddcd3a3998c",
+                "sample2.trgt.sorted.bam.bai:md5,327253095ed9acab7f8dd3306d5e93f5",
+                "sample1.spanning.bam:md5,76edf28e42886c5eb74736888b57e350",
+                "sample1.vcf.gz:md5,1d2e24ffe7a14a116ec95ebad14f3964",
+                "sample2.spanning.bam:md5,d9321d609d8ded7108f6c162a95e9398",
+                "sample2.vcf.gz:md5,df5f445ed85442aacb2cbdda79e7e60e"
+            ],
+            [
+                [
+                    "sample1.aligned.bam",
+                    "a95c25c423c2ca5e703b45d8c4671b77"
+                ],
+                [
+                    "sample2.aligned.bam",
+                    "416724610e9d8591ce92aa54f585c359"
+                ],
+                [
+                    "sample1.sorted.bam",
+                    "ffaeec7b182150bc50a09072dfa0f2d5"
+                ],
+                [
+                    "sample1.trgt.sorted.bam",
+                    "b21eb285669d0bc281e97f886488b91b"
+                ],
+                [
+                    "sample2.sorted.bam",
+                    "b89044d8fbd65446dfcf3026eb5ec92"
+                ],
+                [
+                    "sample2.trgt.sorted.bam",
+                    "3219020d6c2d49c5c64b367a006cd313"
+                ],
+                [
+                    "sample1.spanning.bam",
+                    "b2756d838b9c93427b160401b3338028"
+                ],
+                [
+                    "sample2.spanning.bam",
+                    "ce4ccd590f462dd4545c490f7ab36d54"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-12-04T10:41:46.32169369"
+    }
+}

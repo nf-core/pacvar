@@ -5,10 +5,11 @@ nextflow_pipeline {
     config "./nextflow.config"
     tag "cpu"
 
-    test("Params: default") {
+    test("Params: karyotype in samplesheet") {
         when {
             params {
                 outdir = "$outputDir"
+                input = "$projectDir/assets/samplesheet_karyotype.csv"
             }
         }
 
