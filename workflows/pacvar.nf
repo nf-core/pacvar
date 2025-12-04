@@ -170,11 +170,24 @@ workflow PACVAR {
         }
 
         if (!params.skip_sv) {
-            //pbsv structural variant calling
+            //pbsv or sawfish structural variant calling
+            exclude_ch = params.cnv_exclude_regions ? 
+                channel.value([[:], file(params.cnv_exclude_regions)]) : 
+                channel.value([[:], []])
+    
+            expected_cn_ch = params.cnv_expected_cn_file ? 
+                channel.value([[:], file(params.cnv_expected_cn_file)]) : 
+                channel.value([[:], []])
+
+            maf_vcf_ch = channel.value([[:], []]) //empty for no
+
             BAM_SV_VARIANT_CALLING(ordered_bam_ch,
                 ordered_bai_ch,
                 fasta,
-                fasta_fai)
+                fasta_fai,
+                exclude_ch,
+                maf_vcf_ch,
+                expected_cn_ch)
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
 
