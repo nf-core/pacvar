@@ -78,58 +78,58 @@
                 "trgt/sample2_FMR1_motifs.png"
             ],
             [
-                "sample1.sorted.vcf.gz:md5,b9f59e505f3ece3eda3fda579de581a4",
-                "sample1.sorted.vcf.gz.csi:md5,d0a2e9455760fa778980588292c3272c",
-                "sample2.sorted.vcf.gz:md5,4bd208998f0b3831cb0f417782877220",
-                "sample2.sorted.vcf.gz.csi:md5,a7171c21130aa583901bdf3da19c5bb9",
+                "sample1.sorted.vcf.gz:md5,f5a0c891c6db5a6e1f41c2e7195b6db6",
+                "sample1.sorted.vcf.gz.csi:md5,98443ce2d36663d417e7b94d345a0896",
+                "sample2.sorted.vcf.gz:md5,1b40ce2e80badfd0542f6868981d2b55",
+                "sample2.sorted.vcf.gz.csi:md5,0a6901ae4538929625fbe40bde58a5f3",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "sample1.aligned.bam:md5,7cf43e9f457d67ddc0952149f485fcf6",
-                "sample2.aligned.bam:md5,40f4fc9b6e48ac9d6490964c15947dc0",
-                "sample1.sorted.bam:md5,2057a80809364e63932b147e35e311f4",
-                "sample1.sorted.bam.bai:md5,5706f85ac685ac409cd32bb22e93269e",
-                "sample1.trgt.sorted.bam:md5,5a42cc19e395e7180c87a496a822d0ab",
-                "sample1.trgt.sorted.bam.bai:md5,f6ece98ed08d51cb1fddc79165ce1d3e",
-                "sample2.sorted.bam:md5,421f39453db315ac56672d2fa6b3dd34",
-                "sample2.sorted.bam.bai:md5,b02b786b6591e31405c66770a8c613b5",
-                "sample2.trgt.sorted.bam:md5,c5426b9ebf499fa74e4bef6253a1e7b8",
-                "sample2.trgt.sorted.bam.bai:md5,18a8cd2b39d98283be8f2181a12d0912",
-                "sample1.spanning.bam:md5,4dfcaa610ed35a972b2893eb364fc29a",
-                "sample1.vcf.gz:md5,61d22b6f925706a15d7ad88f0668e379",
-                "sample2.spanning.bam:md5,745957b35ad58702ce29e7e8a3f35b43",
-                "sample2.vcf.gz:md5,3f21a5a29248034864f2128aa2ddebe2"
+                "sample1.aligned.bam:md5,6fe905a77487dafd4ac9767c31cc4845",
+                "sample2.aligned.bam:md5,0cd9406f5b0e8c9822c21eef7265a27b",
+                "sample1.sorted.bam:md5,a00eb50546b4bea45715bb70bdc1de99",
+                "sample1.sorted.bam.bai:md5,cd979b2ffd948a5204f4d666521f015d",
+                "sample1.trgt.sorted.bam:md5,410cd555e48be92bfde9d0b1d4764e4c",
+                "sample1.trgt.sorted.bam.bai:md5,fc8092d32ea965155c079d1c2fb06a13",
+                "sample2.sorted.bam:md5,f8fccfec83e02e3feaf2f4fe3aac4829",
+                "sample2.sorted.bam.bai:md5,b038308573ecab3ac67624ba886ab2c6",
+                "sample2.trgt.sorted.bam:md5,c2de95a1e57570550704ab6ba6d8ec81",
+                "sample2.trgt.sorted.bam.bai:md5,ddc585bb60f6c4207cc213d7e342d2a6",
+                "sample1.spanning.bam:md5,a4094c78e970ce19121c4235af56e6f4",
+                "sample1.vcf.gz:md5,e887433ce9cc32b31adb27aea114e8ef",
+                "sample2.spanning.bam:md5,c4e4f83aceef85ac6c2549d28bc098d1",
+                "sample2.vcf.gz:md5,2b0bb8adbee096f204f72ca7bac75458"
             ],
             [
                 [
                     "sample1.aligned.bam",
-                    "c5ab8d7322137329e1aad34eeb39d702"
+                    "c604bffe626ac10d42eb3479e942aa87"
                 ],
                 [
                     "sample2.aligned.bam",
-                    "ce55c1c70789846b2216406c9f920375"
+                    "d107ed9d03a15e6dad0e5db64ac6f71b"
                 ],
                 [
                     "sample1.sorted.bam",
-                    "b12c25c0e9a567a4f14cf715f3263f08"
+                    "e7f3c35b4b795712e402c552a5b4e36b"
                 ],
                 [
                     "sample1.trgt.sorted.bam",
-                    "441993f47deea9e4a440587382462615"
+                    "3aa69e87d468d5da76c332edfc0f9a3a"
                 ],
                 [
                     "sample2.sorted.bam",
-                    "6bf72ddd3449f2e1a713aca712a21c58"
+                    "dd291bd2fa447057bf6b3f1b89ebed8"
                 ],
                 [
                     "sample2.trgt.sorted.bam",
-                    "8293783509073f7e63402d3c0c01f4c0"
+                    "b274122f675a8b86f522f7714fe202f3"
                 ],
                 [
                     "sample1.spanning.bam",
-                    "1ddd9595b4f84aa3f7de03f1995ebf05"
+                    "a758a118d5b0b67ce54c78402f2cb4aa"
                 ],
                 [
                     "sample2.spanning.bam",
-                    "3408784e183b7a59763e92dba5ea0e39"
+                    "965ba634dd3081924741b54f7f587eba"
                 ]
             ]
         ],
@@ -137,6 +137,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-04T10:04:23.314637186"
+        "timestamp": "2025-12-04T10:25:36.750003976"
     }
 }

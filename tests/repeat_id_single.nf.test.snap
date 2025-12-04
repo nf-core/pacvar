@@ -72,56 +72,56 @@
             [
                 "sample1.sorted.vcf.gz:md5,f5a0c891c6db5a6e1f41c2e7195b6db6",
                 "sample1.sorted.vcf.gz.csi:md5,98443ce2d36663d417e7b94d345a0896",
-                "sample2.sorted.vcf.gz:md5,1b40ce2e80badfd0542f6868981d2b55",
-                "sample2.sorted.vcf.gz.csi:md5,0a6901ae4538929625fbe40bde58a5f3",
+                "sample2.sorted.vcf.gz:md5,31168a74281eb7a37a4cafaf27de5d52",
+                "sample2.sorted.vcf.gz.csi:md5,841ba6dca4b957d9e4398c4bda1ddb0f",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "sample1.aligned.bam:md5,9eac348330805187882798cd61c0b42a",
-                "sample2.aligned.bam:md5,02ea2310c2c3c2809100405de2f2ac4c",
-                "sample1.sorted.bam:md5,de7c4d70f534f6c36ae79825578681b9",
-                "sample1.sorted.bam.bai:md5,d67bd9e1dd8268199824d0e48d1321e0",
-                "sample1.trgt.sorted.bam:md5,74bfd837955ed7747cf49047008f7957",
-                "sample1.trgt.sorted.bam.bai:md5,10bb819037d495c46c51ee139617cd41",
-                "sample2.sorted.bam:md5,4efe544d2cc0469dc157b17bc9b07d29",
-                "sample2.sorted.bam.bai:md5,73b2bd5a26616df5717362bc76a5684d",
-                "sample2.trgt.sorted.bam:md5,83504d2eef74b0f6b950ca3c0837288f",
-                "sample2.trgt.sorted.bam.bai:md5,6d757efc61afdd286f70e1734a357fe6",
-                "sample1.spanning.bam:md5,65aff6a8175012adf7c68dd7d0dd16a1",
+                "sample1.aligned.bam:md5,48c85e88d892ef1547168f6e0ffb0f43",
+                "sample2.aligned.bam:md5,53b9fd17ac0031550d9a43ab3b937de8",
+                "sample1.sorted.bam:md5,19ddf2684bb86fb30b8313ee0840e70d",
+                "sample1.sorted.bam.bai:md5,317f387f0eaf96826ee9ebff805a3e6b",
+                "sample1.trgt.sorted.bam:md5,c2e1a672f43e1a481bd8b7aea71e7665",
+                "sample1.trgt.sorted.bam.bai:md5,350d7ac2dce97ff4160af20af78a61e4",
+                "sample2.sorted.bam:md5,94563a1039ec9ae8d0cc1c4403a8f81b",
+                "sample2.sorted.bam.bai:md5,baa229ae4eca945a97072c706b718c0e",
+                "sample2.trgt.sorted.bam:md5,e895a74f32ea77152a34b9c21d630eeb",
+                "sample2.trgt.sorted.bam.bai:md5,f5f427ffef65bef63b0772ad68c297af",
+                "sample1.spanning.bam:md5,4f9d5745c8f984b848bad2720a6d0e0c",
                 "sample1.vcf.gz:md5,e887433ce9cc32b31adb27aea114e8ef",
-                "sample2.spanning.bam:md5,eeb5fc0e6b43cb49d8b4bd33d53bab4b",
-                "sample2.vcf.gz:md5,2b0bb8adbee096f204f72ca7bac75458"
+                "sample2.spanning.bam:md5,e9bbee44a9704ec6b0da635671300d91",
+                "sample2.vcf.gz:md5,6a9a74c47324fc1839e268047ae1443a"
             ],
             [
                 [
                     "sample1.aligned.bam",
-                    "f8ad0d07efcd20aba07d3a293fedf0da"
+                    "25ea6c3d1021aab3a01d877a3a7a5408"
                 ],
                 [
                     "sample2.aligned.bam",
-                    "cea137cdf43a49a4cc6ef31a05a43a84"
+                    "127368f37228c3892f3e467aca32551"
                 ],
                 [
                     "sample1.sorted.bam",
-                    "5a0d5136b7920b3ef558591b2a02a72f"
+                    "69b1a9335eab5484a234a29429141c41"
                 ],
                 [
                     "sample1.trgt.sorted.bam",
-                    "240a5f6d338e1002db9bc3504f9d4506"
+                    "d469f132e1e960323a8e6dd01da09895"
                 ],
                 [
                     "sample2.sorted.bam",
-                    "c11e68ceb8fe97cbc0d6086799ff878c"
+                    "ef48db91aff007aa7c7302e1dbcf6632"
                 ],
                 [
                     "sample2.trgt.sorted.bam",
-                    "df163604ab28d101a0f20352badd67e7"
+                    "7cfc142ec3bd42f159e64144b2c2dfb4"
                 ],
                 [
                     "sample1.spanning.bam",
-                    "1c19f353eab22b2f9817800e04a914fd"
+                    "a325ccaa5d4441e8e9bf90e4974f854e"
                 ],
                 [
                     "sample2.spanning.bam",
-                    "4e32ea084f9af198af0831becd1dc783"
+                    "300a42b5322a75bbf77502d4263ac13"
                 ]
             ]
         ],
@@ -129,6 +129,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-04T10:01:37.552722326"
+        "timestamp": "2025-12-04T10:23:38.694217928"
     }
 }
