@@ -1,0 +1,45 @@
+nextflow_pipeline {
+
+    name "Test Workflow main.nf"
+    script "../main.nf"
+    config "./nextflow.config"
+    tag "cpu"
+
+    test("Params: single repeat_id") {
+        when {
+            params {
+                outdir = "$outputDir"
+                input = "$projectDir/assets/samplesheet_repeat_id.csv"
+                fasta = "$projectDir/input/GCA_000001405.15_GRCh38_no_alt_analysis_subset_test.fa"
+                fasta_fai = "$projectDir/input/GCA_000001405.15_GRCh38_no_alt_analysis_subset_test.fa.fai"
+                barcodes = "$projectDir/input/m84036_240201_205955_s2.barcodes.fasta"
+                intervals = "$projectDir/input/PureTarget_repeat_expansion_panel_subset_test.bed"
+                repeat_id = null
+            }
+        }
+
+        then {
+            // stable_name: All files + folders in ${params.outdir}/ with a stable name
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            // stable_path: All files in ${params.outdir}/ with stable content
+            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            // bam_files: All bam files
+            def bam_files  = getAllFilesFromDir(params.outdir, include: ['**/*.bam'])
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(
+                    // Number of tasks
+                    workflow.trace.succeeded().size(),
+                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pipeline_software_mqc_versions.yml"),
+                    // All stable path name
+                    stable_name,
+                    // All files with stable contents
+                    stable_path,
+                    // All bam files
+                    bam_files.collect{ file -> [ file.getName(), bam(file.toString(), stringency: "lenient").getReadsMD5() ] }
+                ).match() }
+            )
+        }
+    }
+}

@@ -9,6 +9,7 @@ nextflow_pipeline {
         when {
             params {
                 outdir = "$outputDir"
+                repeat_id = 'C9ORF72'
             }
         }
 

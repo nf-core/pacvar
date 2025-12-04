@@ -1,0 +1,150 @@
+{
+    "Params: single repeat_id": {
+        "content": [
+            19,
+            {
+                "BCFTOOLS_SORT": {
+                    "bcftools": 1.2
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "1.14.99"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_INDEX_TRGT": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_SORT_TRGT": {
+                    "samtools": 1.21
+                },
+                "TRGT_GENOTYPE": {
+                    "trgt": "1.2.0-9eda4dd"
+                },
+                "TRGT_PLOT": {
+                    "trgt": "1.2.0-9eda4dd"
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.0.1"
+                }
+            },
+            [
+                "bcftools",
+                "bcftools/sample1.sorted.vcf.gz",
+                "bcftools/sample1.sorted.vcf.gz.csi",
+                "bcftools/sample2.sorted.vcf.gz",
+                "bcftools/sample2.sorted.vcf.gz.csi",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbmm2",
+                "pbmm2/sample1.aligned.bam",
+                "pbmm2/sample2.aligned.bam",
+                "pipeline_info",
+                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "samtools",
+                "samtools/sample1.sorted.bam",
+                "samtools/sample1.sorted.bam.bai",
+                "samtools/sample1.trgt.sorted.bam",
+                "samtools/sample1.trgt.sorted.bam.bai",
+                "samtools/sample2.sorted.bam",
+                "samtools/sample2.sorted.bam.bai",
+                "samtools/sample2.trgt.sorted.bam",
+                "samtools/sample2.trgt.sorted.bam.bai",
+                "trgt",
+                "trgt/sample1.spanning.bam",
+                "trgt/sample1.vcf.gz",
+                "trgt/sample1_C9ORF72_meth.png",
+                "trgt/sample1_C9ORF72_motifs.png",
+                "trgt/sample1_DMPK_meth.png",
+                "trgt/sample1_DMPK_motifs.png",
+                "trgt/sample1_FMR1_meth.png",
+                "trgt/sample1_FMR1_motifs.png",
+                "trgt/sample1_HTT_meth.png",
+                "trgt/sample1_HTT_motifs.png",
+                "trgt/sample1_PABPN1_meth.png",
+                "trgt/sample1_PABPN1_motifs.png",
+                "trgt/sample2.spanning.bam",
+                "trgt/sample2.vcf.gz",
+                "trgt/sample2_C9ORF72_meth.png",
+                "trgt/sample2_C9ORF72_motifs.png",
+                "trgt/sample2_DMPK_meth.png",
+                "trgt/sample2_DMPK_motifs.png",
+                "trgt/sample2_FMR1_meth.png",
+                "trgt/sample2_FMR1_motifs.png",
+                "trgt/sample2_HTT_meth.png",
+                "trgt/sample2_HTT_motifs.png",
+                "trgt/sample2_PABPN1_meth.png",
+                "trgt/sample2_PABPN1_motifs.png"
+            ],
+            [
+                "sample1.sorted.vcf.gz:md5,f5a0c891c6db5a6e1f41c2e7195b6db6",
+                "sample1.sorted.vcf.gz.csi:md5,98443ce2d36663d417e7b94d345a0896",
+                "sample2.sorted.vcf.gz:md5,1b40ce2e80badfd0542f6868981d2b55",
+                "sample2.sorted.vcf.gz.csi:md5,0a6901ae4538929625fbe40bde58a5f3",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "sample1.aligned.bam:md5,b60037c08c4b0763f22e4cb7d287ca59",
+                "sample2.aligned.bam:md5,427dc1d92be93b44de00979eb366bd92",
+                "sample1.sorted.bam:md5,2f09e2dbf88386ee52471f5e23152c5f",
+                "sample1.sorted.bam.bai:md5,4d8407be2272c89dc77e9200af5997ef",
+                "sample1.trgt.sorted.bam:md5,74bfd837955ed7747cf49047008f7957",
+                "sample1.trgt.sorted.bam.bai:md5,10bb819037d495c46c51ee139617cd41",
+                "sample2.sorted.bam:md5,452fb5272a98e254ed3164679a33d42e",
+                "sample2.sorted.bam.bai:md5,82f232d3211b2c38a247e9eda1d58aa0",
+                "sample2.trgt.sorted.bam:md5,83504d2eef74b0f6b950ca3c0837288f",
+                "sample2.trgt.sorted.bam.bai:md5,6d757efc61afdd286f70e1734a357fe6",
+                "sample1.spanning.bam:md5,65aff6a8175012adf7c68dd7d0dd16a1",
+                "sample1.vcf.gz:md5,e887433ce9cc32b31adb27aea114e8ef",
+                "sample2.spanning.bam:md5,eeb5fc0e6b43cb49d8b4bd33d53bab4b",
+                "sample2.vcf.gz:md5,2b0bb8adbee096f204f72ca7bac75458"
+            ],
+            [
+                [
+                    "sample1.aligned.bam",
+                    "60294cf265a04e0304af0e5b899cfef5"
+                ],
+                [
+                    "sample2.aligned.bam",
+                    "df9b68184e755dcf75c64ac58c6fffd"
+                ],
+                [
+                    "sample1.sorted.bam",
+                    "a5f71d02a203ae0b0ffc8a119c41efa"
+                ],
+                [
+                    "sample1.trgt.sorted.bam",
+                    "240a5f6d338e1002db9bc3504f9d4506"
+                ],
+                [
+                    "sample2.sorted.bam",
+                    "35392007ee07263876c93512a9417661"
+                ],
+                [
+                    "sample2.trgt.sorted.bam",
+                    "df163604ab28d101a0f20352badd67e7"
+                ],
+                [
+                    "sample1.spanning.bam",
+                    "1c19f353eab22b2f9817800e04a914fd"
+                ],
+                [
+                    "sample2.spanning.bam",
+                    "4e32ea084f9af198af0831becd1dc783"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.04.6"
+        },
+        "timestamp": "2025-12-04T10:05:30.781725299"
+    }
+}
