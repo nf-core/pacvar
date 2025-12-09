@@ -45,15 +45,8 @@ workflow  REPEAT_CHARACTERIZATION{
     bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai)
     bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
-    //allow repeat_id to be optional
-    if (params.repeat_id) {
-        repeat_values = repeat_id.map { tuple -> tuple[1] }
-    }
-    else {
-        repeat_values = Channel.value("")
-    }
-
-    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.combine(repeat_values)
+    //add repeat_id to channel
+    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, repeat_id] }
 
     //plot the vcf file -- for a specified id
     TRGT_PLOT(bam_bai_vcf_tbi_repeat_ch,
