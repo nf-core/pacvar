@@ -173,7 +173,7 @@ workflow PACVAR {
             fasta_fai,
             intervals,
             repeat_id)
-            
+
         ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
     }
 
