@@ -78,58 +78,130 @@
                 "trgt/sample2_FMR1_motifs.png"
             ],
             [
-                "sample1.sorted.vcf.gz:md5,f5a0c891c6db5a6e1f41c2e7195b6db6",
-                "sample1.sorted.vcf.gz.csi:md5,98443ce2d36663d417e7b94d345a0896",
-                "sample2.sorted.vcf.gz:md5,1b40ce2e80badfd0542f6868981d2b55",
-                "sample2.sorted.vcf.gz.csi:md5,0a6901ae4538929625fbe40bde58a5f3",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "sample1.aligned.bam:md5,6fe905a77487dafd4ac9767c31cc4845",
-                "sample2.aligned.bam:md5,0cd9406f5b0e8c9822c21eef7265a27b",
-                "sample1.sorted.bam:md5,a00eb50546b4bea45715bb70bdc1de99",
-                "sample1.sorted.bam.bai:md5,cd979b2ffd948a5204f4d666521f015d",
-                "sample1.trgt.sorted.bam:md5,410cd555e48be92bfde9d0b1d4764e4c",
-                "sample1.trgt.sorted.bam.bai:md5,fc8092d32ea965155c079d1c2fb06a13",
-                "sample2.sorted.bam:md5,f8fccfec83e02e3feaf2f4fe3aac4829",
-                "sample2.sorted.bam.bai:md5,b038308573ecab3ac67624ba886ab2c6",
-                "sample2.trgt.sorted.bam:md5,c2de95a1e57570550704ab6ba6d8ec81",
-                "sample2.trgt.sorted.bam.bai:md5,ddc585bb60f6c4207cc213d7e342d2a6",
-                "sample1.spanning.bam:md5,a4094c78e970ce19121c4235af56e6f4",
-                "sample1.vcf.gz:md5,e887433ce9cc32b31adb27aea114e8ef",
-                "sample2.spanning.bam:md5,c4e4f83aceef85ac6c2549d28bc098d1",
-                "sample2.vcf.gz:md5,2b0bb8adbee096f204f72ca7bac75458"
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
                 [
                     "sample1.aligned.bam",
-                    "c604bffe626ac10d42eb3479e942aa87"
+                    {
+                        "maxReadLength": 47301,
+                        "minReadLength": 641,
+                        "meanReadLength": 5995,
+                        "maxQuality": 60,
+                        "minQuality": 1,
+                        "meanQuality": 48,
+                        "readCount": 3812,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample2.aligned.bam",
-                    "d107ed9d03a15e6dad0e5db64ac6f71b"
+                    {
+                        "maxReadLength": 47301,
+                        "minReadLength": 641,
+                        "meanReadLength": 5995,
+                        "maxQuality": 60,
+                        "minQuality": 1,
+                        "meanQuality": 48,
+                        "readCount": 3812,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample1.sorted.bam",
-                    "e7f3c35b4b795712e402c552a5b4e36b"
+                    {
+                        "maxReadLength": 47301,
+                        "minReadLength": 641,
+                        "meanReadLength": 5995,
+                        "maxQuality": 60,
+                        "minQuality": 1,
+                        "meanQuality": 48,
+                        "readCount": 3812,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample1.trgt.sorted.bam",
-                    "3aa69e87d468d5da76c332edfc0f9a3a"
+                    {
+                        "maxReadLength": 7643,
+                        "minReadLength": 100,
+                        "meanReadLength": 248,
+                        "maxQuality": 60,
+                        "minQuality": 60,
+                        "meanQuality": 60,
+                        "readCount": 1250,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample2.sorted.bam",
-                    "dd291bd2fa447057bf6b3f1b89ebed8"
+                    {
+                        "maxReadLength": 47301,
+                        "minReadLength": 641,
+                        "meanReadLength": 5995,
+                        "maxQuality": 60,
+                        "minQuality": 1,
+                        "meanQuality": 48,
+                        "readCount": 3812,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample2.trgt.sorted.bam",
-                    "b274122f675a8b86f522f7714fe202f3"
+                    {
+                        "maxReadLength": 7643,
+                        "minReadLength": 100,
+                        "meanReadLength": 248,
+                        "maxQuality": 60,
+                        "minQuality": 60,
+                        "meanQuality": 60,
+                        "readCount": 1250,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample1.spanning.bam",
-                    "a758a118d5b0b67ce54c78402f2cb4aa"
+                    {
+                        "maxReadLength": 7643,
+                        "minReadLength": 100,
+                        "meanReadLength": 248,
+                        "maxQuality": 60,
+                        "minQuality": 60,
+                        "meanQuality": 60,
+                        "readCount": 1250,
+                        "duplicateReadCount": 0
+                    }
                 ],
                 [
                     "sample2.spanning.bam",
-                    "965ba634dd3081924741b54f7f587eba"
+                    {
+                        "maxReadLength": 7643,
+                        "minReadLength": 100,
+                        "meanReadLength": 248,
+                        "maxQuality": 60,
+                        "minQuality": 60,
+                        "meanQuality": 60,
+                        "readCount": 1250,
+                        "duplicateReadCount": 0
+                    }
+                ]
+            ],
+            [
+                [
+                    "sample1.sorted.vcf.gz",
+                    5
+                ],
+                [
+                    "sample2.sorted.vcf.gz",
+                    5
+                ],
+                [
+                    "sample1.vcf.gz",
+                    5
+                ],
+                [
+                    "sample2.vcf.gz",
+                    5
                 ]
             ]
         ],
@@ -137,6 +209,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-04T10:25:36.750003976"
+        "timestamp": "2025-12-09T15:52:45.052002982"
     }
 }

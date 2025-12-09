@@ -10,10 +10,10 @@ nextflow_pipeline {
             params {
                 outdir = "$outputDir"
                 input = "$projectDir/assets/samplesheet_repeat_id.csv"
-                fasta = "$projectDir/input/GCA_000001405.15_GRCh38_no_alt_analysis_subset_test.fa"
-                fasta_fai = "$projectDir/input/GCA_000001405.15_GRCh38_no_alt_analysis_subset_test.fa.fai"
-                barcodes = "$projectDir/input/m84036_240201_205955_s2.barcodes.fasta"
-                intervals = "$projectDir/input/PureTarget_repeat_expansion_panel_subset_test.bed"
+                fasta = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/GRCh38_no_alt_subset.fa"
+                fasta_fai = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/GRCh38_no_alt_subset.fa.fai"
+                barcodes = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/barcodes.fasta"
+                intervals = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/PureTarget_repeat_expansion_panel_subset.bed"
                 repeat_id = "C9ORF72"
             }
         }
@@ -25,6 +25,8 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // bam_files: All bam files
             def bam_files  = getAllFilesFromDir(params.outdir, include: ['**/*.bam'])
+            // vcf_files: All vcf files
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz'])
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
@@ -37,7 +39,9 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All bam files
-                    bam_files.collect{ file -> [ file.getName(), bam(file.toString(), stringency: "lenient").getReadsMD5() ] }
+                    bam_files.collect{ file -> [ file.getName(), bam(file.toString(), stringency: "lenient").getStatistics() ] },
+                    // All vcf files
+                    vcf_files.collect{ file -> [ file.getName(), path(file.toString()).vcf.variants.size() ] }
                 ).match() }
             )
         }

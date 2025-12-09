@@ -9,3 +9,7 @@ multiqc/multiqc_report.html
 multiqc/multiqc_plots/{pdf,png,svg}/*.{pdf,png,svg}
 pipeline_info/*.{html,json,txt,yml}
 trgt/*.png
+bcftools/*.{vcf.gz,vcf.gz.csi}
+pbmm2/*.bam
+samtools/*.{bam,bam.bai}
+trgt/*.{bam,vcf.gz}
