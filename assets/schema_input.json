@@ -31,7 +31,7 @@
                 "errorMessage": "Karyotype must be equal to XX or XY",
                 "meta": ["karyotype"],
                 "type": ["string"],
-                "enum": ["XX","XY"],
+                "enum": ["XX", "XY"],
                 "default": ""
             }
         },
