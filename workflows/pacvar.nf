@@ -142,13 +142,34 @@ workflow PACVAR {
         }
 
         if (!params.skip_cnv) {
-            // CNV calling with HiFiCNV (after DeepVariant)
-            // Prepare MAF input: use DeepVariant VCF if SNP calling was done, otherwise empty
+            // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
+            // Prepare MAF input based on skip_snp and skip_phase parameters
+    
+            if (!params.skip_snp && !params.skip_phase) {
+                // Use phased BAM, BAI, and VCF from HIPHASE_SNP
+                bam_bai_maf_ch = bam_bai_ch
+                    .join(HIPHASE_SNP.out.vcf)
+                    .map { meta, bam, bai, vcf -> 
+                        [meta, bam, bai, vcf] 
+                    }
+            } else if (!params.skip_snp && params.skip_phase) {
+                // Use unphased BAM, BAI, and VCF from SNP calling
+                bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi -> 
+                    [meta, bam, bai, vcf] 
+                    }
+            } else {
+                // Skip SNP calling - use original BAM and BAI with empty VCF
+                bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai -> 
+                    [meta, bam, bai, []] 
+                }
+            }
+            /*
             bam_bai_maf_ch = params.skip_snp ? 
                 bam_bai_ch.map { meta, bam, bai -> [meta, bam, bai, []] } :
                 bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi -> 
                     [meta, bam, bai, vcf] 
                 }
+            */
             
             // Prepare optional input channels  
             exclude_ch = params.cnv_exclude_regions ? 
