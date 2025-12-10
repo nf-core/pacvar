@@ -199,7 +199,7 @@
             "properties": {
                 "repeat_id": {
                     "type": "string",
-                    "description": "Id for repeat",
+                    "description": "Repeat ID(s) to be plotted (single ID, multiple comma-separated IDs, or empty for all IDs from interval BED file",
                     "fa_icon": "fas fa-bars"
                 },
                 "karyotype": {
