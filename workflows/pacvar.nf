@@ -144,7 +144,6 @@ workflow PACVAR {
         if (!params.skip_cnv) {
             // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
             // Prepare MAF input based on skip_snp and skip_phase parameters
-    
             if (!params.skip_snp && !params.skip_phase) {
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
                 bam_bai_maf_ch = bam_bai_ch
@@ -192,6 +191,19 @@ workflow PACVAR {
 
         if (!params.skip_sv) {
             //pbsv or sawfish structural variant calling
+            // Prepare MAF VCF input based on skip_snp and skip_phase parameters
+            if (!params.skip_snp && !params.skip_phase) {
+                // Use phased VCF from HIPHASE_SNP (already [meta, vcf])
+                maf_vcf_ch = HIPHASE_SNP.out.vcf
+            } else if (!params.skip_snp && params.skip_phase) {
+                // Use unphased VCF from SNP calling (extract just meta and vcf)
+                maf_vcf_ch = BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, tbi -> 
+                    [meta, vcf] 
+                }
+            } else {
+                // Skip SNP calling - empty VCF
+                maf_vcf_ch = channel.value([[:], []])
+            }
             exclude_ch = params.cnv_exclude_regions ? 
                 channel.value([[:], file(params.cnv_exclude_regions)]) : 
                 channel.value([[:], []])
@@ -199,9 +211,7 @@ workflow PACVAR {
             expected_cn_ch = params.cnv_expected_cn_file ? 
                 channel.value([[:], file(params.cnv_expected_cn_file)]) : 
                 channel.value([[:], []])
-
-            maf_vcf_ch = channel.value([[:], []]) //empty for no
-
+            
             BAM_SV_VARIANT_CALLING(ordered_bam_ch,
                 ordered_bai_ch,
                 fasta,
