@@ -137,7 +137,7 @@ workflow PACVAR {
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
                 ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
 
-                phased_snp_bam_bai_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
+                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
         }
 
@@ -162,14 +162,6 @@ workflow PACVAR {
                     [meta, bam, bai, []] 
                 }
             }
-            /*
-            bam_bai_maf_ch = params.skip_snp ? 
-                bam_bai_ch.map { meta, bam, bai -> [meta, bam, bai, []] } :
-                bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi -> 
-                    [meta, bam, bai, vcf] 
-                }
-            */
-            
             // Prepare optional input channels  
             exclude_ch = params.cnv_exclude_regions ? 
                 channel.value([[:], file(params.cnv_exclude_regions)]) : 
@@ -191,19 +183,25 @@ workflow PACVAR {
 
         if (!params.skip_sv) {
             //pbsv or sawfish structural variant calling
-            // Prepare MAF VCF input based on skip_snp and skip_phase parameters
-            if (!params.skip_snp && !params.skip_phase) {
-                // Use phased VCF from HIPHASE_SNP (already [meta, vcf])
-                maf_vcf_ch = HIPHASE_SNP.out.vcf
-            } else if (!params.skip_snp && params.skip_phase) {
-                // Use unphased VCF from SNP calling (extract just meta and vcf)
-                maf_vcf_ch = BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, tbi -> 
-                    [meta, vcf] 
+            // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
+            if (params.sv_caller == 'sawfish') {
+                if (!params.skip_snp && !params.skip_phase) {
+                    // Use phased VCF from HIPHASE_SNP (already [meta, vcf])
+                    maf_vcf_ch = HIPHASE_SNP.out.vcf
+                } else if (!params.skip_snp && params.skip_phase) {
+                    // Use unphased VCF from SNP calling (extract just meta and vcf)
+                    maf_vcf_ch = BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, tbi -> 
+                        [meta, vcf] 
+                    }
+                } else {
+                    // Skip SNP calling - empty VCF
+                    maf_vcf_ch = channel.value([[:], []])
                 }
             } else {
-                // Skip SNP calling - empty VCF
+                // PBSV doesn't use MAF VCF - always empty
                 maf_vcf_ch = channel.value([[:], []])
             }
+
             exclude_ch = params.cnv_exclude_regions ? 
                 channel.value([[:], file(params.cnv_exclude_regions)]) : 
                 channel.value([[:], []])
@@ -250,7 +248,7 @@ workflow PACVAR {
             // Determine which BAM to use based on phasing and SNV calling
             if (!params.skip_snp && !params.skip_phase) {
                 // Use phased BAM from HIPHASE_SNV
-                cpg_bam_bai_ch = phased_snp_bam_bai_ch
+                cpg_bam_bai_ch = bam_bai_snp_phased_ch
             } else {
                 // Use original sorted BAM
                 cpg_bam_bai_ch = bam_bai_ch
