@@ -14,7 +14,6 @@ workflow  REPEAT_CHARACTERIZATION{
     fasta
     fasta_fai
     bed
-    repeat_id
     karyotype
 
     main:
@@ -46,7 +45,7 @@ workflow  REPEAT_CHARACTERIZATION{
     bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
     //add repeat_id to channel
-    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, repeat_id] }
+    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, meta.repeat_id] }
 
     //plot the vcf file -- for a specified id
     TRGT_PLOT(bam_bai_vcf_tbi_repeat_ch,

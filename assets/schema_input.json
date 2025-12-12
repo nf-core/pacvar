@@ -26,6 +26,12 @@
                 "pattern": "^\\S+\\.(bai|crai|pbi)$",
                 "format": "file-path",
                 "exists": true
+            },
+            "repeat_id": {
+                "errorMessage": "Repeat ID to be plotted cannot contain spaces. Multiple IDs can be provided separated by semicolons ';'. If not provided, all repeats will be plotted.",
+                "meta": ["repeat_id"],
+                "type": ["string"],
+                "default": ""
             }
         },
         "required": ["sample", "bam"]

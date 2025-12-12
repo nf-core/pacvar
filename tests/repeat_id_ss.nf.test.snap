@@ -1,7 +1,7 @@
 {
-    "Params: multiple repeat_id": {
+    "Omit repeat_id as parameter, provide via samplesheet": {
         "content": [
-            19,
+            28,
             {
                 "BCFTOOLS_SORT": {
                     "bcftools": 1.2
@@ -37,6 +37,8 @@
                 "bcftools/sample1.sorted.vcf.gz.csi",
                 "bcftools/sample2.sorted.vcf.gz",
                 "bcftools/sample2.sorted.vcf.gz.csi",
+                "bcftools/sample3.sorted.vcf.gz",
+                "bcftools/sample3.sorted.vcf.gz.csi",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/multiqc.log",
@@ -48,6 +50,7 @@
                 "pbmm2",
                 "pbmm2/sample1.aligned.bam",
                 "pbmm2/sample2.aligned.bam",
+                "pbmm2/sample3.aligned.bam",
                 "pipeline_info",
                 "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
                 "samtools",
@@ -59,6 +62,10 @@
                 "samtools/sample2.sorted.bam.bai",
                 "samtools/sample2.trgt.sorted.bam",
                 "samtools/sample2.trgt.sorted.bam.bai",
+                "samtools/sample3.sorted.bam",
+                "samtools/sample3.sorted.bam.bai",
+                "samtools/sample3.trgt.sorted.bam",
+                "samtools/sample3.trgt.sorted.bam.bai",
                 "trgt",
                 "trgt/sample1.spanning.bam",
                 "trgt/sample1.vcf.gz",
@@ -68,14 +75,22 @@
                 "trgt/sample1_DMPK_motifs.png",
                 "trgt/sample1_FMR1_meth.png",
                 "trgt/sample1_FMR1_motifs.png",
+                "trgt/sample1_HTT_meth.png",
+                "trgt/sample1_HTT_motifs.png",
+                "trgt/sample1_PABPN1_meth.png",
+                "trgt/sample1_PABPN1_motifs.png",
                 "trgt/sample2.spanning.bam",
                 "trgt/sample2.vcf.gz",
                 "trgt/sample2_C9ORF72_meth.png",
                 "trgt/sample2_C9ORF72_motifs.png",
-                "trgt/sample2_DMPK_meth.png",
-                "trgt/sample2_DMPK_motifs.png",
-                "trgt/sample2_FMR1_meth.png",
-                "trgt/sample2_FMR1_motifs.png"
+                "trgt/sample3.spanning.bam",
+                "trgt/sample3.vcf.gz",
+                "trgt/sample3_C9ORF72_meth.png",
+                "trgt/sample3_C9ORF72_motifs.png",
+                "trgt/sample3_DMPK_meth.png",
+                "trgt/sample3_DMPK_motifs.png",
+                "trgt/sample3_FMR1_meth.png",
+                "trgt/sample3_FMR1_motifs.png"
             ],
             [
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
@@ -96,6 +111,19 @@
                 ],
                 [
                     "sample2.aligned.bam",
+                    {
+                        "maxReadLength": 47301,
+                        "minReadLength": 641,
+                        "meanReadLength": 5995,
+                        "maxQuality": 60,
+                        "minQuality": 1,
+                        "meanQuality": 48,
+                        "readCount": 3812,
+                        "duplicateReadCount": 0
+                    }
+                ],
+                [
+                    "sample3.aligned.bam",
                     {
                         "maxReadLength": 47301,
                         "minReadLength": 641,
@@ -160,6 +188,32 @@
                     }
                 ],
                 [
+                    "sample3.sorted.bam",
+                    {
+                        "maxReadLength": 47301,
+                        "minReadLength": 641,
+                        "meanReadLength": 5995,
+                        "maxQuality": 60,
+                        "minQuality": 1,
+                        "meanQuality": 48,
+                        "readCount": 3812,
+                        "duplicateReadCount": 0
+                    }
+                ],
+                [
+                    "sample3.trgt.sorted.bam",
+                    {
+                        "maxReadLength": 7643,
+                        "minReadLength": 100,
+                        "meanReadLength": 248,
+                        "maxQuality": 60,
+                        "minQuality": 60,
+                        "meanQuality": 60,
+                        "readCount": 1250,
+                        "duplicateReadCount": 0
+                    }
+                ],
+                [
                     "sample1.spanning.bam",
                     {
                         "maxReadLength": 7643,
@@ -184,6 +238,19 @@
                         "readCount": 1250,
                         "duplicateReadCount": 0
                     }
+                ],
+                [
+                    "sample3.spanning.bam",
+                    {
+                        "maxReadLength": 7643,
+                        "minReadLength": 100,
+                        "meanReadLength": 248,
+                        "maxQuality": 60,
+                        "minQuality": 60,
+                        "meanQuality": 60,
+                        "readCount": 1250,
+                        "duplicateReadCount": 0
+                    }
                 ]
             ],
             [
@@ -196,11 +263,19 @@
                     5
                 ],
                 [
+                    "sample3.sorted.vcf.gz",
+                    5
+                ],
+                [
                     "sample1.vcf.gz",
                     5
                 ],
                 [
                     "sample2.vcf.gz",
+                    5
+                ],
+                [
+                    "sample3.vcf.gz",
                     5
                 ]
             ]
@@ -209,6 +284,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-09T15:52:45.052002982"
+        "timestamp": "2025-12-12T10:23:19.472245589"
     }
 }

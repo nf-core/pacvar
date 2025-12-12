@@ -53,7 +53,6 @@ workflow PACVAR {
     dbsnp
     dbsnp_tbi
     intervals
-    repeat_id
     karyotype
 
     main:
@@ -171,7 +170,6 @@ workflow PACVAR {
             fasta,
             fasta_fai,
             intervals,
-            repeat_id,
             karyotype)
 
         ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
