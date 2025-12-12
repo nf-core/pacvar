@@ -83,7 +83,7 @@ workflow PIPELINE_INITIALISATION {
         .map {
             meta, bam, pbi ->
                 def repeat_id = meta.repeat_id ?: params.repeat_id ?: ""
-                def new_meta = meta + [ 'repeat_id': repeat_id ]         
+                def new_meta = meta + [ 'repeat_id': repeat_id ]
                 return [new_meta, bam]
         }
         .groupTuple()
