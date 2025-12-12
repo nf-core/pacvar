@@ -201,12 +201,6 @@
                     "type": "string",
                     "description": "If no sample-specific repeat ID to be plotted is provided in the samplesheet, this value will be used ",
                     "fa_icon": "fas fa-bars"
-                },
-                "karyotype": {
-                    "type": "string",
-                    "description": "Karyotype for repeat",
-                    "default": "XX",
-                    "fa_icon": "fas fa-align-justify"
                 }
             },
             "fa_icon": "fas fa-align-justify"

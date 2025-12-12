@@ -38,7 +38,6 @@ workflow NFCORE_PACVAR {
     dbsnp       // channel: [mandatory] dbsnp
     dbsnp_tbi   // channel: [mandatory] dbsnp_tbi
     intervals   // channel: [mandatory] intervals
-    karyotype   // channel: [mandatory] karyotype
 
     main:
     //
@@ -51,8 +50,7 @@ workflow NFCORE_PACVAR {
         dict,
         dbsnp,
         dbsnp_tbi,
-        intervals,
-        karyotype
+        intervals
     )
 
 
@@ -75,9 +73,7 @@ workflow {
     dict                = params.dict ? Channel.fromPath(params.dict).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.empty()
     dbsnp               = params.dbsnp ? Channel.fromPath(params.dbsnp).collect() : Channel.value([])
     dbsnp_tbi           = params.dbsnp_tbi ? Channel.fromPath(params.dbsnp_tbi).collect() : Channel.value([])
-
     intervals           = params.intervals ? Channel.fromPath(params.intervals).map{ it -> [ [id:it.baseName], it ] }.collect() : Channel.value([[],[]])
-    karyotype           = params.karyotype ? Channel.fromPath(params.karyotype).map{ it -> [ [id:it.baseName], it.baseName ] }.collect() : Channel.value([])
 
     //
     // SUBWORKFLOW: Run initialisation tasks
@@ -101,8 +97,7 @@ workflow {
         dict,
         dbsnp,
         dbsnp_tbi,
-        intervals,
-        karyotype
+        intervals
     )
     //
     // SUBWORKFLOW: Run completion tasks

@@ -53,7 +53,6 @@ workflow PACVAR {
     dbsnp
     dbsnp_tbi
     intervals
-    karyotype
 
     main:
     ch_versions = Channel.empty()
@@ -169,8 +168,7 @@ workflow PACVAR {
             ordered_bai_ch,
             fasta,
             fasta_fai,
-            intervals,
-            karyotype)
+            intervals)
 
         ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
     }
