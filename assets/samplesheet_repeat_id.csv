@@ -1,4 +1,4 @@
 sample,bam,pbi,repeat_id
-sample1,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam
+sample1,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam,,C9ORF72;DMPK;FMR1
 sample2,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam,,C9ORF72
-sample3,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam,,C9ORF72;DMPK;FMR1
+sample3,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam

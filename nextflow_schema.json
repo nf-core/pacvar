@@ -197,6 +197,11 @@
             "description": "Options for repeat specification",
             "help_text": "These options are important for the repeat-characterization step of the workflow",
             "properties": {
+                "repeat_id": {
+                    "type": "string",
+                    "description": "If no sample-specific repeat ID to be plotted is provided in the samplesheet, this value will be used ",
+                    "fa_icon": "fas fa-bars"
+                },
                 "karyotype": {
                     "type": "string",
                     "description": "Karyotype for repeat",

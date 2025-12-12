@@ -82,7 +82,9 @@ workflow PIPELINE_INITIALISATION {
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
         .map {
             meta, bam, pbi ->
-                return [meta, bam]
+                def repeat_id = meta.repeat_id ?: params.repeat_id ?: ""
+                def new_meta = meta + [ 'repeat_id': repeat_id ]         
+                return [new_meta, bam]
         }
         .groupTuple()
         .set { ch_samplesheet }

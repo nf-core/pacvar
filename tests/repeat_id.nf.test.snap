@@ -1,5 +1,5 @@
 {
-    "Omit repeat_id as parameter, provide via samplesheet": {
+    "Provide sample-specific repeat_id via samplesheet, if no value is provided use params.repeat_id": {
         "content": [
             28,
             {
@@ -75,22 +75,14 @@
                 "trgt/sample1_DMPK_motifs.png",
                 "trgt/sample1_FMR1_meth.png",
                 "trgt/sample1_FMR1_motifs.png",
-                "trgt/sample1_HTT_meth.png",
-                "trgt/sample1_HTT_motifs.png",
-                "trgt/sample1_PABPN1_meth.png",
-                "trgt/sample1_PABPN1_motifs.png",
                 "trgt/sample2.spanning.bam",
                 "trgt/sample2.vcf.gz",
                 "trgt/sample2_C9ORF72_meth.png",
                 "trgt/sample2_C9ORF72_motifs.png",
                 "trgt/sample3.spanning.bam",
                 "trgt/sample3.vcf.gz",
-                "trgt/sample3_C9ORF72_meth.png",
-                "trgt/sample3_C9ORF72_motifs.png",
                 "trgt/sample3_DMPK_meth.png",
-                "trgt/sample3_DMPK_motifs.png",
-                "trgt/sample3_FMR1_meth.png",
-                "trgt/sample3_FMR1_motifs.png"
+                "trgt/sample3_DMPK_motifs.png"
             ],
             [
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
@@ -284,6 +276,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-12T10:23:19.472245589"
+        "timestamp": "2025-12-12T14:52:16.095697396"
     }
 }

@@ -5,7 +5,7 @@ nextflow_pipeline {
     config "./nextflow.config"
     tag "cpu"
 
-    test("Provide repeat_id via samplesheet, instead of as parameter") {
+    test("Provide sample-specific repeat_id via samplesheet, if no value is provided use params.repeat_id") {
         when {
             params {
                 outdir = "$outputDir"
@@ -14,6 +14,7 @@ nextflow_pipeline {
                 fasta_fai = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/GRCh38_no_alt_subset.fa.fai"
                 barcodes = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/barcodes.fasta"
                 intervals = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/PureTarget_repeat_expansion_panel_subset.bed"
+                repeat_id = "DMPK"  // example repeat_id to be used if not provided in samplesheet
             }
         }
 
