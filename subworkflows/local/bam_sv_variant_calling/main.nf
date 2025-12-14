@@ -8,13 +8,13 @@ include { TABIX_BGZIP       } from '../../../modules/nf-core/tabix/bgzip/main'
 
 workflow BAM_SV_VARIANT_CALLING {
     take:
-    sorted_bam
-    sorted_bai
-    fasta
-    fasta_fai
-    expected_cn_bed         // tuple val(meta4), path(bed) - for SAWFISH
-    maf_vcf                 // tuple val(meta5), path(vcf) - for SAWFISH (optional)
-    cnv_exclude_regions_bed // tuple val(meta6), path(bed) - for SAWFISH (optional)
+    sorted_bam              // tuple val(meta), path(bam)
+    sorted_bai              // tuple val(meta), path(bai)
+    fasta                   // tuple val(meta), path(ref)
+    fasta_fai               // tuple val(meta), path(fai) - probably don't need it!
+    expected_cn_bed         // tuple val(meta), path(bed) - for SAWFISH
+    maf_vcf                 // tuple val(meta), path(vcf) - for SAWFISH (optional)
+    cnv_exclude_regions_bed // tuple val(meta), path(bed) - for SAWFISH (optional)
 
 
     main:

@@ -59,6 +59,15 @@ workflow PACVAR {
     main:
     ch_versions = Channel.empty()
 
+    // Prepare optional input channels  
+    exclude_ch = params.cnv_exclude_regions ? 
+        channel.value([[:], file(params.cnv_exclude_regions)]) : 
+        channel.value([[:], []])
+    
+    expected_cn_ch = params.cnv_expected_cn_file ? 
+        channel.value([[:], file(params.cnv_expected_cn_file)]) : 
+        channel.value([[:], []])
+
     // demultiplex
     if (!params.skip_demultiplexing) {
         barcode_ch = Channel.value(file(params.barcodes))
@@ -162,15 +171,7 @@ workflow PACVAR {
                     [meta, bam, bai, []] 
                 }
             }
-            // Prepare optional input channels  
-            exclude_ch = params.cnv_exclude_regions ? 
-                channel.value([[:], file(params.cnv_exclude_regions)]) : 
-                channel.value([[:], []])
-    
-            expected_cn_ch = params.cnv_expected_cn_file ? 
-                channel.value([[:], file(params.cnv_expected_cn_file)]) : 
-                channel.value([[:], []])
-        
+            
             // Run HiFiCNV
             BAM_CNV_VARIANT_CALLING(
                 bam_bai_maf_ch,
@@ -202,14 +203,6 @@ workflow PACVAR {
                 maf_vcf_ch = channel.value([[:], []])
             }
 
-            exclude_ch = params.cnv_exclude_regions ? 
-                channel.value([[:], file(params.cnv_exclude_regions)]) : 
-                channel.value([[:], []])
-    
-            expected_cn_ch = params.cnv_expected_cn_file ? 
-                channel.value([[:], file(params.cnv_expected_cn_file)]) : 
-                channel.value([[:], []])
-            
             BAM_SV_VARIANT_CALLING(ordered_bam_ch,
                 ordered_bai_ch,
                 fasta,
