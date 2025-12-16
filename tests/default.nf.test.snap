@@ -55,19 +55,11 @@
                 "trgt",
                 "trgt/sample1.spanning.bam",
                 "trgt/sample1.vcf.gz",
-                "trgt/sample1_C9ORF72.png"
+                "trgt/sample1_C9ORF72_meth.png",
+                "trgt/sample1_C9ORF72_motifs.png"
             ],
             [
-                "sample1.sorted.vcf.gz:md5,102564333300798a76aa07459f556674",
-                "sample1.sorted.vcf.gz.csi:md5,dc33c54371ea46a0f8eb0729d9f308ac",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "sample1.aligned.bam:md5,de474ce5643dca426e6188c993dc0770",
-                "sample1.sorted.bam:md5,521a5953352482218b671ef5ede8b33f",
-                "sample1.sorted.bam.bai:md5,3806978185623ab2e73836223be76b62",
-                "sample1.trgt.sorted.bam:md5,bd48523bf9cc279504a910123fd11f03",
-                "sample1.trgt.sorted.bam.bai:md5,65c74ba1d6d68044bc65070ef770724e",
-                "sample1.spanning.bam:md5,7571eaa392afc593bff8c44c3ad28ae8",
-                "sample1.vcf.gz:md5,102564333300798a76aa07459f556674"
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
                 [
@@ -92,6 +84,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-04T10:35:35.211568617"
+        "timestamp": "2025-12-12T15:59:36.304967708"
     }
 }

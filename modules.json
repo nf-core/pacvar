@@ -113,7 +113,8 @@
                     "trgt/plot": {
                         "branch": "master",
                         "git_sha": "c3fe6e90faa4c02f6ce451e7418a87b883ff4ea1",
-                        "installed_by": ["modules"]
+                        "installed_by": ["modules"],
+                        "patch": "modules/nf-core/trgt/plot/trgt-plot.diff"
                     }
                 }
             },

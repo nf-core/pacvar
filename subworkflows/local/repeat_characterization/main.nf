@@ -14,7 +14,6 @@ workflow  REPEAT_CHARACTERIZATION{
     fasta
     fasta_fai
     bed
-    repeat_id
 
     main:
     ch_versions = Channel.empty()
@@ -38,16 +37,14 @@ workflow  REPEAT_CHARACTERIZATION{
     //sort the resulting vcf
     BCFTOOLS_SORT(TRGT_GENOTYPE.out.vcf)
 
-    //Index the VCF file
+    //index the VCF file
     BCFTOOLS_INDEX(BCFTOOLS_SORT.out.vcf)
 
     bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai)
     bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
-    //add the repeat id to the channel
-    repeat_values = repeat_id.map { tuple -> tuple[1] }
-
-    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.combine(repeat_values)
+    //add repeat_id to channel
+    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, meta.repeat_id] }
 
     //plot the vcf file -- for a specified id
     TRGT_PLOT(bam_bai_vcf_tbi_repeat_ch,

@@ -53,7 +53,6 @@ workflow PACVAR {
     dbsnp
     dbsnp_tbi
     intervals
-    repeat_id
 
     main:
     ch_versions = Channel.empty()
@@ -164,15 +163,12 @@ workflow PACVAR {
     }
 
     if (params.workflow == 'repeat') {
-        id_ch = Channel.fromPath(params.repeat_id).map { file ->[file.baseName, file] }
-
         // characterize repeats
         REPEAT_CHARACTERIZATION(ordered_bam_ch,
             ordered_bai_ch,
             fasta,
             fasta_fai,
-            intervals,
-            repeat_id)
+            intervals)
 
         ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
     }
