@@ -20,6 +20,8 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // bam_files: All bam files
             def bam_files  = getAllFilesFromDir(params.outdir, include: ['**/*.bam'])
+            // vcf_files: All vcf files
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz'])
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
@@ -32,7 +34,9 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All bam files
-                    bam_files.collect{ file -> [ file.getName(), bam(file.toString(), stringency: "lenient").getReadsMD5() ] }
+                    bam_files.collect{ file -> [ file.getName(), bam(file.toString(), stringency: "lenient").getStatistics() ] },
+                    // All vcf files
+                    vcf_files.collect{ file -> [ file.getName(), path(file.toString()).vcf.variants.size() ] }
                 ).match() }
             )
         }
