@@ -128,7 +128,7 @@ workflow PACVAR {
             .set { samtools_input_ch }
     }
 
-    ///
+    /*
     ch_samplesheet.view { it -> "ch_samplesheet: ${it}"}
     pbmm2_input_ch.view { it -> "pbmm2_input_ch: ${it}"}
     pbmm2_input_filter_ch.view { it -> "pbmm2_input_filter_ch: ${it}"}
@@ -137,7 +137,7 @@ workflow PACVAR {
     ch_no_merge.view { it -> "ch_no_merge: ${it}"}
     ch_merged.view { it -> "ch_merged: ${it}"}
     samtools_input_ch.view { it -> "samtools_input_ch: ${it}"}
-    ///
+    */
 
     SAMTOOLS_SORT(samtools_input_ch, fasta)
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)

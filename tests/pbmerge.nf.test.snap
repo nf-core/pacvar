@@ -1,13 +1,16 @@
 {
-    "Params: karyotype in samplesheet": {
+    "Provide fail bam via samplesheet (optional) and merge in case of repeat workflow": {
         "content": [
-            19,
+            21,
             {
                 "BCFTOOLS_SORT": {
                     "bcftools": 1.2
                 },
                 "PBMM2_ALIGN": {
                     "pbmm2": "1.14.99"
+                },
+                "PBTK_PBMERGE": {
+                    "pbbam": "3.1.1"
                 },
                 "SAMTOOLS_INDEX": {
                     "samtools": 1.21
@@ -46,8 +49,12 @@
                 "multiqc/multiqc_data/multiqc_sources.txt",
                 "multiqc/multiqc_report.html",
                 "pbmm2",
+                "pbmm2/sample1_fail.aligned.bam",
                 "pbmm2/sample1_hifi.aligned.bam",
                 "pbmm2/sample2_hifi.aligned.bam",
+                "pbtk",
+                "pbtk/sample1.merged.bam",
+                "pbtk/sample1.merged.bam.pbi",
                 "pipeline_info",
                 "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
                 "samtools",
@@ -70,54 +77,82 @@
                 "trgt/sample2_C9ORF72_motifs.png"
             ],
             [
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "sample1.merged.bam:md5,f0910a77d4d29ccdbe9d887307f9a2c3",
+                "sample1.merged.bam.pbi:md5,9e287caa87aeae9e5225d126e3bcd632"
             ],
             [
                 [
+                    "sample1_fail.aligned.bam",
+                    {
+                        "maxReadLength": 6054,
+                        "minReadLength": 3386,
+                        "meanReadLength": 3979,
+                        "maxQuality": 60,
+                        "minQuality": 16,
+                        "meanQuality": 58,
+                        "readCount": 24,
+                        "duplicateReadCount": 0
+                    }
+                ],
+                [
                     "sample1_hifi.aligned.bam",
                     {
-                        "maxReadLength": 29253,
-                        "minReadLength": 2862,
-                        "meanReadLength": 4161,
+                        "maxReadLength": 31694,
+                        "minReadLength": 2617,
+                        "meanReadLength": 3758,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 564,
+                        "readCount": 346,
                         "duplicateReadCount": 0
                     }
                 ],
                 [
                     "sample2_hifi.aligned.bam",
                     {
-                        "maxReadLength": 29253,
-                        "minReadLength": 2862,
-                        "meanReadLength": 4161,
+                        "maxReadLength": 9651,
+                        "minReadLength": 3190,
+                        "meanReadLength": 3694,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 564,
+                        "readCount": 348,
+                        "duplicateReadCount": 0
+                    }
+                ],
+                [
+                    "sample1.merged.bam",
+                    {
+                        "maxReadLength": 31694,
+                        "minReadLength": 2617,
+                        "meanReadLength": 3772,
+                        "maxQuality": 60,
+                        "minQuality": 16,
+                        "meanQuality": 59,
+                        "readCount": 370,
                         "duplicateReadCount": 0
                     }
                 ],
                 [
                     "sample1.sorted.bam",
                     {
-                        "maxReadLength": 29253,
-                        "minReadLength": 2862,
-                        "meanReadLength": 4161,
+                        "maxReadLength": 31694,
+                        "minReadLength": 2617,
+                        "meanReadLength": 3772,
                         "maxQuality": 60,
-                        "minQuality": 60,
-                        "meanQuality": 60,
-                        "readCount": 564,
+                        "minQuality": 16,
+                        "meanQuality": 59,
+                        "readCount": 370,
                         "duplicateReadCount": 0
                     }
                 ],
                 [
                     "sample1.trgt.sorted.bam",
                     {
-                        "maxReadLength": 7642,
-                        "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "maxReadLength": 111,
+                        "minReadLength": 110,
+                        "meanReadLength": 110,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -128,22 +163,22 @@
                 [
                     "sample2.sorted.bam",
                     {
-                        "maxReadLength": 29253,
-                        "minReadLength": 2862,
-                        "meanReadLength": 4161,
+                        "maxReadLength": 9651,
+                        "minReadLength": 3190,
+                        "meanReadLength": 3694,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 564,
+                        "readCount": 348,
                         "duplicateReadCount": 0
                     }
                 ],
                 [
                     "sample2.trgt.sorted.bam",
                     {
-                        "maxReadLength": 7642,
-                        "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "maxReadLength": 112,
+                        "minReadLength": 110,
+                        "meanReadLength": 111,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -154,9 +189,9 @@
                 [
                     "sample1.spanning.bam",
                     {
-                        "maxReadLength": 7642,
-                        "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "maxReadLength": 111,
+                        "minReadLength": 110,
+                        "meanReadLength": 110,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -167,9 +202,9 @@
                 [
                     "sample2.spanning.bam",
                     {
-                        "maxReadLength": 7642,
-                        "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "maxReadLength": 112,
+                        "minReadLength": 110,
+                        "meanReadLength": 111,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -201,6 +236,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-17T16:55:04.021321115"
+        "timestamp": "2025-12-17T16:44:24.525049735"
     }
 }

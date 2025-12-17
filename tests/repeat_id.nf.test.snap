@@ -48,9 +48,9 @@
                 "multiqc/multiqc_data/multiqc_sources.txt",
                 "multiqc/multiqc_report.html",
                 "pbmm2",
-                "pbmm2/sample1.aligned.bam",
-                "pbmm2/sample2.aligned.bam",
-                "pbmm2/sample3.aligned.bam",
+                "pbmm2/sample1_hifi.aligned.bam",
+                "pbmm2/sample2_hifi.aligned.bam",
+                "pbmm2/sample3_hifi.aligned.bam",
                 "pipeline_info",
                 "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
                 "samtools",
@@ -89,7 +89,7 @@
             ],
             [
                 [
-                    "sample1.aligned.bam",
+                    "sample1_hifi.aligned.bam",
                     {
                         "maxReadLength": 47301,
                         "minReadLength": 641,
@@ -102,7 +102,7 @@
                     }
                 ],
                 [
-                    "sample2.aligned.bam",
+                    "sample2_hifi.aligned.bam",
                     {
                         "maxReadLength": 47301,
                         "minReadLength": 641,
@@ -115,7 +115,7 @@
                     }
                 ],
                 [
-                    "sample3.aligned.bam",
+                    "sample3_hifi.aligned.bam",
                     {
                         "maxReadLength": 47301,
                         "minReadLength": 641,
@@ -276,6 +276,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-12T14:52:16.095697396"
+        "timestamp": "2025-12-17T16:50:30.238159115"
     }
 }
