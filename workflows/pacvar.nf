@@ -28,6 +28,7 @@ include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subwo
 */
 
 include { LIMA                                                  } from '../modules/nf-core/lima/main'
+include { PBTK_PBMERGE                                          } from '../modules/nf-core/pbtk/pbmerge/main'
 include { DEEPVARIANT_RUNDEEPVARIANT                            } from '../modules/nf-core/deepvariant/rundeepvariant/main'
 include { SAMTOOLS_INDEX                                        } from '../modules/nf-core/samtools/index/main'
 include { SAMTOOLS_SORT                                         } from '../modules/nf-core/samtools/sort/main'
@@ -57,26 +58,23 @@ workflow PACVAR {
     main:
     ch_versions = Channel.empty()
 
-    // demultiplex
+    // demultiplexing
     if (!params.skip_demultiplexing) {
-        barcode_ch = Channel.value(file(params.barcodes))
-        LIMA(ch_samplesheet, barcode_ch)
+        ch_barcode = Channel.value(file(params.barcodes))
+        LIMA(ch_samplesheet, ch_barcode)
         ch_versions = ch_versions.mix(LIMA.out.versions)
 
-        lima_ch = LIMA.out.bam
-            .flatMap{ metadata, sampleBams ->
-            //seperate samples
-                sampleBams.collect { bam ->
-                    [metadata, bam]
+        ch_lima = LIMA.out.bam
+            .flatMap{ meta, sampleBams ->
+                //seperate samples
+                sampleBams.collect { bam -> [meta, bam] }
             }
-            }
-            .map{tuple ->
-                def bam = tuple[1]
+            .map{ meta, bam ->
                 //change metadata to reflect demultiplexed barcode
                 [[id: bam.baseName], bam]
             }
 
-            pbmm2_input_ch = lima_ch
+            pbmm2_input_ch = ch_lima
     }
 
     // align input directly (skipping demultiplexing phase)
