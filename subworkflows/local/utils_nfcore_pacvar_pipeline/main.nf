@@ -74,9 +74,6 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    // Create channel from input file provided through params.input
-
-    //return a bed as well
 
     Channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
@@ -88,8 +85,8 @@ workflow PIPELINE_INITIALISATION {
         }
         .flatMap { meta, bam, fail ->
             def items = []
-            if (bam) items << [meta, bam]
-            if (fail) items << [meta, fail]
+            if (bam) items << [meta + [type: 'hifi'], bam]
+            if (fail) items << [meta + [type: 'fail'], fail]
             return items
         }
         .set { ch_samplesheet }
