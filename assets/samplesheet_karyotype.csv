@@ -1,3 +1,3 @@
 sample,bam,pbi,karyotype
-sample1,https://downloads.pacbcloud.com/public/dataset/PureTargetRE/Revio48/0-run_directory/1_A01/hifi_reads/m84036_240201_205955_s2.hifi_reads.bc2001.bam,,XX
-sample2,https://downloads.pacbcloud.com/public/dataset/PureTargetRE/Revio48/0-run_directory/1_A01/hifi_reads/m84036_240201_205955_s2.hifi_reads.bc2002.bam,,XY
+sample1,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam,,XX
+sample2,https://github.com/nf-core/test-datasets/raw/refs/heads/pacvar/pacbio_data/1_D01/hifi_reads/m84127_240712_175808_s4.hifi_reads.bam,,XY
