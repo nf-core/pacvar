@@ -3,6 +3,7 @@ include { PBSV_DISCOVER     } from '../../../modules/nf-core/pbsv/discover/main'
 include { PBSV_CALL         } from '../../../modules/nf-core/pbsv/call/main'
 include { SAWFISH_DISCOVER  } from '../../../modules/nf-core/sawfish/discover/main'
 include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
+include { BCFTOOLS_VIEW     } from '../../../modules/nf-core/bcftools/view/main'
 include { TABIX_BGZIP       } from '../../../modules/nf-core/tabix/bgzip/main'
 
 
@@ -51,10 +52,16 @@ workflow BAM_SV_VARIANT_CALLING {
         )
 
         // SAWFISH outputs BCF with .csi index already - just join them
-        vcf_ch = SAWFISH_DISCOVER.out.candidate_sv_bcf
+        // convert to vcf.gz and csi 
+        bcf_csi_sawfish_ch = SAWFISH_DISCOVER.out.candidate_sv_bcf
             .join(SAWFISH_DISCOVER.out.candidate_sv_bcf_csi)
+        BCFTOOLS_VIEW(bcf_csi_sawfish_ch, [], [], [])
+
+        // Join compressed VCF with its index
+        vcf_ch = BCFTOOLS_VIEW.out.vcf.join(BCFTOOLS_VIEW.out.csi)  
 
         ch_versions = ch_versions.mix(SAWFISH_DISCOVER.out.versions)
+        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
     }
 
     emit:
@@ -62,4 +69,3 @@ workflow BAM_SV_VARIANT_CALLING {
     versions       = ch_versions
 
 }
-

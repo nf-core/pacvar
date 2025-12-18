@@ -136,7 +136,7 @@ workflow PACVAR {
             }
 
             if (!params.skip_phase) {
-                //phase snp files
+                // phase snp files
                 HIPHASE_SNP(orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_snp.bam_bai,
                     fasta)
@@ -146,13 +146,15 @@ workflow PACVAR {
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
                 ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
 
+                // channel for pbcpgtools_alignedbamtocpgscores 
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
         }
 
         if (!params.skip_cnv) {
             // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
-            // Prepare MAF input based on skip_snp and skip_phase parameters
+            // Prepare channel and MAF input based on skip_snp and skip_phase parameters
+            // bam_bam_maf_ch to be channel: tuple val(meta), path(bam), path(bai), path(vcf)
             if (!params.skip_snp && !params.skip_phase) {
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
                 bam_bai_maf_ch = bam_bai_ch
@@ -185,6 +187,7 @@ workflow PACVAR {
         if (!params.skip_sv) {
             //pbsv or sawfish structural variant calling
             // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
+            // maf_vcf_ch to be channel: tuple val(meta), path(vcf)
             if (params.sv_caller == 'sawfish') {
                 if (!params.skip_snp && !params.skip_phase) {
                     // Use phased VCF from HIPHASE_SNP (already [meta, vcf])
@@ -213,7 +216,7 @@ workflow PACVAR {
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
 
-            //join the bam and bai and vcf based off the meta id (ensure correct order)
+            // join the bam and bai and vcf based off the meta id (ensure correct order)
             bam_bai_vcf_sv_ch = bam_bai_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
 
             orderd_bam_bai_vcf_tbi_sv = bam_bai_vcf_sv_ch
