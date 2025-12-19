@@ -78,8 +78,8 @@
             ],
             [
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "sample1.merged.bam:md5,f0910a77d4d29ccdbe9d887307f9a2c3",
-                "sample1.merged.bam.pbi:md5,9e287caa87aeae9e5225d126e3bcd632"
+                "sample1.merged.bam:md5,0d99dce9f71fbd4dc1e1b8002d21266e",
+                "sample1.merged.bam.pbi:md5,35eefe5de049ea43cf7a801aebe0305a"
             ],
             [
                 [
@@ -100,24 +100,24 @@
                     {
                         "maxReadLength": 31694,
                         "minReadLength": 2617,
-                        "meanReadLength": 3758,
+                        "meanReadLength": 3971,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 346,
+                        "readCount": 92,
                         "duplicateReadCount": 0
                     }
                 ],
                 [
                     "sample2_hifi.aligned.bam",
                     {
-                        "maxReadLength": 9651,
-                        "minReadLength": 3190,
-                        "meanReadLength": 3694,
+                        "maxReadLength": 3685,
+                        "minReadLength": 3610,
+                        "meanReadLength": 3677,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 348,
+                        "readCount": 92,
                         "duplicateReadCount": 0
                     }
                 ],
@@ -126,11 +126,11 @@
                     {
                         "maxReadLength": 31694,
                         "minReadLength": 2617,
-                        "meanReadLength": 3772,
+                        "meanReadLength": 3973,
                         "maxQuality": 60,
                         "minQuality": 16,
                         "meanQuality": 59,
-                        "readCount": 370,
+                        "readCount": 116,
                         "duplicateReadCount": 0
                     }
                 ],
@@ -139,11 +139,11 @@
                     {
                         "maxReadLength": 31694,
                         "minReadLength": 2617,
-                        "meanReadLength": 3772,
+                        "meanReadLength": 3973,
                         "maxQuality": 60,
                         "minQuality": 16,
                         "meanQuality": 59,
-                        "readCount": 370,
+                        "readCount": 116,
                         "duplicateReadCount": 0
                     }
                 ],
@@ -156,20 +156,20 @@
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 250,
+                        "readCount": 95,
                         "duplicateReadCount": 0
                     }
                 ],
                 [
                     "sample2.sorted.bam",
                     {
-                        "maxReadLength": 9651,
-                        "minReadLength": 3190,
-                        "meanReadLength": 3694,
+                        "maxReadLength": 3685,
+                        "minReadLength": 3610,
+                        "meanReadLength": 3677,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 348,
+                        "readCount": 92,
                         "duplicateReadCount": 0
                     }
                 ],
@@ -177,12 +177,12 @@
                     "sample2.trgt.sorted.bam",
                     {
                         "maxReadLength": 112,
-                        "minReadLength": 110,
+                        "minReadLength": 111,
                         "meanReadLength": 111,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 250,
+                        "readCount": 92,
                         "duplicateReadCount": 0
                     }
                 ],
@@ -195,7 +195,7 @@
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 250,
+                        "readCount": 95,
                         "duplicateReadCount": 0
                     }
                 ],
@@ -203,12 +203,12 @@
                     "sample2.spanning.bam",
                     {
                         "maxReadLength": 112,
-                        "minReadLength": 110,
+                        "minReadLength": 111,
                         "meanReadLength": 111,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
-                        "readCount": 250,
+                        "readCount": 92,
                         "duplicateReadCount": 0
                     }
                 ]
@@ -236,6 +236,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.04.6"
         },
-        "timestamp": "2025-12-17T16:44:24.525049735"
+        "timestamp": "2025-12-19T10:54:18.538896232"
     }
 }
