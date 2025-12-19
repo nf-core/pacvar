@@ -57,7 +57,7 @@ workflow PACVAR {
     intervals
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     // Prepare optional input channels  
     exclude_ch = params.cnv_exclude_regions ? 

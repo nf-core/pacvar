@@ -2,8 +2,8 @@
 include { PBSV_DISCOVER     } from '../../../modules/nf-core/pbsv/discover/main'
 include { PBSV_CALL         } from '../../../modules/nf-core/pbsv/call/main'
 include { SAWFISH_DISCOVER  } from '../../../modules/nf-core/sawfish/discover/main'
+include { SAWFISH_JOINTCALL  } from '../../../modules/nf-core/sawfish/jointcall/main'
 include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
-include { BCFTOOLS_VIEW     } from '../../../modules/nf-core/bcftools/view/main'
 include { TABIX_BGZIP       } from '../../../modules/nf-core/tabix/bgzip/main'
 
 
@@ -50,22 +50,23 @@ workflow BAM_SV_VARIANT_CALLING {
             maf_vcf,
             cnv_exclude_regions_bed
         )
+        // Call and genotype SVs
 
-        // SAWFISH outputs BCF with .csi index already - just join them
-        // convert to vcf.gz and csi 
-        bcf_csi_sawfish_ch = SAWFISH_DISCOVER.out.candidate_sv_bcf
-            .join(SAWFISH_DISCOVER.out.candidate_sv_bcf_csi)
-        BCFTOOLS_VIEW(bcf_csi_sawfish_ch, [], [], [])
+        SAWFISH_JOINTCALL(
+            SAWFISH_DISCOVER.out.discover_dir,
+            fasta,
+            sorted_bam_bai, // might not need this!
+            [[:], []]
+        )
 
-        // Join compressed VCF with its index
-        vcf_ch = BCFTOOLS_VIEW.out.vcf.join(BCFTOOLS_VIEW.out.csi)  
+        // VCF output with TBI index
+        vcf_ch = SAWFISH_JOINTCALL.out.vcf.join(SAWFISH_JOINTCALL.out.tbi)
 
         ch_versions = ch_versions.mix(SAWFISH_DISCOVER.out.versions)
-        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
+        ch_versions = ch_versions.mix(SAWFISH_JOINTCALL.out.versions)
     }
 
     emit:
     vcf_ch
     versions       = ch_versions
-
 }
