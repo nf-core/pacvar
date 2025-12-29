@@ -56,7 +56,7 @@ workflow BAM_SV_VARIANT_CALLING {
             SAWFISH_DISCOVER.out.discover_dir,
             fasta,
             sorted_bam_bai, // might not need this!
-            [[:], []]
+            [[:], []] 
         )
 
         // VCF output with TBI index

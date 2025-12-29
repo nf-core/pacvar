@@ -200,6 +200,33 @@
                     "type": "boolean",
                     "description": "Option to skip phasing",
                     "fa_icon": "fas fa-forward"
+                },
+                "expected_cn": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "BED/BED.GZ file specifying expected copy-number regions (for sawfish/hificnv).",
+                    "pattern": "^.*\\.bed(\\.gz)?$"
+                  },
+                "cnv_excluded_regions": {
+                    "type": "string",
+                    "format": "file-path",
+                    "description": "BED/BED.GZ file of regions to exclude from CNV calling.",
+                    "pattern": "^.*\\.bed(\\.gz)?$"
+                }
+            }
+        },
+        "methylation_profiling": {
+            "title": "Methylation profiling options",
+            "type": "object",
+            "fa_icon": "fas fa-dna",
+            "description": "Options for summarizing CpG site probabilities for 5mC methylation.",
+            "help_text": "These options control 5mC methylation probability calling from PacBio long-read sequencing data.",
+            "properties": {
+                "skip_cpg": {
+                    "type": "boolean",
+                    "description": "Skip CpG site probability for 5mC methylation calling",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the pipeline will skip CpG site 5mC methylation probability scoring steps."
                 }
             }
         },
@@ -386,16 +413,5 @@
         {
             "$ref": "#/$defs/repeat"
         }
-    ],
-    "properties": {
-        "skip_cpg": {
-            "type": "boolean"
-        },
-        "cnv_exclude_regions": {
-            "type": "string"
-        },
-        "cnv_expected_cn_file": {
-            "type": "string"
-        }        
-    }
+    ]
 }

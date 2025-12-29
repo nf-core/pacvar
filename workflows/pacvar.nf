@@ -55,22 +55,15 @@ workflow PACVAR {
     dbsnp
     dbsnp_tbi
     intervals
+    expected_cn
+    cnv_excluded_regions
 
     main:
     ch_versions = channel.empty()
 
-    // Prepare optional input channels  
-    exclude_ch = params.cnv_exclude_regions ? 
-        channel.value([[:], file(params.cnv_exclude_regions)]) : 
-        channel.value([[:], []])
-    
-    expected_cn_ch = params.cnv_expected_cn_file ? 
-        channel.value([[:], file(params.cnv_expected_cn_file)]) : 
-        channel.value([[:], []])
-
     // demultiplex
     if (!params.skip_demultiplexing) {
-        barcode_ch = Channel.value(file(params.barcodes))
+        barcode_ch = channel.value(file(params.barcodes))
         LIMA(ch_samplesheet, barcode_ch)
         ch_versions = ch_versions.mix(LIMA.out.versions)
 
@@ -156,6 +149,7 @@ workflow PACVAR {
             // Prepare channel and MAF input based on skip_snp and skip_phase parameters
             // bam_bam_maf_ch to be channel: tuple val(meta), path(bam), path(bai), path(vcf)
             if (!params.skip_snp && !params.skip_phase) {
+                // define bam_bai_maf_ch
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
                 bam_bai_maf_ch = bam_bai_ch
                     .join(HIPHASE_SNP.out.vcf)
@@ -178,8 +172,8 @@ workflow PACVAR {
             BAM_CNV_VARIANT_CALLING(
                 bam_bai_maf_ch,
                 fasta,
-                exclude_ch,
-                expected_cn_ch
+                expected_cn,
+                cnv_excluded_regions
             )
             ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
         }
@@ -189,6 +183,7 @@ workflow PACVAR {
             // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
             // maf_vcf_ch to be channel: tuple val(meta), path(vcf)
             if (params.sv_caller == 'sawfish') {
+                // define maf_vcf_ch
                 if (!params.skip_snp && !params.skip_phase) {
                     // Use phased VCF from HIPHASE_SNP (already [meta, vcf])
                     maf_vcf_ch = HIPHASE_SNP.out.vcf
@@ -210,9 +205,9 @@ workflow PACVAR {
                 ordered_bai_ch,
                 fasta,
                 fasta_fai,
-                exclude_ch,
+                expected_cn,
                 maf_vcf_ch,
-                expected_cn_ch)
+                cnv_excluded_regions)
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
 

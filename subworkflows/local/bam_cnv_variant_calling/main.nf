@@ -4,10 +4,10 @@ include { BCFTOOLS_INDEX } from '../../../modules/nf-core/bcftools/index/main'
 workflow BAM_CNV_VARIANT_CALLING {
     
     take:
-    sorted_bam_bai_maf  // channel: tuple val(meta), path(bam), path(bai), path(maf)
-    fasta               // channel: tuple val(meta), path(ref)
-    exclude             // channel: tuple val(meta), path(exclude)
-    expected_cn         // channel: tuple val(meta), path(expected_cn)
+    sorted_bam_bai_maf    // channel: tuple val(meta), path(bam), path(bai), path(maf)
+    fasta                 // channel: tuple val(meta), path(ref)
+    expected_cn           // channel: tuple val(meta), path(expected_cn)
+    cnv_excluded_regions  // channel: tuple val(meta), path(cnv_excluded_regions)
     
     main:
     ch_versions = channel.empty()
@@ -16,7 +16,7 @@ workflow BAM_CNV_VARIANT_CALLING {
     HIFICNV(
         sorted_bam_bai_maf,
         fasta,
-        exclude,
+        cnv_excluded_regions,
         expected_cn
     )
     
