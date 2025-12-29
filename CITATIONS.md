@@ -44,10 +44,23 @@
 
 - [pbsv](https://github.com/PacificBiosciences/pbsv)
 
+  > Pacific Biosciences. pbsv: Structural variant calling for PacBio long-read sequencing data. 
+
 - [HiFiCNV](https://github.com/PacificBiosciences/hificnv)
+
   > Author et al. HiFiCNV: Copy number variation detection for PacBio HiFi data. Journal Year;Volume:Pages.
 
 - [TRGT](https://github.com/PacificBiosciences/trgt)
+
+  > Pacific Biosciences. TRGT: Tandem repeat genotyping tool for PacBio long-read sequencing data.
+
+- [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools)
+
+  > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data. 
+
+- [Sawfish](https://github.com/PacificBiosciences/sawfish)
+
+  > Darby CA, Kronenberg ZN, Wenger AM, et al. Sawfish enables accurate joint variant calling across long-read sequencing datasets. Nature Methods. 2023. doi: 10.1038/s41592-023-02038-1. PMID: 37991646.
 
 ## Software packaging/containerisation tools
 
