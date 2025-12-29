@@ -204,14 +204,18 @@
                 "expected_cn": {
                     "type": "string",
                     "format": "file-path",
+                    "exists": true,
                     "description": "BED/BED.GZ file specifying expected copy-number regions (for sawfish/hificnv).",
-                    "pattern": "^.*\\.bed(\\.gz)?$"
+                    "pattern": "^\\S+\\.bed(\\.gz)?$",
+                    "fa_icon": "far fa-file-code"
                   },
                 "cnv_excluded_regions": {
                     "type": "string",
                     "format": "file-path",
+                    "exists": true,
                     "description": "BED/BED.GZ file of regions to exclude from CNV calling.",
-                    "pattern": "^.*\\.bed(\\.gz)?$"
+                    "pattern": "^\\S+\\.bed(\\.gz)?$",
+                    "fa_icon": "far fa-file-code"
                 }
             }
         },

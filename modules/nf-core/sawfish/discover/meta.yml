@@ -196,6 +196,7 @@ output:
           type: file
           description: Genome GC levels mpack file
           pattern: "*.mpack"
+          optional: true
           ontologies: []
   max_depth:
     - - meta:
