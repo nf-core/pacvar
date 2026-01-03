@@ -12,10 +12,10 @@ workflow BAM_SV_VARIANT_CALLING {
     sorted_bam              // tuple val(meta), path(bam)
     sorted_bai              // tuple val(meta), path(bai)
     fasta                   // tuple val(meta), path(ref)
-    fasta_fai               // tuple val(meta), path(fai) - probably don't need it!
-    expected_cn_bed         // tuple val(meta), path(bed) - for SAWFISH
-    maf_vcf                 // tuple val(meta), path(vcf) - for SAWFISH (optional)
-    cnv_exclude_regions_bed // tuple val(meta), path(bed) - for SAWFISH (optional)
+    fasta_fai               // tuple val(meta), path(fai) 
+    expected_cn         // tuple val(meta), path(bed) - for SAWFISH
+    maf_vcf                 // tuple val(meta), path(vcf) - for SAWFISH
+    cnv_excluded_regions // tuple val(meta), path(bed) - for SAWFISH
 
 
     main:
@@ -46,16 +46,16 @@ workflow BAM_SV_VARIANT_CALLING {
         SAWFISH_DISCOVER(
             sorted_bam_bai,
             fasta,
-            expected_cn_bed,
+            expected_cn,
             maf_vcf,
-            cnv_exclude_regions_bed
+            cnv_excluded_regions
         )
-        // Call and genotype SVs
 
+        // Call genotype SVs
         SAWFISH_JOINTCALL(
             SAWFISH_DISCOVER.out.discover_dir,
             fasta,
-            sorted_bam_bai, // might not need this!
+            sorted_bam_bai, 
             [[:], []] 
         )
 
