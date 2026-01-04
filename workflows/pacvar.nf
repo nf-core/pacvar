@@ -94,7 +94,7 @@ workflow PACVAR {
 
     SAMTOOLS_SORT(PBMM2_ALIGN.out.bam, fasta, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
-    ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
+    //ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions_samtools)
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
 
 
