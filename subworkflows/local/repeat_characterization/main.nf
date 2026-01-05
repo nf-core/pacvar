@@ -56,7 +56,7 @@ workflow  REPEAT_CHARACTERIZATION{
     // ch_versions = ch_versions.mix(SAMTOOLS_SORT_TRGT.out.versions)
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX_TRGT.out.versions)
     ch_versions = ch_versions.mix(BCFTOOLS_SORT.out.versions)
-    ch_versions = ch_versions.mix(TRGT_PLOT.out.versions)
+    //ch_versions = ch_versions.mix(TRGT_PLOT.out.versions)
 
     emit:
     versions       = ch_versions
