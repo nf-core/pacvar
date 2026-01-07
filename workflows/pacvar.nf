@@ -128,20 +128,6 @@ workflow PACVAR {
             .set { samtools_input_ch }
     }
 
-
-    // DEBUGGING CHANNEL VIEWS
-    //ch_samplesheet.view { it -> "ch_samplesheet: ${it}"}
-    //LIMA.out.bam.view { it -> "LIMA output bam: ${it}"}
-    //ch_lima.view { it -> "ch_lima: ${it}"}
-    //pbmm2_input_ch.view { it -> "pbmm2_input_ch: ${it}"}
-    //pbmm2_input_filter_ch.view { it -> "pbmm2_input_filter_ch: ${it}"}
-    //ch_bams.view { it -> "ch_bams: ${it}"}
-    //ch_to_merge.view { it -> "ch_to_merge: ${it}"}
-    //ch_no_merge.view { it -> "ch_no_merge: ${it}"}
-    //ch_merged.view { it -> "ch_merged: ${it}"}
-    //samtools_input_ch.view { it -> "samtools_input_ch: ${it}"}
-    
-
     SAMTOOLS_SORT(samtools_input_ch, fasta)
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
     ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
