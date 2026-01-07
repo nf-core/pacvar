@@ -71,7 +71,7 @@ workflow PACVAR {
             }
             .map{ meta, bam ->
                 //change metadata to reflect demultiplexed barcode
-                [[id: bam.baseName], bam]
+                [[id: bam.baseName, type: meta.type], bam]
             }
 
             pbmm2_input_ch = ch_lima
@@ -128,22 +128,24 @@ workflow PACVAR {
             .set { samtools_input_ch }
     }
 
-    /*
-    ch_samplesheet.view { it -> "ch_samplesheet: ${it}"}
-    pbmm2_input_ch.view { it -> "pbmm2_input_ch: ${it}"}
-    pbmm2_input_filter_ch.view { it -> "pbmm2_input_filter_ch: ${it}"}
-    ch_bams.view { it -> "ch_bams: ${it}"}
-    ch_to_merge.view { it -> "ch_to_merge: ${it}"}
-    ch_no_merge.view { it -> "ch_no_merge: ${it}"}
-    ch_merged.view { it -> "ch_merged: ${it}"}
-    samtools_input_ch.view { it -> "samtools_input_ch: ${it}"}
-    */
+
+    // DEBUGGING CHANNEL VIEWS
+    //ch_samplesheet.view { it -> "ch_samplesheet: ${it}"}
+    //LIMA.out.bam.view { it -> "LIMA output bam: ${it}"}
+    //ch_lima.view { it -> "ch_lima: ${it}"}
+    //pbmm2_input_ch.view { it -> "pbmm2_input_ch: ${it}"}
+    //pbmm2_input_filter_ch.view { it -> "pbmm2_input_filter_ch: ${it}"}
+    //ch_bams.view { it -> "ch_bams: ${it}"}
+    //ch_to_merge.view { it -> "ch_to_merge: ${it}"}
+    //ch_no_merge.view { it -> "ch_no_merge: ${it}"}
+    //ch_merged.view { it -> "ch_merged: ${it}"}
+    //samtools_input_ch.view { it -> "samtools_input_ch: ${it}"}
+    
 
     SAMTOOLS_SORT(samtools_input_ch, fasta)
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
     ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
-
 
     //join the bam and index based off the meta id (ensure correct order)
     bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai)
