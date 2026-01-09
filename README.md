@@ -32,15 +32,15 @@ Workflow Overview
 WGS Workflow Overview
 
 1. Choice of SNVs and small indels calling routes:
-   a. ([`deepvariant`](https://github.com/google/deepvariant))
-   b. ([`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller))
-2. Choice of SVs calling routes:
-   a. ([`pbsv`](https://github.com/PacificBiosciences/pbsv))
-   b. ([`sawfish`](https://github.com/PacificBiosciences/sawfish))
-3. Call CNVs ([`hificnv`](https://github.com/PacificBiosciences/HiFiCNV))
-4. Index VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
-5. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
-6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
+   a. [`deepvariant`](https://github.com/google/deepvariant)
+   b. [`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller)
+2. Choice of SV calling routes:
+   a. [`pbsv`](https://github.com/PacificBiosciences/pbsv)
+   b. [`sawfish`](https://github.com/PacificBiosciences/sawfish): use the VCF derived from SNVs calls as minor allele frequency (MAF) fif `skip_snp=false`
+3. Index VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
+5. Call CNVs ([`hificnv`](https://github.com/PacificBiosciences/HiFiCNV)): staged before or after phasing depending on `skip_phase` and use the VCF derived from SNVs calls as minor allele frequency (MAF) fif `skip_snp=false`
+6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools)); staged before or after phase route depending on `skip_phase`
 
 Tandem Repeat Workflow Overview
 
@@ -85,7 +85,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`.
+optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_cnv`, and `--skip_cpg`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
