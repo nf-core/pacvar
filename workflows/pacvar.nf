@@ -71,8 +71,8 @@ workflow PACVAR {
             }
             .map{ meta, bam ->
                 //change metadata to reflect demultiplexed barcode
-                def newMeta = meta + [id: bam.baseName]
-                [newMeta, bam]
+                def new_meta = meta + [id: bam.baseName]
+                [new_meta, bam]
             }
 
             pbmm2_input_ch = ch_lima
@@ -98,7 +98,6 @@ workflow PACVAR {
 
     PBMM2_ALIGN(pbmm2_input_filter_ch, fasta)
     ch_versions = ch_versions.mix(PBMM2_ALIGN.out.versions)
-
 
     // merge hifi and fail bams for repeat workflow
     if (params.workflow == 'wgs') {
@@ -212,13 +211,6 @@ workflow PACVAR {
 
         ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
     }
-
-    //DEBUGGING CHANNEL VIEWS
-    //ch_samplesheet.view { it -> "ch_samplesheet: ${it}"}
-    //LIMA.out.bam.view { it -> "LIMA output bam: ${it}"}
-    //ch_lima.view { it -> "ch_lima: ${it}"}
-    ch_merged.view { it -> "ch_merged: ${it}"}
-    ordered_bam_ch.view { it -> "ordered_bam_ch: ${it}"}   
 
     // MODULE: MultiQC
     ch_multiqc_files = Channel.empty()
