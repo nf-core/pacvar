@@ -77,7 +77,8 @@ Note:
 
 ### GATK4
 
-[GATK4](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) HaplotypeCaller - SNV detection and Variant Call tool.
+[GATK4](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) HaplotypeCaller is a variant caller for identifying small variants (SNVs and small indels) from high-throughput sequencing data.
+
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -85,6 +86,19 @@ Note:
 - `gatk4/`
   - `<basename>.snv.vcf.gz`: VCF of the SNV
   - `<basename>.snv.vcf.gz.tbi`: Associated indexes for the VCF files
+
+</details>
+
+### DEEPVARIANT
+
+[DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `deepvariant/`
+  - `<basename>.snv.vcf.gz`: Zipped VCF file
+  - `<basename>.snv.vcf.gz.tbi`: Associated index to zipped VCF file
 
 </details>
 
@@ -187,19 +201,6 @@ Note:
 
 - `BCFTOOLS/`
   - `<basename>.sv.vcf.gz.csi`: Index of PBSV VCF files
-
-</details>
-
-### DEEPVARIANT
-
-[DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data.
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `deepvariant/`
-  - `<basename>.snv.vcf.gz`: Zipped VCF file
-  - `<basename>.snv.vcf.gz.tbi`: Associated index to zipped VCF file
 
 </details>
 
