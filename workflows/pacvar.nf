@@ -71,7 +71,8 @@ workflow PACVAR {
             }
             .map{ meta, bam ->
                 //change metadata to reflect demultiplexed barcode
-                [[id: bam.baseName, type: meta.type], bam]
+                def newMeta = meta + [id: bam.baseName]
+                [newMeta, bam]
             }
 
             pbmm2_input_ch = ch_lima
@@ -211,6 +212,13 @@ workflow PACVAR {
 
         ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
     }
+
+    //DEBUGGING CHANNEL VIEWS
+    //ch_samplesheet.view { it -> "ch_samplesheet: ${it}"}
+    //LIMA.out.bam.view { it -> "LIMA output bam: ${it}"}
+    //ch_lima.view { it -> "ch_lima: ${it}"}
+    ch_merged.view { it -> "ch_merged: ${it}"}
+    ordered_bam_ch.view { it -> "ordered_bam_ch: ${it}"}   
 
     // MODULE: MultiQC
     ch_multiqc_files = Channel.empty()
