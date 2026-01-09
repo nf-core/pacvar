@@ -12,17 +12,17 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - [LIMA](#lima) - Demultiplex samples
 - [PBMM2](#pbmm2) - Align samples to reference genome
-- [SAMTOOLS SORT](#samtools-sort) - Sort BAM files
-- [SAMTOOLS INDEX](#samtools-sort) - Index BAM files
+- [SAMTOOLS SORT](#samtools) - Sort BAM files
+- [SAMTOOLS INDEX](#samtools) - Index BAM files
 - [DEEPVARIANT](#deepvariant-rundeepvariant) - Variant call SNVs
 - [HAPLOTYPECALLER](#gatk4-haplotypecaller) - Variant call SNVs
 - [PBSV](#pbsv) - Variant call SVs
 - [SAWFISH](#sawfish) - Variant call SVs
 - [TRGT](#trgt) - Plots and Genotypes tandem repeats
-- [BCFTOOLS](#bcftools-index) - Index VCF files
-- [HIPHASE](#Hiphase) - Phase VCF, and BAM files
+- [BCFTOOLS INDEX](#bcftools) - Index VCF files
+- [HiPHASE](#hiphase) - Phase VCF, and BAM files
 - [HiFiCNV](#hificnv) - Variant call CNVs
-- [pb-CpG-tools/ALIGNEDBAMTOCPGSCORES](#pb-cpg-toolsalignedbamtocpgscores) - per-CpG methylation scores 
+- [ALIGNEDBAMTOCPGSCORES](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores 
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
@@ -75,9 +75,9 @@ Note:
 
 </details>
 
-### GATK4
+### GATK4 HaplotypeCaller
 
-[GATK4](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) HaplotypeCaller is a variant caller for identifying small variants (SNVs and small indels) from high-throughput sequencing data.
+[GATK4 HaplotypeCaller](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) is a variant caller for identifying small variants (SNVs and small indels) from high-throughput sequencing data.
 
 
 <details markdown="1">
@@ -89,7 +89,7 @@ Note:
 
 </details>
 
-### DEEPVARIANT
+### DEEPVARIANT Rundeepvariant
 
 [DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data.
 
@@ -162,7 +162,7 @@ Note:
 
 </details>
 
-### HIPHASE
+### HiPHASE
 
 [HiPhase](https://github.com/PacificBiosciences/HiPhase) performs haplotype phasing of small variants and structural variants from PacBio HiFi sequencing data, generating phased VCFs and haplotagged BAM files for downstream haplotype-aware analyses.
 
@@ -193,7 +193,7 @@ Note:
 
 </details>
 
-### BCFTOOLS
+### BCFTOOLS Index
 
 [BCFTOOLS](https://github.com/samtools/bcftools) manipulates VCF files including Indexes them
 <details markdown="1">
@@ -239,7 +239,7 @@ Example png output: sample1_C9ORF72.png
 
 </details>
 
-### pb-CpG-tools/ALIGNEDBAMTOCPGSCORES
+### pb-CpG-tools ALIGNEDBAMTOCPGSCORES
 
 The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
 
