@@ -16,10 +16,13 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [SAMTOOLS INDEX](#samtools-sort) - Index BAM files
 - [DEEPVARIANT](#deepvariant-rundeepvariant) - Variant call SNVs
 - [HAPLOTYPECALLER](#gatk4-haplotypecaller) - Variant call SNVs
-- [pbsv](#pbsv) - Variant call SVs
-- [TRGT](#trgt) - Genotype and Plot structural variants
+- [PBSV](#pbsv) - Variant call SVs
+- [SAWFISH](#sawfish) - Variant call SVs
+- [TRGT](#trgt) - Plots and Genotypes tandem repeats
 - [BCFTOOLS](#bcftools-index) - Index VCF files
 - [HIPHASE](#Hiphase) - Phase VCF, and BAM files
+- [HiFiCNV](#hificnv) - Variant call CNVs
+- [pb-CpG-tools/ALIGNEDBAMTOCPGSCORES](#cpgscore) - per-CpG methylation scores 
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
@@ -98,6 +101,54 @@ Note:
 
 [PBSV](https://github.com/PacificBiosciences/pbsv). Discover and call structural variants
 
+### Sawfish
+
+[Sawfish](https://github.com/PacificBiosciences/sawfish) is a joint structural variant (SV) and copy number variant (CNV) caller for mapped HiFi sequencing reads. It uses a two-step workflow: a per-sample **discover** step that identifies SV candidates through local haplotype assembly, followed by a **joint-call** step that merges, genotypes, and integrates SV and CNV calls across one or more samples.
+
+#### Sawfish Discover
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `sawfish/discover/`
+  - `<basename>_discovery/sv_candidates.vcf.gz`: Per-sample structural variant candidate calls from haplotype assembly.
+  - `<basename>_discovery/sv_candidates.vcf.gz.tbi`: Tabix index for SV candidates VCF.
+  - `<basename>_discovery/contig.alignment.bam`: Assembled haplotype contigs aligned to the reference genome.
+  - `<basename>_discovery/contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
+  - `<basename>_discovery/assembly.regions.bed`: Genomic regions where local assembly was performed.
+  - `<basename>_discovery/copynum.bedgraph`: Preliminary copy number estimates in bedGraph format.
+  - `<basename>_discovery/copynum.mpack`: Copy number data in MessagePack binary format.
+  - `<basename>_discovery/depth.mpack`: Depth coverage data in MessagePack format.
+  - `<basename>_discovery/maf.mpack`: Minor allele frequency data in MessagePack format if `skip_snp=false`.
+  - `<basename>_discovery/expected.copy.number.bed`: Expected copy number for genomic regions (e.g., sex chromosomes).
+  - `<basename>_discovery/max.depth.bed`: Regions with maximum depth thresholds.
+  - `<basename>_discovery/genome.gclevels.mpack`: GC content levels across the genome.
+  - `<basename>_discovery/sample.gcbias.mpack`: Sample-specific GC bias correction data.
+  - `<basename>_discovery/discover.settings.json`: Configuration file with input paths and parameters.
+  - `<basename>_discovery/run.data.json`: Runtime data and statistics.
+  - `run.stats.json`: Summary statistics from the discover run.
+  - `<basename>_discovery/sawfish.log`: Detailed log file from the discover step.
+  - `<basename>_discovery/debug.breakpoint_clusters.bed`: Debug output showing breakpoint cluster locations.
+  - `<basename>_discovery/debug.cluster.refinement.txt`: Debug output with cluster refinement details.
+
+</details>
+
+#### Sawfish Joint-call
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `sawfish/jointcall/`
+  - `<basename>_jointcall/genotyped.sv.vcf.gz`: Integrated structural variant and copy number variant calls in VCF format.
+  - `<basename>_jointcall/genotyped.sv.vcf.gz.tbi`: Tabix index for the joint-called VCF.
+  - `<basename>_jointcall/contig.alignment.bam`: Merged contig alignments from all samples.
+  - `<basename>_jointcall/contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
+  - `<basename>_jointcall/run.stats.json`: Summary statistics from the joint-call run.
+  - `<basename>_jointcall/sawfish.log`: Detailed log file from the joint-call step.
+
+</details>
+
+
 ### HIPHASE
 
 <details markdown="1">
@@ -105,7 +156,9 @@ Note:
 
 - `hiphase/`
   - `<basename>.snv.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
+  - `<basename>.snv.phased.bam.bai`: Haplotagged BAM index
   - `<basename>.sv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV
+  - `<basename>.sv.phased.bam.bai`: Haplotagged BAM index
   - `<basename>.snv.phased.vcf`: The phased Variant File (SNV) (Zipped)
   - `<basename>.sv.phased.vcf`: The phased Variant File (SV) (Zipped)
   - `<basename>.snv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
@@ -168,6 +221,43 @@ Example png output: sample1_C9ORF72.png
 </details>
 
 [TRGT](https://github.com/PacificBiosciences/trgt) Plots and Genotypes tandem repeats
+
+### HiFiCNV
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `hificnv/`
+  - `<basename>.cnv.<id>.vcf.gz`: Copy number variant calls in VCF format with copy number estimates, confidence intervals, and quality scores.
+  - `<basename>.cnv.<id>.copynum.bedgraph`: Copy number segmentation results in bedGraph format with copy number values for each genomic region.
+  - `<basename>.cnv.<id>.depth.bw`: Read depth coverage in BigWig format for genome browser visualization.
+
+  If `skip_cnv=false`
+
+  - ``<basename>.cnv.<id>.maf.bw`: Minor allele frequency (MAF) in BigWig format for assessing allelic imbalance.
+
+</details>
+
+### pb-CpG-tools/ALIGNEDBAMTOCPGSCORES
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pgcpgtools/`
+  - `<basename>.cpgscores.combined.bed.gz`: Combined methylation scores across both haplotypes in BED format.
+  - `<basename>.cpgscores.combined.bed.gz.tbi`: Index of the combined methylation scores across both haplotypes in BED format.
+  - `<basename>.cpgscores.combined.bw`: Combined methylation scores in BigWig format for genome browser visualization.
+
+  If `skip_phase=false`
+
+  - `<basename>.cpgscore.hap1.bed.gz`: Haplotype 1-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscore.hap1.bed.gz.tbi`: Index of the haplotype 1-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscores.hap2.bed.gz`: Haplotype 2-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscores.hap2.bed.gz.tbi`: Index of the haplotype 2-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscores.hap1.bw`: Haplotype 1-specific methylation scores in BigWig format.
+  - `<basename>.cpgscores.hap2.bw`: Haplotype 2-specific methylation scores in BigWig format.
+
+</details>
 
 ### MultiQC
 

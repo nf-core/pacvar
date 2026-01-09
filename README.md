@@ -36,11 +36,11 @@ WGS Workflow Overview
    b. [`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller)
 2. Choice of SV calling routes:
    a. [`pbsv`](https://github.com/PacificBiosciences/pbsv)
-   b. [`sawfish`](https://github.com/PacificBiosciences/sawfish): use the VCF derived from SNVs calls as minor allele frequency (MAF) fif `skip_snp=false`
+   b. [`sawfish`](https://github.com/PacificBiosciences/sawfish)
 3. Index VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
-5. Call CNVs ([`hificnv`](https://github.com/PacificBiosciences/HiFiCNV)): staged before or after phasing depending on `skip_phase` and use the VCF derived from SNVs calls as minor allele frequency (MAF) fif `skip_snp=false`
-6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools)); staged before or after phase route depending on `skip_phase`
+5. Call CNVs ([`hificnv`](https://github.com/PacificBiosciences/HiFiCNV))
+6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
 
 Tandem Repeat Workflow Overview
 
