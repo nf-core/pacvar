@@ -22,12 +22,14 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [BCFTOOLS](#bcftools-index) - Index VCF files
 - [HIPHASE](#Hiphase) - Phase VCF, and BAM files
 - [HiFiCNV](#hificnv) - Variant call CNVs
-- [pb-CpG-tools/ALIGNEDBAMTOCPGSCORES](#cpgscore) - per-CpG methylation scores 
+- [pb-CpG-tools/ALIGNEDBAMTOCPGSCORES](#pb-cpg-toolsalignedbamtocpgscores) - per-CpG methylation scores 
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
 
 ### LIMA
+
+[LIMA](https://lima.how) is a PacBio tool for **demultiplexing HiFi sequencing data** by identifying and trimming barcode sequences, producing per-sample BAM files and associated demultiplexing reports.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -41,8 +43,6 @@ When `--skip_demultiplexing` is false (default behavior)
 
 </details>
 
-[LIMA](https://lima.how) demultiplex samples
-
 Note:
 
 - If `--skip_demultiplexing` is true:
@@ -52,6 +52,8 @@ Note:
 
 ### PBMM2
 
+[PBMM2](https://github.com/PacificBiosciences/pbmm2) aligns PacBio HiFi reads to a reference genome using a minimap2-based algorithm optimized for long reads.
+
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -60,9 +62,9 @@ Note:
 
 </details>
 
-[PBMM2](https://github.com/PacificBiosciences/pbmm2) Aligned BAM files
-
 ### SAMTOOLS
+
+[SAMTOOLS](https://github.com/samtools/samtools) Sort and index aligned bams.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -73,9 +75,9 @@ Note:
 
 </details>
 
-[SAMTOOLS](https://github.com/samtools/samtools) Sort and index aligned bams.
-
 ### GATK4
+
+[GATK4](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) HaplotypeCaller - SNV detection and Variant Call tool.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -86,9 +88,9 @@ Note:
 
 </details>
 
-[GATK4](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) HaplotypeCaller - SNV detection and Variant Call tool.
-
 ### PBSV
+
+[PBSV](https://github.com/PacificBiosciences/pbsv) is a PacBio structural variant caller that discovers and genotypes structural variants from long-read sequencing data by identifying and clustering read-level SV signatures.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -98,8 +100,6 @@ Note:
   - `<basename>.svsig.gz`: File containing signatures of structural variants
 
 </details>
-
-[PBSV](https://github.com/PacificBiosciences/pbsv). Discover and call structural variants
 
 ### Sawfish
 
@@ -127,7 +127,7 @@ Note:
   - `<basename>_discovery/discover.settings.json`: Configuration file with input paths and parameters.
   - `<basename>_discovery/run.data.json`: Runtime data and statistics.
   - `run.stats.json`: Summary statistics from the discover run.
-  - `<basename>_discovery/sawfish.log`: Detailed log file from the discover step.
+  - `<basename>_discovery/<basename>_discovery/sawfish.log`: Detailed log file from the discover step.
   - `<basename>_discovery/debug.breakpoint_clusters.bed`: Debug output showing breakpoint cluster locations.
   - `<basename>_discovery/debug.cluster.refinement.txt`: Debug output with cluster refinement details.
 
@@ -148,8 +148,9 @@ Note:
 
 </details>
 
-
 ### HIPHASE
+
+[HiPhase](https://github.com/PacificBiosciences/HiPhase) performs haplotype phasing of small variants and structural variants from PacBio HiFi sequencing data, generating phased VCFs and haplotagged BAM files for downstream haplotype-aware analyses.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -166,9 +167,9 @@ Note:
 
 </details>
 
-[`HIPHASE`](https://github.com/PacificBiosciences/HiPhase/tree/main)
-
 ### TABIX
+
+[TABIX](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -178,10 +179,9 @@ Note:
 
 </details>
 
-[TABIX](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
-
 ### BCFTOOLS
 
+[BCFTOOLS](https://github.com/samtools/bcftools) manipulates VCF files including Indexes them
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -190,9 +190,9 @@ Note:
 
 </details>
 
-[BCFTOOLS](https://github.com/samtools/bcftools) Manipulates VCF files including Indexes them
-
 ### DEEPVARIANT
+
+[DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -203,9 +203,9 @@ Note:
 
 </details>
 
-[DEEPVARIANT](https://github.com/google/deepvariant) SNV caller
-
 ### TRGT
+
+[TRGT](https://github.com/PacificBiosciences/trgt) Plots and Genotypes tandem repeats
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -220,9 +220,9 @@ Example png output: sample1_C9ORF72.png
 
 </details>
 
-[TRGT](https://github.com/PacificBiosciences/trgt) Plots and Genotypes tandem repeats
-
 ### HiFiCNV
+
+[HiFiCNV](https://github.com/PacificBiosciences/HiFiCNV) is a copy number variant (CNV) caller optimized for PacBio HiFi sequencing reads. The tool detects copy number variants using read depth analysis with optimizations specifically designed for the characteristics of HiFi data.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -232,13 +232,15 @@ Example png output: sample1_C9ORF72.png
   - `<basename>.cnv.<id>.copynum.bedgraph`: Copy number segmentation results in bedGraph format with copy number values for each genomic region.
   - `<basename>.cnv.<id>.depth.bw`: Read depth coverage in BigWig format for genome browser visualization.
 
-  If `skip_cnv=false`
+  If `skip_snp=false`, the SNV VCF output is used to derive minor allele frequencies, and HiFiCNV additionally produces:
 
-  - ``<basename>.cnv.<id>.maf.bw`: Minor allele frequency (MAF) in BigWig format for assessing allelic imbalance.
+  - `<basename>.cnv.<id>.maf.bw`: Minor allele frequency (MAF) in BigWig format for assessing allelic imbalance.
 
 </details>
 
 ### pb-CpG-tools/ALIGNEDBAMTOCPGSCORES
+
+The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -248,7 +250,7 @@ Example png output: sample1_C9ORF72.png
   - `<basename>.cpgscores.combined.bed.gz.tbi`: Index of the combined methylation scores across both haplotypes in BED format.
   - `<basename>.cpgscores.combined.bw`: Combined methylation scores in BigWig format for genome browser visualization.
 
-  If `skip_phase=false`
+  If `skip_phase=false`, haplotype-specific methylation outputs are also generated:
 
   - `<basename>.cpgscore.hap1.bed.gz`: Haplotype 1-specific methylation scores (only for haplotagged reads).
   - `<basename>.cpgscore.hap1.bed.gz.tbi`: Index of the haplotype 1-specific methylation scores (only for haplotagged reads).
@@ -261,6 +263,10 @@ Example png output: sample1_C9ORF72.png
 
 ### MultiQC
 
+[MultiQC](http://multiqc.info) is a visualization tool that generates a single HTML report summarising all samples in your project. Most of the pipeline QC results are visualised in the report and further statistics are available in the report data directory.
+
+Results generated by MultiQC collate pipeline QC from supported tools e.g. FastQC. The pipeline has special steps which also allow the software versions to be reported in the MultiQC output for future traceability. For more information about how to use MultiQC reports, see <http://multiqc.info>.
+
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -270,10 +276,6 @@ Example png output: sample1_C9ORF72.png
   - `multiqc_plots/`: directory containing static images from the report in various formats.
 
 </details>
-
-[MultiQC](http://multiqc.info) is a visualization tool that generates a single HTML report summarising all samples in your project. Most of the pipeline QC results are visualised in the report and further statistics are available in the report data directory.
-
-Results generated by MultiQC collate pipeline QC from supported tools e.g. FastQC. The pipeline has special steps which also allow the software versions to be reported in the MultiQC output for future traceability. For more information about how to use MultiQC reports, see <http://multiqc.info>.
 
 ### Pipeline information
 
