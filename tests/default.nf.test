@@ -1,11 +1,20 @@
 nextflow_pipeline {
 
+<<<<<<< HEAD
     name "Test Workflow main.nf"
     script "../main.nf"
     config "./nextflow.config"
     tag "cpu"
 
     test("Params: default") {
+=======
+    name "Test pipeline"
+    script "../main.nf"
+    tag "pipeline"
+
+    test("-profile test") {
+
+>>>>>>> TEMPLATE
         when {
             params {
                 outdir = "$outputDir"
@@ -17,6 +26,7 @@ nextflow_pipeline {
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+<<<<<<< HEAD
             // bam_files: All bam files
             def bam_files  = getAllFilesFromDir(params.outdir, include: ['**/*.bam'])
             assertAll(
@@ -32,6 +42,17 @@ nextflow_pipeline {
                     stable_path,
                     // All bam files
                     bam_files.collect{ file -> [ file.getName(), bam(file.toString(), stringency: "lenient").getReadsMD5() ] }
+=======
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(
+                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we test pipelines on multiple Nextflow versions
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    // All files with stable contents
+                    stable_path
+>>>>>>> TEMPLATE
                 ).match() }
             )
         }

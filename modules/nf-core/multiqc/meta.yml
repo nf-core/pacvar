@@ -74,6 +74,7 @@ output:
         pattern: "*_data"
         ontologies: []
   versions:
+<<<<<<< HEAD
     - - ${task.process}:
           type: string
           description: The process the versions were collected from
@@ -83,6 +84,14 @@ output:
       - multiqc --version | sed "s/.* //g":
           type: eval
           description: The expression to obtain the version of the tool
+=======
+    - versions.yml:
+        type: file
+        description: File containing software versions
+        pattern: "versions.yml"
+        ontologies:
+          - edam: http://edamontology.org/format_3750 # YAML
+>>>>>>> TEMPLATE
 authors:
   - "@abhi18av"
   - "@bunop"
