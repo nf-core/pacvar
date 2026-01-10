@@ -412,6 +412,9 @@
             "$ref": "#/$defs/variant"
         },
         {
+            "$ref": "#/$defs/methylation_profiling"
+        },
+        {
             "$ref": "#/$defs/pre_processing"
         },
         {
