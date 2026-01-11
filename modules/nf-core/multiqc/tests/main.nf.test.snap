@@ -1,7 +1,6 @@
 {
     "sarscov2 single-end [fastqc]": {
         "content": [
-<<<<<<< HEAD
             {
                 "versions": [
                     [
@@ -17,17 +16,6 @@
             "nextflow": "25.10.2"
         },
         "timestamp": "2025-12-09T10:10:43.020315838"
-=======
-            [
-                "versions.yml:md5,737bb2c7cad54ffc2ec020791dc48b8f"
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-10-27T13:33:24.356715"
->>>>>>> TEMPLATE
     },
     "sarscov2 single-end [fastqc] - stub": {
         "content": [
@@ -35,7 +23,6 @@
                 "multiqc_report.html",
                 "multiqc_data",
                 "multiqc_plots",
-<<<<<<< HEAD
                 {
                     "versions": [
                         [
@@ -45,26 +32,16 @@
                         ]
                     ]
                 }
-=======
-                "versions.yml:md5,737bb2c7cad54ffc2ec020791dc48b8f"
->>>>>>> TEMPLATE
             ]
         ],
         "meta": {
             "nf-test": "0.9.3",
-<<<<<<< HEAD
             "nextflow": "25.10.2"
         },
         "timestamp": "2025-12-09T10:11:14.131950776"
-=======
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-10-27T13:34:11.103619"
->>>>>>> TEMPLATE
     },
     "sarscov2 single-end [fastqc] [config]": {
         "content": [
-<<<<<<< HEAD
             {
                 "versions": [
                     [
@@ -80,16 +57,5 @@
             "nextflow": "25.10.2"
         },
         "timestamp": "2025-12-09T10:11:07.15692209"
-=======
-            [
-                "versions.yml:md5,737bb2c7cad54ffc2ec020791dc48b8f"
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-10-27T13:34:04.615233"
->>>>>>> TEMPLATE
     }
 }

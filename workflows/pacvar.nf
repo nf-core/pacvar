@@ -265,12 +265,12 @@ workflow PACVAR {
     }
 
     // MODULE: MultiQC
-    ch_multiqc_files = Channel.empty()
+    ch_multiqc_files = channel.empty()
 
     //
     // Collate and save software versions
     //
-    def topic_versions = Channel.topic("versions")
+    def topic_versions = channel.topic("versions")
         .distinct()
         .branch { entry ->
             versions_file: entry instanceof Path
@@ -297,14 +297,10 @@ workflow PACVAR {
         ).set { ch_collated_versions }
 
 
-<<<<<<< HEAD
-    ch_multiqc_config        = Channel.fromPath(
-=======
     //
     // MODULE: MultiQC
     //
     ch_multiqc_config        = channel.fromPath(
->>>>>>> TEMPLATE
         "$projectDir/assets/multiqc_config.yml", checkIfExists: true)
     ch_multiqc_custom_config = params.multiqc_config ?
         channel.fromPath(params.multiqc_config, checkIfExists: true) :

@@ -1,4 +1,6 @@
 Changes in component 'nf-core/trgt/plot'
+'modules/nf-core/trgt/plot/environment.yml' is unchanged
+'modules/nf-core/trgt/plot/meta.yml' is unchanged
 Changes in 'trgt/plot/main.nf':
 --- modules/nf-core/trgt/plot/main.nf
 +++ modules/nf-core/trgt/plot/main.nf
@@ -55,9 +57,7 @@ Changes in 'trgt/plot/main.nf':
      cat <<-END_VERSIONS > versions.yml
      "${task.process}":
 
-'modules/nf-core/trgt/plot/meta.yml' is unchanged
-'modules/nf-core/trgt/plot/environment.yml' is unchanged
-'modules/nf-core/trgt/plot/tests/main.nf.test.snap' is unchanged
-'modules/nf-core/trgt/plot/tests/main.nf.test' is unchanged
 'modules/nf-core/trgt/plot/tests/nextflow.config' is unchanged
+'modules/nf-core/trgt/plot/tests/main.nf.test' is unchanged
+'modules/nf-core/trgt/plot/tests/main.nf.test.snap' is unchanged
 ************************************************************

@@ -28,7 +28,7 @@ process TRGT_PLOT {
         mapfile -t repeat_ids < <(awk -F '\\t' '{ split(\$4,a,";"); gsub("ID=","",a[1]); print a[1] }' "${repeats}")
 
     else
-        IFS=',; ' read -r -a repeat_ids <<< "${repeat_id}"
+        IFS=',;' read -r -a repeat_ids <<< "${repeat_id}"
     fi
 
     for rid in "\${repeat_ids[@]}"; do

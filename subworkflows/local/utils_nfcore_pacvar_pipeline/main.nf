@@ -40,12 +40,8 @@ workflow PIPELINE_INITIALISATION {
     show_hidden       // boolean: Show hidden parameters in the help message
 
 
-<<<<<<< HEAD
     main:
-    ch_versions = Channel.empty()
-=======
     ch_versions = channel.empty()
->>>>>>> TEMPLATE
 
     //
     // Print version and exit if required and dump pipeline parameters to JSON file

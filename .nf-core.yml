@@ -9,4 +9,4 @@ template:
   name: pacvar
   org: nf-core
   outdir: .
-  version: 2.0.0dev
+  version: dev
