@@ -18,7 +18,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 
 include { BAM_SNP_VARIANT_CALLING as BAM_SNP_VARIANT_CALLING    } from '../subworkflows/local/bam_snp_variant_calling'
 include { BAM_SV_VARIANT_CALLING  as BAM_SV_VARIANT_CALLING     } from '../subworkflows/local/bam_sv_variant_calling'
-include { BAM_CNV_VARIANT_CALLING as BAM_CNV_VARIANT_CALLING    } from '../subworkflows/local/bam_cnv_variant_calling'  
+include { BAM_CNV_VARIANT_CALLING as BAM_CNV_VARIANT_CALLING    } from '../subworkflows/local/bam_cnv_variant_calling'
 include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subworkflows/local/repeat_characterization'
 
 /*
@@ -134,12 +134,12 @@ workflow PACVAR {
                     orderd_bam_bai_vcf_tbi_snp.bam_bai,
                     fasta)
                 ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions)
-                
+
                 // Index the phased BAM from HIPHASE_SNP
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
                 ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
 
-                // channel for pbcpgtools_alignedbamtocpgscores 
+                // channel for pbcpgtools_alignedbamtocpgscores
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
         }
@@ -153,21 +153,21 @@ workflow PACVAR {
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
                 bam_bai_maf_ch = bam_bai_ch
                     .join(HIPHASE_SNP.out.vcf)
-                    .map { meta, bam, bai, vcf -> 
-                        [meta, bam, bai, vcf] 
+                    .map { meta, bam, bai, vcf ->
+                        [meta, bam, bai, vcf]
                     }
             } else if (!params.skip_snp && params.skip_phase) {
                 // Use unphased BAM, BAI, and VCF from SNP calling
-                bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi -> 
-                    [meta, bam, bai, vcf] 
+                bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->
+                    [meta, bam, bai, vcf]
                     }
             } else {
                 // Skip SNP calling - use original BAM and BAI with empty VCF
-                bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai -> 
-                    [meta, bam, bai, []] 
+                bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai ->
+                    [meta, bam, bai, []]
                 }
             }
-            
+
             // Run HiFiCNV
             BAM_CNV_VARIANT_CALLING(
                 bam_bai_maf_ch,
@@ -189,8 +189,8 @@ workflow PACVAR {
                     maf_vcf_ch = HIPHASE_SNP.out.vcf
                 } else if (!params.skip_snp && params.skip_phase) {
                     // Use unphased VCF from SNP calling (extract just meta and vcf)
-                    maf_vcf_ch = BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, tbi -> 
-                        [meta, vcf] 
+                    maf_vcf_ch = BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, tbi ->
+                        [meta, vcf]
                     }
                 } else {
                     // Skip SNP calling - empty VCF
@@ -244,11 +244,11 @@ workflow PACVAR {
                 // Use original sorted BAM
                 cpg_bam_bai_ch = bam_bai_ch
             }
-    
+
             // Call pbcpgtools alignedbamtocpgscores
             PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
                 cpg_bam_bai_ch)
-    
+
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }
     }

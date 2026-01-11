@@ -22,7 +22,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [BCFTOOLS INDEX](#bcftools) - Index VCF files
 - [HiPHASE](#hiphase) - Phase VCF, and BAM files
 - [HiFiCNV](#hificnv) - Variant call CNVs
-- [ALIGNEDBAMTOCPGSCORES](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores 
+- [ALIGNEDBAMTOCPGSCORES](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
@@ -78,7 +78,6 @@ Note:
 ### GATK4 HaplotypeCaller
 
 [GATK4 HaplotypeCaller](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) is a variant caller for identifying small variants (SNVs and small indels) from high-throughput sequencing data.
-
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -196,6 +195,7 @@ Note:
 ### BCFTOOLS Index
 
 [BCFTOOLS](https://github.com/samtools/bcftools) manipulates VCF files including Indexes them
+
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -234,7 +234,6 @@ Example png output: sample1_C9ORF72.png
   - `<basename>.cnv.<id>.depth.bw`: Read depth coverage in BigWig format for genome browser visualization.
 
   If `skip_snp=false`, the SNV VCF output is used to derive minor allele frequencies, and HiFiCNV additionally produces:
-
   - `<basename>.cnv.<id>.maf.bw`: Minor allele frequency (MAF) in BigWig format for assessing allelic imbalance.
 
 </details>
@@ -252,7 +251,6 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
   - `<basename>.cpgscores.combined.bw`: Combined methylation scores in BigWig format for genome browser visualization.
 
   If `skip_phase=false`, haplotype-specific methylation outputs are also generated:
-
   - `<basename>.cpgscore.hap1.bed.gz`: Haplotype 1-specific methylation scores (only for haplotagged reads).
   - `<basename>.cpgscore.hap1.bed.gz.tbi`: Index of the haplotype 1-specific methylation scores (only for haplotagged reads).
   - `<basename>.cpgscores.hap2.bed.gz`: Haplotype 2-specific methylation scores (only for haplotagged reads).

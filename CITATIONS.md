@@ -44,7 +44,7 @@
 
 - [pbsv](https://github.com/PacificBiosciences/pbsv)
 
-  > Pacific Biosciences. pbsv: Structural variant calling for PacBio long-read sequencing data. 
+  > Pacific Biosciences. pbsv: Structural variant calling for PacBio long-read sequencing data.
 
 - [HiFiCNV](https://github.com/PacificBiosciences/hificnv)
 
@@ -56,7 +56,7 @@
 
 - [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools)
 
-  > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data. 
+  > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data.
 
 - [Sawfish](https://github.com/PacificBiosciences/sawfish)
 
