@@ -9,4 +9,3 @@ testing*
 null/
 .nf-test*
 .nf-test/
-subworkflows/local/bam_cnv_variant_calling/tests/
