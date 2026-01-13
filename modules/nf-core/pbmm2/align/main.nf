@@ -21,7 +21,7 @@ process PBMM2_ALIGN {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: (meta.type ? "${meta.id}_${meta.type}" : "${meta.id}")
 
     """
     # pbmm2 doesn't support .fna extension, so rename to .fa
