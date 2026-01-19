@@ -103,19 +103,21 @@ workflow PIPELINE_INITIALISATION {
     //
     // Create channel from input file provided through params.input
     //
-    // Create channel from input file provided through params.input
-
-    //return a bed as well
 
     channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
         .map {
-            meta, bam, pbi ->
+            meta, bam, pbi, fail ->
                 def repeat_id = meta.repeat_id ?: params.repeat_id ?: ""
                 def new_meta = meta + [ 'repeat_id': repeat_id ]
-                return [new_meta, bam]
+                return [new_meta, bam, fail]
         }
-        .groupTuple()
+        .flatMap { meta, bam, fail ->
+            def items = []
+            if (bam) items << [meta + [type: 'hifi'], bam]
+            if (fail) items << [meta + [type: 'fail'], fail]
+            return items
+        }
         .set { ch_samplesheet }
 
     emit:

@@ -28,16 +28,17 @@ include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subwo
 */
 
 include { LIMA                                                           } from '../modules/nf-core/lima/main'
-include { DEEPVARIANT_RUNDEEPVARIANT                                     } from '../modules/nf-core/deepvariant/rundeepvariant/main'
-include { SAMTOOLS_INDEX                                                 } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_SORT                                                  } from '../modules/nf-core/samtools/sort/main'
-include { GATK4_HAPLOTYPECALLER                                          } from '../modules/nf-core/gatk4/haplotypecaller/main'
-include { PBMM2_ALIGN                                                    } from '../modules/nf-core/pbmm2/align/main'
-include { HIPHASE                          as HIPHASE_SNP                } from '../modules/nf-core/hiphase/main'
-include { HIPHASE                          as HIPHASE_SV                 } from '../modules/nf-core/hiphase/main'
-include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                               } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
-include { SAMTOOLS_INDEX                   as SAMTOOLS_INDEX_HIPHASE_SNP } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_INDEX                   as SAMTOOLS_INDEX_HIPHASE_SV  } from '../modules/nf-core/samtools/index/main'
+include { PBTK_PBMERGE                                 } from '../modules/nf-core/pbtk/pbmerge/main'
+include { DEEPVARIANT_RUNDEEPVARIANT                   } from '../modules/nf-core/deepvariant/rundeepvariant/main'
+include { SAMTOOLS_INDEX                               } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_SORT                                } from '../modules/nf-core/samtools/sort/main'
+include { GATK4_HAPLOTYPECALLER                        } from '../modules/nf-core/gatk4/haplotypecaller/main'
+include { PBMM2_ALIGN                                  } from '../modules/nf-core/pbmm2/align/main'
+include { HIPHASE as HIPHASE_SNP                       } from '../modules/nf-core/hiphase/main'
+include { HIPHASE as HIPHASE_SV                        } from '../modules/nf-core/hiphase/main'
+include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES             } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SNP } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SV  } from '../modules/nf-core/samtools/index/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,26 +62,24 @@ workflow PACVAR {
     main:
     ch_versions = channel.empty()
 
-    // demultiplex
+    // demultiplexing
     if (!params.skip_demultiplexing) {
-        barcode_ch = channel.value(file(params.barcodes))
-        LIMA(ch_samplesheet, barcode_ch)
+        ch_barcode = Channel.value(file(params.barcodes))
+        LIMA(ch_samplesheet, ch_barcode)
         ch_versions = ch_versions.mix(LIMA.out.versions)
 
-        lima_ch = LIMA.out.bam
-            .flatMap{ metadata, sampleBams ->
-            //seperate samples
-                sampleBams.collect { bam ->
-                    [metadata, bam]
+        ch_lima = LIMA.out.bam
+            .flatMap{ meta, sampleBams ->
+                //seperate samples
+                sampleBams.collect { bam -> [meta, bam] }
             }
-            }
-            .map{tuple ->
-                def bam = tuple[1]
+            .map{ meta, bam ->
                 //change metadata to reflect demultiplexed barcode
-                [[id: bam.baseName], bam]
+                def new_meta = meta + [id: bam.baseName]
+                [new_meta, bam]
             }
 
-            pbmm2_input_ch = lima_ch
+            pbmm2_input_ch = ch_lima
     }
 
     // align input directly (skipping demultiplexing phase)
@@ -88,15 +87,55 @@ workflow PACVAR {
         pbmm2_input_ch = ch_samplesheet
     }
 
-    PBMM2_ALIGN(pbmm2_input_ch, fasta)
+    // filter input based on workflow type
+    pbmm2_input_filter_ch = pbmm2_input_ch.filter { meta, bam ->
+        if (params.workflow == 'wgs') {
+            return meta.type == 'hifi'
+        }
+        else if (params.workflow == 'repeat') {
+            return meta.type in ['hifi', 'fail']
+        }
+        else {
+            return false
+        }
+    }
+
+    PBMM2_ALIGN(pbmm2_input_filter_ch, fasta)
     ch_versions = ch_versions.mix(PBMM2_ALIGN.out.versions)
 
+    // merge hifi and fail bams for repeat workflow
+    if (params.workflow == 'wgs') {
+        samtools_input_ch = PBMM2_ALIGN.out.bam
+            .map { meta, bam -> [meta-meta.subMap('type'), bam] }
+    }
+    else if (params.workflow == 'repeat') {
+        ch_bams = PBMM2_ALIGN.out.bam
+            .map { meta, bam -> [meta-meta.subMap('type'), bam] }
+            .groupTuple()
 
-    SAMTOOLS_SORT(PBMM2_ALIGN.out.bam, fasta, '')
+        // get samples with hifi and fail reads
+        ch_to_merge = ch_bams
+            .filter { meta, bams -> bams.size() > 1 }
+            .map { meta, bams -> [meta, bams] }
+
+        // get samples with only hifi reads
+        ch_no_merge = ch_bams
+            .filter { meta, bams -> bams.size() == 1 }
+            .map { meta, bams -> [meta, bams[0]] }
+
+        PBTK_PBMERGE(ch_to_merge)
+        ch_versions = ch_versions.mix(PBTK_PBMERGE.out.versions)
+        ch_merged = PBTK_PBMERGE.out.bam
+
+        ch_no_merge
+            .mix(ch_merged)
+            .set { samtools_input_ch }
+    }
+
+    SAMTOOLS_SORT(samtools_input_ch, fasta, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
     // ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions.first())
     ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
-
 
     //join the bam and index based off the meta id (ensure correct order)
     bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai)

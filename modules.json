@@ -96,6 +96,11 @@
                         "git_sha": "28e94c35f90efd2bcbe06261d1bdcf3577f71220",
                         "installed_by": ["modules"]
                     },
+                    "pbtk/pbmerge": {
+                        "branch": "master",
+                        "git_sha": "8c62f149237d7a5d0dfcb95fcc78cc4ad314fd9b",
+                        "installed_by": ["modules"]
+                    },
                     "samtools/index": {
                         "branch": "master",
                         "git_sha": "c8be52dba1166c678e74cda9c3a3c221635c8bb1",

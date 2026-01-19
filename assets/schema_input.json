@@ -27,6 +27,13 @@
                 "format": "file-path",
                 "exists": true
             },
+            "fail": {
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This is an optional input in case merging of hifi and fail reads need to occur for the 'repeat' workflow.",
+                "type": "string",
+                "pattern": "^\\S+\\.(bam|cram)$",
+                "format": "file-path",
+                "exists": true
+            },
             "repeat_id": {
                 "errorMessage": "Repeat ID to be plotted cannot contain spaces. Multiple IDs can be provided separated by semicolons ';'. If not provided, params.repeat_id will be used.",
                 "meta": ["repeat_id"],
