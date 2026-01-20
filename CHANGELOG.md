@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## dev - [11/1/2026]
+## dev - [1/20/2026]
 
 This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules.
 
@@ -13,6 +13,7 @@ This is new dev version includes new features with copy number variation calling
   - `hificnv`: Integrated the hificnv module for copy-number variant (CNVs) calling, positioned either before or after SNVs calling depending on the skip_snp parameter.
   - `sawfish/discover` and `sawfish/jointcall`: Integrated sawfish as an optional structural variant caller, configurable via `sv_caller = ['pbsv', 'sawfish']`.
   - `pbcpgtools/alignedbamtoscore`: Integrated the pbcpgtools/alignedbamcpgscores module for CpG methylation profiling, placed before or after hiphase based on the skip_phase setting.
+  - `pbbam/pbmerge`: Integrated the pbbam/pbmerge module to merge multiple PacBio BAM files into a single BAM file using the PacBio BAM (pbbam) library.
 - main paramters (`nextlfow.config`):
   - `sv_caller`: an optional structural variant caller `['pbsv', 'sawfish]`
   - `skip_cnv` : to skip copy number variation calling by `hificnv`

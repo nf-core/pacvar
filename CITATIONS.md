@@ -54,13 +54,18 @@
 
   > Pacific Biosciences. TRGT: Tandem repeat genotyping tool for PacBio long-read sequencing data.
 
-- [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools)
+- [pb-CpG-tools / alignedbamtocpgscores](https://github.com/PacificBiosciences/pb-CpG-tools)
 
   > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data.
 
 - [Sawfish](https://github.com/PacificBiosciences/sawfish)
 
   > Darby CA, Kronenberg ZN, Wenger AM, et al. Sawfish enables accurate joint variant calling across long-read sequencing datasets. Nature Methods. 2023. doi: 10.1038/s41592-023-02038-1. PMID: 37991646.
+
+- [pbbam / pbmerge](https://github.com/PacificBiosciences/pbbam)
+
+  > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files. GitHub repository: https://github.com/PacificBiosciences/pbbam
+
 
 ## Software packaging/containerisation tools
 
