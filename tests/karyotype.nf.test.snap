@@ -4,31 +4,31 @@
             19,
             {
                 "BCFTOOLS_SORT": {
-                    "bcftools": 1.2
+                    "bcftools": 1.22
                 },
                 "PBMM2_ALIGN": {
                     "pbmm2": "1.14.99"
                 },
                 "SAMTOOLS_INDEX": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_INDEX_TRGT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_SORT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_SORT_TRGT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "TRGT_GENOTYPE": {
-                    "trgt": "1.2.0-9eda4dd"
+                    "trgt": "5.0.0-e9acee0"
                 },
                 "TRGT_PLOT": {
-                    "trgt": "1.2.0-9eda4dd"
+                    "trgt": "5.0.0-e9acee0"
                 },
                 "Workflow": {
-                    "nf-core/pacvar": "v1.0.1"
+                    "nf-core/pacvar": "vdev"
                 }
             },
             [
@@ -39,7 +39,9 @@
                 "bcftools/sample2.sorted.vcf.gz.csi",
                 "multiqc",
                 "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
                 "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
@@ -70,6 +72,8 @@
                 "trgt/sample2_C9ORF72_motifs.png"
             ],
             [
+                "llms-full.txt:md5,6fef54d5a1b18edb1568aa8ac8760ef0",
+                "multiqc.parquet:md5,12ed63e8a5b18ef380644684d9d1609d",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
@@ -117,7 +121,7 @@
                     {
                         "maxReadLength": 7642,
                         "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "meanReadLength": 614,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -143,7 +147,7 @@
                     {
                         "maxReadLength": 7642,
                         "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "meanReadLength": 614,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -156,7 +160,7 @@
                     {
                         "maxReadLength": 7642,
                         "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "meanReadLength": 614,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -169,7 +173,7 @@
                     {
                         "maxReadLength": 7642,
                         "minReadLength": 100,
-                        "meanReadLength": 629,
+                        "meanReadLength": 614,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -198,9 +202,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.2",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-17T16:55:04.021321115"
+        "timestamp": "2026-01-20T13:35:03.53298916"
     }
 }

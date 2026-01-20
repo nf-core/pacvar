@@ -4,7 +4,7 @@
             21,
             {
                 "BCFTOOLS_SORT": {
-                    "bcftools": 1.2
+                    "bcftools": 1.22
                 },
                 "PBMM2_ALIGN": {
                     "pbmm2": "1.14.99"
@@ -13,25 +13,25 @@
                     "pbbam": "3.1.1"
                 },
                 "SAMTOOLS_INDEX": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_INDEX_TRGT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_SORT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_SORT_TRGT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "TRGT_GENOTYPE": {
-                    "trgt": "1.2.0-9eda4dd"
+                    "trgt": "5.0.0-e9acee0"
                 },
                 "TRGT_PLOT": {
-                    "trgt": "1.2.0-9eda4dd"
+                    "trgt": "5.0.0-e9acee0"
                 },
                 "Workflow": {
-                    "nf-core/pacvar": "v1.0.1"
+                    "nf-core/pacvar": "vdev"
                 }
             },
             [
@@ -42,7 +42,9 @@
                 "bcftools/sample2.sorted.vcf.gz.csi",
                 "multiqc",
                 "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
                 "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
@@ -77,6 +79,8 @@
                 "trgt/sample2_C9ORF72_motifs.png"
             ],
             [
+                "llms-full.txt:md5,349925a13b9f0445f163ed138aa10522",
+                "multiqc.parquet:md5,3468fdd4330ab008514d5be93c2bc90b",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "sample1.merged.bam:md5,0d99dce9f71fbd4dc1e1b8002d21266e",
                 "sample1.merged.bam.pbi:md5,35eefe5de049ea43cf7a801aebe0305a"
@@ -233,9 +237,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.2",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-19T10:54:18.538896232"
+        "timestamp": "2026-01-20T13:36:02.217439486"
     }
 }
