@@ -66,7 +66,6 @@
 
   > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files. GitHub repository: https://github.com/PacificBiosciences/pbbam
 
-
 ## Software packaging/containerisation tools
 
 - [Anaconda](https://anaconda.com)
