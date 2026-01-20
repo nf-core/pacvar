@@ -1,4 +1,48 @@
 {
+    "-profile test": {
+        "content": [
+            null,
+            [
+                "bcftools",
+                "bcftools/sample1.sorted.vcf.gz",
+                "bcftools/sample1.sorted.vcf.gz.csi",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbmm2",
+                "pbmm2/sample1_hifi.aligned.bam",
+                "pipeline_info",
+                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "samtools",
+                "samtools/sample1.sorted.bam",
+                "samtools/sample1.sorted.bam.bai",
+                "samtools/sample1.trgt.sorted.bam",
+                "samtools/sample1.trgt.sorted.bam.bai",
+                "trgt",
+                "trgt/sample1.spanning.bam",
+                "trgt/sample1.vcf.gz",
+                "trgt/sample1_C9ORF72_meth.png",
+                "trgt/sample1_C9ORF72_motifs.png"
+            ],
+            [
+                "llms-full.txt:md5,435756f80e530fc842c65ea9b18c5668",
+                "multiqc.parquet:md5,7ab33340ac45081470a1abf16a8d9756",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.10.2"
+        },
+        "timestamp": "2026-01-20T13:18:38.407400031"
+    },
     "Params: default": {
         "content": [
             10,
