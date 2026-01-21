@@ -32,8 +32,6 @@
                 "trgt/sample1_C9ORF72_motifs.png"
             ],
             [
-                "llms-full.txt:md5,1b774c1d1ace8102c0e56738ccd0a535",
-                "multiqc.parquet:md5,caa6de76316471dccdbd14c39fd443e7",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ]
         ],
@@ -41,7 +39,7 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-01-20T16:20:14.421017958"
+        "timestamp": "2026-01-20T16:36:50.817230876"
     },
     "Params: default": {
         "content": [

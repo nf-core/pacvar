@@ -79,8 +79,6 @@
                 "trgt/sample2_C9ORF72_motifs.png"
             ],
             [
-                "llms-full.txt:md5,eec7ee944ccb2b706abddab2a1dd4c4f",
-                "multiqc.parquet:md5,d7e251a989f4efaf942113c93df3d618",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "sample1.merged.bam:md5,0d99dce9f71fbd4dc1e1b8002d21266e",
                 "sample1.merged.bam.pbi:md5,35eefe5de049ea43cf7a801aebe0305a"
@@ -240,6 +238,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.10.2"
         },
-        "timestamp": "2026-01-20T16:25:47.105363391"
+        "timestamp": "2026-01-20T16:38:58.560548282"
     }
 }
