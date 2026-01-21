@@ -17,3 +17,4 @@ bcftools/*.{vcf.gz,vcf.gz.csi}
 pbmm2/*.bam
 samtools/*.{bam,bam.bai}
 trgt/*.{bam,vcf.gz}
+pbtk/*.merged.{bam,bam.bai}
