@@ -18,4 +18,3 @@ pbmm2/*.bam
 samtools/*.{bam,bam.bai}
 trgt/*.{bam,vcf.gz}
 pbtk/*.{bam,bam.pbi}
-
