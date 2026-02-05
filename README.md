@@ -103,7 +103,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/pacvar was originally written by Tanya Sarkin Jain.
+nf-core/pacvar was originally written by Tanya Sarkin Jain. Contributions by Chao-Jen Wong and Stijn Van de Sompele were added starting with version 1.1.0dev and continuing in later releases.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
