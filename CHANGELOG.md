@@ -3,9 +3,9 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## dev - [1/20/2026]
+## 1.1.0dev - [1/20/2026]
 
-This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules.
+This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools), and PacBio merge bam (pbtk/pbmerge). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules.
 
 ### `Added`
 
@@ -25,34 +25,30 @@ This is new dev version includes new features with copy number variation calling
 
 ### `Fixed`
 
-- Updated nf-core template to version 3.5.1
-- Update modules (12/2025):
-  - bcftools/sort
-  - deepvariant/callvariants
-  - deepvariant/makeexamples
-  - deepvariant/postprocessvariants
-  - deepvariant/rundeepvariant
-  - fastqc
-  - gatk4/haplotypecaller
-  - gunzip
-  - hiphase
-  - hificnv
-  - lima
-  - multiqc
-  - pbcpgtools/alignedbamtocpgscores
-  - pbmm2/align
-  - pbsv/discvoer
-  - pbsv/call
-  - samtools/index
-  - samtools/sort
-  - sawfish/discover
-  - sawfish/jointcall
-  - tabix/bgzip
-  - trgt/genotype
-  - trgt/plot
-- Adopted to some topic-based modules (`trgt`, `bcftools`, and etc)
+- [#35](https://github.com/nf-core/pacvar/pull/37) Important! Template update for nf-core/tools v3.5.1
+- [#31](https://github.com/nf-core/pacvar/issues/31) Update deepvariant
+- [#30](https://github.com/nf-core/pacvar/issues/30) Replace pbsv with sawfish; `sawfish` added but not replacing `pbsv`
 
 ### `Dependencies`
+
+| Tool        | Previous version | New version |
+| ----------- | ---------------- | ----------- |
+| bcftools    | 1.20             | 1.22        |
+| deepvariant | 1.6              | 1.9.0       |
+| gatk4       | 4.5.0            | 4.6.2       |
+| gunzip      | (ubuntu:22.04)   | 1.13        |
+| hiphase     | 1.4.5            | 1.5.0       |
+| hificnv     | -                | 1.0.1       |
+| lima        | 2.9              | 2.12        |
+| multiqc     | 1.27             | 1.33        |
+| pbcpgtools  | -                | 3.0.0       |
+| pbmm2       | 1.14.99          | 1.14.99     |
+| pbsv        | 2.9.0            | 2.11.0      |
+| pbtk        | -                | 3.1.1       |
+| samtools    | 1.21             | 1.22.1      |
+| sawfish     | -                | 2.2.0       |
+| tabix       | 1.11             | 1.21        |
+| trgt        | 1.2              | 5.0.0       |
 
 ### `Deprecated`
 
