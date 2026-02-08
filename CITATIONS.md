@@ -20,8 +20,7 @@
 
 - [lima](https://github.com/PacificBiosciences/barcoding)
 
-  > Pacific Biosciences. pbmm2: Demultiplex Barcoded PacBio Samples
-
+  > Pacific Biosciences. lima: Demultiplex Barcoded PacBio Samples
 
 - [pbmm2](https://github.com/PacificBiosciences/pbmm2)
 
