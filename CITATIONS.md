@@ -20,7 +20,12 @@
 
 - [lima](https://github.com/PacificBiosciences/barcoding)
 
+  > Pacific Biosciences. pbmm2: Demultiplex Barcoded PacBio Samples
+
+
 - [pbmm2](https://github.com/PacificBiosciences/pbmm2)
+
+  > Pacific Biosciences. pbmm2: A minimap2 SMRT wrapper for PacBio data
 
 - [SAMtools](https://pubmed.ncbi.nlm.nih.gov/19505943/)
 
