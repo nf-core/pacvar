@@ -48,7 +48,7 @@
 
 - [HiFiCNV](https://github.com/PacificBiosciences/hificnv)
 
-  > Author et al. HiFiCNV: Copy number variation detection for PacBio HiFi data. Journal Year;Volume:Pages.
+  > Pacific Biosciences. HiFiCNV: Copy number variant caller and depth visualization utility for PacBio HiFi reads
 
 - [TRGT](https://github.com/PacificBiosciences/trgt)
 
@@ -58,13 +58,13 @@
 
   > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data.
 
-- [Sawfish](https://github.com/PacificBiosciences/sawfish)
+- [Sawfish](https://doi.org/10.1093/bioinformatics/btaf136)
 
-  > Darby CA, Kronenberg ZN, Wenger AM, et al. Sawfish enables accurate joint variant calling across long-read sequencing datasets. Nature Methods. 2023. doi: 10.1038/s41592-023-02038-1. PMID: 37991646.
+  > Darby CA, Kronenberg ZN, Wenger AM, et al. Sawfish enables accurate joint variant calling across long-read sequencing datasets. Nature Methods. 2023. doi: 10.1038/s41592-023-02038-1. PMID: 37991646. GitHub repository: https://github.com/PacificBiosciences/sawfish
 
 - [pbbam / pbmerge](https://github.com/PacificBiosciences/pbbam)
 
-  > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files. GitHub repository: https://github.com/PacificBiosciences/pbbam
+  > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files.
 
 ## Software packaging/containerisation tools
 
