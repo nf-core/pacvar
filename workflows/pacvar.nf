@@ -170,7 +170,8 @@ workflow PACVAR {
 
             if (!params.skip_phase) {
                 // phase snp files
-                HIPHASE_SNP(orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
+                HIPHASE_SNP(
+                    orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_snp.bam_bai,
                     fasta)
                 ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions.first())
@@ -187,15 +188,10 @@ workflow PACVAR {
         if (!params.skip_cnv) {
             // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
             // Prepare channel and MAF input based on skip_snp and skip_phase parameters
-            // bam_bam_maf_ch to be channel: tuple val(meta), path(bam), path(bai), path(vcf)
+            // define bam_bam_maf_ch: tuple val(meta), path(bam), path(bai), path(vcf)
             if (!params.skip_snp && !params.skip_phase) {
-                // define bam_bai_maf_ch
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
-                bam_bai_maf_ch = bam_bai_ch
-                    .join(HIPHASE_SNP.out.vcf)
-                    .map { meta, bam, bai, vcf ->
-                        [meta, bam, bai, vcf]
-                    }
+                bam_bai_maf_ch = bam_bai_ch.join(HIPHASE_SNP.out.vcf)
             } else if (!params.skip_snp && params.skip_phase) {
                 // Use unphased BAM, BAI, and VCF from SNP calling
                 bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->
