@@ -16,10 +16,10 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BAM_SNP_VARIANT_CALLING as BAM_SNP_VARIANT_CALLING    } from '../subworkflows/local/bam_snp_variant_calling'
+include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_calling'
 include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
 include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
-include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subworkflows/local/repeat_characterization'
+include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,7 +27,7 @@ include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subwo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { LIMA                                                           } from '../modules/nf-core/lima/main'
+include { LIMA                                         } from '../modules/nf-core/lima/main'
 include { PBTK_PBMERGE                                 } from '../modules/nf-core/pbtk/pbmerge/main'
 include { DEEPVARIANT_RUNDEEPVARIANT                   } from '../modules/nf-core/deepvariant/rundeepvariant/main'
 include { SAMTOOLS_INDEX                               } from '../modules/nf-core/samtools/index/main'
