@@ -173,11 +173,11 @@ workflow PACVAR {
                 HIPHASE_SNP(orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_snp.bam_bai,
                     fasta)
-                ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions)
+                ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions.first())
 
                 // Index the phased BAM from HIPHASE_SNP
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
-                ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
+                // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
 
                 // channel for pbcpgtools_alignedbamtocpgscores
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
@@ -266,11 +266,11 @@ workflow PACVAR {
                     orderd_bam_bai_vcf_tbi_sv.bam_bai,
                     fasta)
 
-                ch_versions = ch_versions.mix(HIPHASE_SV.out.versions)
+                ch_versions = ch_versions.mix(HIPHASE_SV.out.versions.first())
 
                 // Index the phased BAM from HIPHASE_SV
                 SAMTOOLS_INDEX_HIPHASE_SV(HIPHASE_SV.out.bam)
-                ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SV.out.versions)
+                // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SV.out.versions)
             }
         }
 
