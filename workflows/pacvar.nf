@@ -134,8 +134,9 @@ workflow PACVAR {
 
     SAMTOOLS_SORT(samtools_input_ch, fasta, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
+    // both SAMTOOLS_SORT and SAMTOOLS_INDEX are updated to standardize version topics
     // ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions.first())
-    ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
+    // ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions.first())
 
     //join the bam and index based off the meta id (ensure correct order)
     bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai)
