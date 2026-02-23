@@ -13,9 +13,9 @@ workflow BAM_SV_VARIANT_CALLING {
     sorted_bai              // tuple val(meta), path(bai)
     fasta                   // tuple val(meta), path(ref)
     fasta_fai               // tuple val(meta), path(fai)
-    expected_cn         // tuple val(meta), path(bed) - for SAWFISH
+    expected_cn             // tuple val(meta), path(bed) - for SAWFISH
     maf_vcf                 // tuple val(meta), path(vcf) - for SAWFISH
-    cnv_excluded_regions // tuple val(meta), path(bed) - for SAWFISH
+    cnv_excluded_regions    // tuple val(meta), path(bed) - for SAWFISH
 
 
     main:
@@ -42,7 +42,8 @@ workflow BAM_SV_VARIANT_CALLING {
     if (params.sv_caller == 'sawfish') {
         // SAWFISH workflow
         // Combine BAM and BAI into single tuple: [meta, bam, bai]
-        sorted_bam_bai = sorted_bam.join(sorted_bai)
+        sorted_bam_bai = sorted_bam.join(sorted_bai, by: 0)
+
         SAWFISH_DISCOVER(
             sorted_bam_bai,
             fasta,
@@ -51,13 +52,22 @@ workflow BAM_SV_VARIANT_CALLING {
             cnv_excluded_regions
         )
 
-        // Call genotype SVs
+        discover_bam_bai_joined = SAWFISH_DISCOVER.out.discover_dir
+            .join(sorted_bam_bai, by: 0)
+
         SAWFISH_JOINTCALL(
-            SAWFISH_DISCOVER.out.discover_dir,
+            discover_bam_bai_joined.map { meta, discover_dir, bam, bai -> [meta, discover_dir] },
             fasta,
-            sorted_bam_bai,
+            discover_bam_bai_joined.map { meta, discover_dir, bam, bai -> [meta, bam, bai] },
             [[:], []]
         )
+        // Call genotype SVs
+        //SAWFISH_JOINTCALL(
+        //    SAWFISH_DISCOVER.out.discover_dir,
+        //    fasta,
+        //   sorted_bam_bai,
+        //    [[:], []]
+        //)
 
         // VCF output with TBI index
         vcf_ch = SAWFISH_JOINTCALL.out.vcf.join(SAWFISH_JOINTCALL.out.tbi)
