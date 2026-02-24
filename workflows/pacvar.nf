@@ -217,32 +217,29 @@ workflow PACVAR {
         if (!params.skip_sv) {
             //pbsv or sawfish structural variant calling
             // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
-            // maf_vcf_ch to be channel: tuple val(meta), path(vcf)
-            if (params.sv_caller == 'sawfish') {
-                // define maf_vcf_ch
-                if (!params.skip_snp && !params.skip_phase) {
-                    // Use phased VCF from HIPHASE_SNP (already [meta, vcf])
-                    maf_vcf_ch = HIPHASE_SNP.out.vcf
-                } else if (!params.skip_snp && params.skip_phase) {
-                    // Use unphased VCF from SNP calling (extract just meta and vcf)
-                    maf_vcf_ch = BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, tbi ->
-                        [meta, vcf]
-                    }
-                } else {
-                    // Skip SNP calling - empty VCF
-                    maf_vcf_ch = channel.value([[:], []])
+            if (params.sv_caller == 'sawfish' && !params.skip_snp) {
+                // Create all three channels from bam_bai_vcf_snp_ch
+                (sv_bam_ch, sv_bai_ch, sv_maf_ch) = bam_bai_vcf_snp_ch.multiMap { meta, bam, bai, vcf, tbi ->
+                    bam: [meta, bam]
+                    bai: [meta, bai]
+                    maf: [meta, vcf]
                 }
             } else {
-                // PBSV doesn't use MAF VCF - always empty
-                maf_vcf_ch = channel.value([[:], []])
+                // Use ordered channels when:
+                // 1) sv_caller is not 'sawfish', OR
+                // 2) sv_caller is 'sawfish' but skip_snp is true
+                sv_bam_ch = ordered_bam_ch
+                sv_bai_ch = ordered_bai_ch
+                sv_maf_ch = channel.value([[:], []])
             }
 
-            BAM_SV_VARIANT_CALLING(ordered_bam_ch,
-                ordered_bai_ch,
+            BAM_SV_VARIANT_CALLING(
+                sv_bam_ch,
+                sv_bai_ch,
                 fasta,
                 fasta_fai,
                 expected_cn,
-                maf_vcf_ch,
+                sv_maf_ch,
                 cnv_excluded_regions)
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
