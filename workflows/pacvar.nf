@@ -163,10 +163,10 @@ workflow PACVAR {
             bam_bai_vcf_snp_ch = bam_bai_ch.join(BAM_SNP_VARIANT_CALLING.out.vcf_ch)
 
             orderd_bam_bai_vcf_tbi_snp = bam_bai_vcf_snp_ch
-            .multiMap { meta, bam, bai, vcf, tbi ->
-                bam_bai: [meta, bam, bai]
-                vcf_tbi: [meta, vcf, tbi]
-            }
+                .multiMap { meta, bam, bai, vcf, tbi ->
+                  bam_bai: [meta, bam, bai]
+                    vcf_tbi: [meta, vcf, tbi]
+                }
 
             if (!params.skip_phase) {
                 // phase snp files
@@ -191,22 +191,22 @@ workflow PACVAR {
             // define bam_bam_maf_ch: tuple val(meta), path(bam), path(bai), path(vcf)
             if (!params.skip_snp && !params.skip_phase) {
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
-                bam_bai_maf_ch = bam_bai_ch.join(HIPHASE_SNP.out.vcf)
+                cnv_input_bam_bai_maf_ch = bam_bai_ch.join(HIPHASE_SNP.out.vcf)
             } else if (!params.skip_snp && params.skip_phase) {
                 // Use unphased BAM, BAI, and VCF from SNP calling
-                bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->
+                cnv_input_bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->
                     [meta, bam, bai, vcf]
                     }
             } else {
                 // Skip SNP calling - use original BAM and BAI with empty VCF
-                bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai ->
+                cnv_input_bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai ->
                     [meta, bam, bai, []]
                 }
             }
 
             // Run HiFiCNV
             BAM_CNV_VARIANT_CALLING(
-                bam_bai_maf_ch,
+                cnv_input_bam_bai_maf_ch,
                 fasta,
                 expected_cn,
                 cnv_excluded_regions
@@ -219,7 +219,7 @@ workflow PACVAR {
             // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
             if (params.sv_caller == 'sawfish' && !params.skip_snp) {
                 // Create all three channels from bam_bai_vcf_snp_ch
-                (sv_bam_ch, sv_bai_ch, sv_maf_ch) = bam_bai_vcf_snp_ch.multiMap { meta, bam, bai, vcf, tbi ->
+                (sv_input_bam_ch, sv_input_bai_ch, sv_input_maf_ch) = bam_bai_vcf_snp_ch.multiMap { meta, bam, bai, vcf, tbi ->
                     bam: [meta, bam]
                     bai: [meta, bai]
                     maf: [meta, vcf]
@@ -228,18 +228,18 @@ workflow PACVAR {
                 // Use ordered channels when:
                 // 1) sv_caller is not 'sawfish', OR
                 // 2) sv_caller is 'sawfish' but skip_snp is true
-                sv_bam_ch = ordered_bam_ch
-                sv_bai_ch = ordered_bai_ch
-                sv_maf_ch = channel.value([[:], []])
+                sv_input_bam_ch = ordered_bam_ch
+                sv_input_bai_ch = ordered_bai_ch
+                sv_input_maf_ch = channel.value([[:], []])
             }
 
             BAM_SV_VARIANT_CALLING(
-                sv_bam_ch,
-                sv_bai_ch,
+                sv_input_bam_ch,
+                sv_input_bai_ch,
                 fasta,
                 fasta_fai,
                 expected_cn,
-                sv_maf_ch,
+                sv_input_maf_ch,
                 cnv_excluded_regions)
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
@@ -248,14 +248,15 @@ workflow PACVAR {
             bam_bai_vcf_sv_ch = bam_bai_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
 
             orderd_bam_bai_vcf_tbi_sv = bam_bai_vcf_sv_ch
-            .multiMap { meta, bam, bai, vcf, tbi ->
-                bam_bai: [meta, bam, bai]
-                vcf_tbi: [meta, vcf, tbi]
-            }
+                .multiMap { meta, bam, bai, vcf, tbi ->
+                    bam_bai: [meta, bam, bai]
+                    vcf_tbi: [meta, vcf, tbi]
+                }
 
             //phase sv files
             if (!params.skip_phase) {
-                HIPHASE_SV(orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
+                HIPHASE_SV(
+                    orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_sv.bam_bai,
                     fasta)
 
@@ -288,13 +289,14 @@ workflow PACVAR {
 
     if (params.workflow == 'repeat') {
         // characterize repeats
-        REPEAT_CHARACTERIZATION(ordered_bam_ch,
+        REPEAT_CHARACTERIZATION(
+            ordered_bam_ch,
             ordered_bai_ch,
             fasta,
             fasta_fai,
             intervals)
 
-        ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
+        ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions.first())
     }
 
     // MODULE: MultiQC
