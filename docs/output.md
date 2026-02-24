@@ -123,26 +123,26 @@ Note:
 <details markdown="1">
 <summary>Output files</summary>
 
-- `sawfish/discover/`
-  - `<basename>_discovery/sv_candidates.vcf.gz`: Per-sample structural variant candidate calls from haplotype assembly.
-  - `<basename>_discovery/sv_candidates.vcf.gz.tbi`: Tabix index for SV candidates VCF.
-  - `<basename>_discovery/contig.alignment.bam`: Assembled haplotype contigs aligned to the reference genome.
-  - `<basename>_discovery/contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
-  - `<basename>_discovery/assembly.regions.bed`: Genomic regions where local assembly was performed.
-  - `<basename>_discovery/copynum.bedgraph`: Preliminary copy number estimates in bedGraph format.
-  - `<basename>_discovery/copynum.mpack`: Copy number data in MessagePack binary format.
-  - `<basename>_discovery/depth.mpack`: Depth coverage data in MessagePack format.
-  - `<basename>_discovery/maf.mpack`: Minor allele frequency data in MessagePack format if `skip_snp=false`.
-  - `<basename>_discovery/expected.copy.number.bed`: Expected copy number for genomic regions (e.g., sex chromosomes).
-  - `<basename>_discovery/max.depth.bed`: Regions with maximum depth thresholds.
-  - `<basename>_discovery/genome.gclevels.mpack`: GC content levels across the genome.
-  - `<basename>_discovery/sample.gcbias.mpack`: Sample-specific GC bias correction data.
-  - `<basename>_discovery/discover.settings.json`: Configuration file with input paths and parameters.
-  - `<basename>_discovery/run.data.json`: Runtime data and statistics.
+- `sawfish/<basename>_discovery`
+  - `sv_candidates.vcf.gz`: Per-sample structural variant candidate calls from haplotype assembly.
+  - `sv_candidates.vcf.gz.tbi`: Tabix index for SV candidates VCF.
+  - `contig.alignment.bam`: Assembled haplotype contigs aligned to the reference genome.
+  - `contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
+  - `assembly.regions.bed`: Genomic regions where local assembly was performed.
+  - `copynum.bedgraph`: Preliminary copy number estimates in bedGraph format.
+  - `copynum.mpack`: Copy number data in MessagePack binary format.
+  - `depth.mpack`: Depth coverage data in MessagePack format.
+  - `maf.mpack`: Minor allele frequency data in MessagePack format if `skip_snp=false`.
+  - `expected.copy.number.bed`: Expected copy number for genomic regions (e.g., sex chromosomes).
+  - `max.depth.bed`: Regions with maximum depth thresholds.
+  - `genome.gclevels.mpack`: GC content levels across the genome.
+  - `sample.gcbias.mpack`: Sample-specific GC bias correction data.
+  - `discover.settings.json`: Configuration file with input paths and parameters.
+  - `run.data.json`: Runtime data and statistics.
   - `run.stats.json`: Summary statistics from the discover run.
-  - `<basename>_discovery/<basename>_discovery/sawfish.log`: Detailed log file from the discover step.
-  - `<basename>_discovery/debug.breakpoint_clusters.bed`: Debug output showing breakpoint cluster locations.
-  - `<basename>_discovery/debug.cluster.refinement.txt`: Debug output with cluster refinement details.
+  - `sawfish.log`: Detailed log file from the discover step.
+  - `debug.breakpoint_clusters.bed`: Debug output showing breakpoint cluster locations.
+  - `debug.cluster.refinement.txt`: Debug output with cluster refinement details.
 
 </details>
 
@@ -151,13 +151,13 @@ Note:
 <details markdown="1">
 <summary>Output files</summary>
 
-- `sawfish/jointcall/`
-  - `<basename>_jointcall/genotyped.sv.vcf.gz`: Integrated structural variant and copy number variant calls in VCF format.
-  - `<basename>_jointcall/genotyped.sv.vcf.gz.tbi`: Tabix index for the joint-called VCF.
-  - `<basename>_jointcall/contig.alignment.bam`: Merged contig alignments from all samples.
-  - `<basename>_jointcall/contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
-  - `<basename>_jointcall/run.stats.json`: Summary statistics from the joint-call run.
-  - `<basename>_jointcall/sawfish.log`: Detailed log file from the joint-call step.
+- `sawfish/<basename>_jointcall`
+  - `genotyped.sv.vcf.gz`: Integrated structural variant and copy number variant calls in VCF format.
+  - `genotyped.sv.vcf.gz.tbi`: Tabix index for the joint-called VCF.
+  - `contig.alignment.bam`: Merged contig alignments from all samples.
+  - `contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
+  - `run.stats.json`: Summary statistics from the joint-call run.
+  - `sawfish.log`: Detailed log file from the joint-call step.
 
 </details>
 
