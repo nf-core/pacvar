@@ -20,7 +20,12 @@ workflow BAM_SV_VARIANT_CALLING {
 
     main:
     ch_versions = channel.empty()
-    vcf_ch      = channel.empty()
+    vcf_ch  = channel.empty()
+
+    // Validate sv_caller parameter
+    if (!(params.sv_caller in ['pbsv', 'sawfish'])) {
+        error "Invalid sv_caller: ${params.sv_caller}. Must be 'pbsv' or 'sawfish'"
+    }
 
     //call the structural variants
     if (params.sv_caller == 'pbsv') {
@@ -42,41 +47,35 @@ workflow BAM_SV_VARIANT_CALLING {
     if (params.sv_caller == 'sawfish') {
         // SAWFISH workflow
         // Combine BAM and BAI into single tuple: [meta, bam, bai]
-        sorted_bam_bai = sorted_bam.join(sorted_bai, by: 0)
+        ch_sorted_bam_bai = sorted_bam.join(sorted_bai, by: 0)
 
         SAWFISH_DISCOVER(
-            sorted_bam_bai,
+            ch_sorted_bam_bai,
             fasta,
             expected_cn,
             maf_vcf,
             cnv_excluded_regions
         )
 
-        discover_bam_bai_joined = SAWFISH_DISCOVER.out.discover_dir
-            .join(sorted_bam_bai, by: 0)
+        // ensure bam_bai and discovery_dir share matched meta.id
+        ch_discover_bam_bai = SAWFISH_DISCOVER.out.discover_dir
+            .join(ch_sorted_bam_bai, by: 0)
 
         SAWFISH_JOINTCALL(
-            discover_bam_bai_joined.map { meta, discover_dir, bam, bai -> [meta, discover_dir] },
+            ch_discover_bam_bai.map { meta, discover_dir, bam, bai -> [meta, discover_dir] },
             fasta,
-            discover_bam_bai_joined.map { meta, discover_dir, bam, bai -> [meta, bam, bai] },
+            ch_discover_bam_bai.map { meta, discover_dir, bam, bai -> [meta, bam, bai] },
             [[:], []]
         )
-        // Call genotype SVs
-        //SAWFISH_JOINTCALL(
-        //    SAWFISH_DISCOVER.out.discover_dir,
-        //    fasta,
-        //   sorted_bam_bai,
-        //    [[:], []]
-        //)
 
         // VCF output with TBI index
         vcf_ch = SAWFISH_JOINTCALL.out.vcf.join(SAWFISH_JOINTCALL.out.tbi)
 
-        ch_versions = ch_versions.mix(SAWFISH_DISCOVER.out.versions)
-        ch_versions = ch_versions.mix(SAWFISH_JOINTCALL.out.versions)
+        ch_versions = ch_versions.mix(SAWFISH_DISCOVER.out.versions.first())
+        ch_versions = ch_versions.mix(SAWFISH_JOINTCALL.out.versions.first())
     }
 
     emit:
     vcf_ch
-    versions       = ch_versions
+    versions   = ch_versions
 }
