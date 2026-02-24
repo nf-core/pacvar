@@ -2,7 +2,7 @@
 include { PBSV_DISCOVER     } from '../../../modules/nf-core/pbsv/discover/main'
 include { PBSV_CALL         } from '../../../modules/nf-core/pbsv/call/main'
 include { SAWFISH_DISCOVER  } from '../../../modules/nf-core/sawfish/discover/main'
-include { SAWFISH_JOINTCALL  } from '../../../modules/nf-core/sawfish/jointcall/main'
+include { SAWFISH_JOINTCALL } from '../../../modules/nf-core/sawfish/jointcall/main'
 include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
 include { TABIX_BGZIP       } from '../../../modules/nf-core/tabix/bgzip/main'
 
