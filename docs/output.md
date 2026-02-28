@@ -10,26 +10,36 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [LIMA](#lima) - Demultiplex samples
-- [PBMM2](#pbmm2) - Align samples to reference genome
-- [SAMTOOLS SORT](#samtools) - Sort BAM files
-- [SAMTOOLS INDEX](#samtools) - Index BAM files
-- [DEEPVARIANT](#deepvariant-rundeepvariant) - Variant call SNVs
-- [HAPLOTYPECALLER](#gatk4-haplotypecaller) - Variant call SNVs
-- [PBSV](#pbsv) - Variant call SVs
-- [SAWFISH](#sawfish) - Variant call SVs
-- [TRGT](#trgt) - Plots and Genotypes tandem repeats
-- [BCFTOOLS INDEX](#bcftools) - Index VCF files
-- [HiPHASE](#hiphase) - Phase VCF, and BAM files
-- [HiFiCNV](#hificnv) - Variant call CNVs
-- [ALIGNEDBAMTOCPGSCORES](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores
+- Demultiplex and alignment
+  - [lima](#lima) - Demultiplex samples
+  - [pbmerge](#pbmerge) - Merge input BAM with failed BAM if specified in the sample sheet
+  - [pbmm2](#pbmm2) - Align samples to reference genome
+  - [SAMTools sort](#samtools) - Sort BAM files
+  - [SAMTools index](#samtools) - Index BAM files
+- WGS workflow  
+  - [DeepVariant](#deepvariant-rundeepvariant) - Variant call SNVs
+  - [GATK4 Haplotypecaller](#gatk4-haplotypecaller) - Variant call SNVs
+  - [pbsv](#pbsv) - Variant call SVs
+  - [tabix](#tabix) - VCF zipping
+  - [bcftools index](#bcftools) - Index VCF files
+  - [Sawfish](#sawfish) - Variant call SVs and CNVs
+  - [HiPHASE](#hiphase) - Phase VCF, and BAM files
+  - [SAMTools index](#samtools) - Index BAM file
+  - [HiFiCNV](#hificnv) - Variant call CNVs
+  - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
+- Repeat workflow
+  - [TRGT](#trgt) - Genotype and plot tandem repeats
+  - [SAMTools sort](#samtools) - Sort BAM files
+  - [SAMTools index](#samtools) - Index BAM files
+  - [bcftools index](#bcftools) - Index VCF files
+- [MultiQC](#multiqc) 
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
 
-### LIMA
+### lima
 
-[LIMA](https://lima.how) is a PacBio tool for **demultiplexing HiFi sequencing data** by identifying and trimming barcode sequences, producing per-sample BAM files and associated demultiplexing reports.
+[lima](https://lima.how) is a PacBio tool for **demultiplexing HiFi sequencing data** by identifying and trimming barcode sequences, producing per-sample BAM files and associated demultiplexing reports.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -50,9 +60,9 @@ Note:
 - If `--skip_demultiplexing` is false:
   `<basename> = <sample>.<barcode-pair>`
 
-### PBMM2
+### pbmm2
 
-[PBMM2](https://github.com/PacificBiosciences/pbmm2) aligns PacBio HiFi reads to a reference genome using a minimap2-based algorithm optimized for long reads.
+[pbmm2](https://github.com/PacificBiosciences/pbmm2) aligns PacBio HiFi reads to a reference genome using a minimap2-based algorithm optimized for long reads.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -62,9 +72,9 @@ Note:
 
 </details>
 
-### SAMTOOLS
+### SAMTools
 
-[SAMTOOLS](https://github.com/samtools/samtools) Sort and index aligned bams.
+[SAMTools](https://github.com/samtools/samtools) Sort and index aligned bams.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -88,9 +98,9 @@ Note:
 
 </details>
 
-### DEEPVARIANT Rundeepvariant
+### DeepVariant (rundeepvariant)
 
-[DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data.
+[DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data. In this workflow, we use the rundeepvariant wrapper provided by DeepVariant to perform variant calling in a standardized and reproducible manner.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -101,9 +111,9 @@ Note:
 
 </details>
 
-### PBSV
+### pbsv
 
-[PBSV](https://github.com/PacificBiosciences/pbsv) is a PacBio structural variant caller that discovers and genotypes structural variants from long-read sequencing data by identifying and clustering read-level SV signatures.
+[pbsv](https://github.com/PacificBiosciences/pbsv) is a PacBio structural variant caller for long-read sequencing data. **Note**: In recent PacBio HiFi analysis workflows (HiFi WGS WDL pipeline 3.0.0), pbsv has been replaced by Sawfish, which integrates structural variant and copy number variant calling and is now the recommended SV caller for HiFi data.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -118,12 +128,12 @@ Note:
 
 [Sawfish](https://github.com/PacificBiosciences/sawfish) is a joint structural variant (SV) and copy number variant (CNV) caller for mapped HiFi sequencing reads. It uses a two-step workflow: a per-sample **discover** step that identifies SV candidates through local haplotype assembly, followed by a **joint-call** step that merges, genotypes, and integrates SV and CNV calls across one or more samples.
 
-#### Sawfish Discover
+#### Sawfish discover
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `sawfish/<basename>_discovery`
+- `sawfish/<basename>/<basename>_discovery`
   - `sv_candidates.vcf.gz`: Per-sample structural variant candidate calls from haplotype assembly.
   - `sv_candidates.vcf.gz.tbi`: Tabix index for SV candidates VCF.
   - `contig.alignment.bam`: Assembled haplotype contigs aligned to the reference genome.
@@ -146,12 +156,12 @@ Note:
 
 </details>
 
-#### Sawfish Joint-call
+#### Sawfish joint-call
 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `sawfish/<basename>_jointcall`
+- `sawfish/<basename>/<basename>_jointcall`
   - `genotyped.sv.vcf.gz`: Integrated structural variant and copy number variant calls in VCF format.
   - `genotyped.sv.vcf.gz.tbi`: Tabix index for the joint-called VCF.
   - `contig.alignment.bam`: Merged contig alignments from all samples.
@@ -161,7 +171,7 @@ Note:
 
 </details>
 
-### HiPHASE
+### HiPhase
 
 [HiPhase](https://github.com/PacificBiosciences/HiPhase) performs haplotype phasing of small variants and structural variants from PacBio HiFi sequencing data, generating phased VCFs and haplotagged BAM files for downstream haplotype-aware analyses.
 
@@ -180,9 +190,9 @@ Note:
 
 </details>
 
-### TABIX
+### tabix
 
-[TABIX](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
+[tabix](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -192,9 +202,9 @@ Note:
 
 </details>
 
-### BCFTOOLS Index
+### bcftools index
 
-[BCFTOOLS](https://github.com/samtools/bcftools) manipulates VCF files including Indexes them
+[bcftools](https://github.com/samtools/bcftools) manipulates VCF files including Indexes them
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -206,7 +216,7 @@ Note:
 
 ### TRGT
 
-[TRGT](https://github.com/PacificBiosciences/trgt) Plots and Genotypes tandem repeats
+[TRGT](https://github.com/PacificBiosciences/trgt) is a PacBio-developed software for genotyping and plot tandem repeats for HiFi long-read sequencing data.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -218,6 +228,18 @@ Note:
 
 Example png output: sample1_C9ORF72.png
 ![example: sample1_C9ORF72.png](images/sample1_C9ORF72.png)
+
+</details>
+
+### pbmerge
+
+[pbmerge](https://github.com/PacificBiosciences/pbmerge) is a PacBio utility used to merge multiple BAM files into a single BAM file while preserving PacBio-specific metadata.
+
+<details markdown="1">
+<summary>Output files</summary>
+- `pbmerge/`
+  - `<basename>.merged.bam`: merged BAM
+  - `<basename>.merged.bam.pbi`: PacBio BAM index
 
 </details>
 
@@ -238,7 +260,7 @@ Example png output: sample1_C9ORF72.png
 
 </details>
 
-### pb-CpG-tools ALIGNEDBAMTOCPGSCORES
+### pb-CpG-tools (aligned_bam_to_cpg_scores)
 
 The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
 
@@ -272,7 +294,6 @@ Results generated by MultiQC collate pipeline QC from supported tools e.g. FastQ
 - `multiqc/`
   - `multiqc_report.html`: a standalone HTML file that can be viewed in your web browser.
   - `multiqc_data/`: directory containing parsed statistics from the different tools used in the pipeline.
-  - `multiqc_plots/`: directory containing static images from the report in various formats.
 
 </details>
 
