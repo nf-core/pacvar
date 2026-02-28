@@ -16,7 +16,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [pbmm2](#pbmm2) - Align samples to reference genome
   - [SAMTools sort](#samtools) - Sort BAM files
   - [SAMTools index](#samtools) - Index BAM files
-- WGS workflow  
+- WGS workflow
   - [DeepVariant](#deepvariant-rundeepvariant) - Variant call SNVs
   - [GATK4 Haplotypecaller](#gatk4-haplotypecaller) - Variant call SNVs
   - [pbsv](#pbsv) - Variant call SVs
@@ -32,7 +32,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [SAMTools sort](#samtools) - Sort BAM files
   - [SAMTools index](#samtools) - Index BAM files
   - [bcftools index](#bcftools) - Index VCF files
-- [MultiQC](#multiqc) 
+- [MultiQC](#multiqc)
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
