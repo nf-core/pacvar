@@ -71,6 +71,7 @@ Note:
 </details>
 
 [pbmm2](https://github.com/PacificBiosciences/pbmm2) aligns PacBio HiFi reads to a reference genome using a minimap2-based algorithm optimized for long reads.
+
 ### SAMTools
 
 <details markdown="1">
