@@ -5,23 +5,25 @@
   </picture>
 </h1>
 
-[![GitHub Actions CI Status](https://github.com/nf-core/pacvar/actions/workflows/ci.yml/badge.svg)](https://github.com/nf-core/pacvar/actions/workflows/ci.yml)
-[![GitHub Actions Linting Status](https://github.com/nf-core/pacvar/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/pacvar/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pacvar/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.14813048-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.14813048)
+[![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/nf-core/pacvar)
+[![GitHub Actions CI Status](https://github.com/nf-core/pacvar/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/pacvar/actions/workflows/nf-test.yml)
+[![GitHub Actions Linting Status](https://github.com/nf-core/rnaseq/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/rnaseq/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/rnaseq/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.1400710-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.1400710)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.2-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.5.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.5.1)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 [![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/nf-core/pacvar)
 
-[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23pacvar-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/pacvar)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
+[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23pacvar-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/pacvar)[![Follow on Bluesky](https://img.shields.io/badge/bluesky-%40nf__core-1185fe?labelColor=000000&logo=bluesky)](https://bsky.app/profile/nf-co.re)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
 
 ## Introduction
 
-nf-core/pacvar is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
+**nf-core/pacvar** is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
 
-![nf-core/pacvar metro map](docs/images/pacvar_white_background.png)
+![nf-core/pacvar metro map](docs/images/metro_update_with_new_features.png)
 
 Workflow Overview
 
@@ -31,12 +33,16 @@ Workflow Overview
 
 WGS Workflow Overview
 
-1. Choice of SNP calling routes:
-   a. ([`deepvariant`](https://github.com/google/deepvariant))
-   b. ([`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller))
-2. Call SVs ([`pbsv`](https://github.com/PacificBiosciences/pbsv))
+1. Choice of SNVs and small indels calling routes:
+   a. [`deepvariant`](https://github.com/google/deepvariant)
+   b. [`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller)
+2. Choice of SV calling routes:
+   a. [`pbsv`](https://github.com/PacificBiosciences/pbsv)
+   b. [`sawfish`](https://github.com/PacificBiosciences/sawfish)
 3. Index VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
-4. Phase SNPs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
+4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
+5. Call CNVs ([`hificnv`](https://github.com/PacificBiosciences/HiFiCNV))
+6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
 
 Tandem Repeat Workflow Overview
 
@@ -81,7 +87,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`.
+optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_cnv`, and `--skip_cpg`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
@@ -97,7 +103,7 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/pacvar was originally written by Tanya Sarkin Jain.
+nf-core/pacvar was originally written by Tanya Sarkin Jain. Contributions by Chao-Jen Wong and Stijn Van de Sompele were added starting with version 1.1.0dev and continuing in later releases.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 

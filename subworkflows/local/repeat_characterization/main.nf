@@ -16,7 +16,7 @@ workflow  REPEAT_CHARACTERIZATION{
     bed
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     bam_bai_ch = sorted_bam
         .join(sorted_bai)
@@ -29,7 +29,7 @@ workflow  REPEAT_CHARACTERIZATION{
 
     //sort the resulting spanning bam
     SAMTOOLS_SORT_TRGT(TRGT_GENOTYPE.out.bam,
-        fasta)
+        fasta, '')
 
     //index the resulting bam
     SAMTOOLS_INDEX_TRGT(SAMTOOLS_SORT_TRGT.out.bam)
@@ -52,11 +52,8 @@ workflow  REPEAT_CHARACTERIZATION{
         fasta_fai,
         bed)
 
-    ch_versions = ch_versions.mix(TRGT_GENOTYPE.out.versions)
-    ch_versions = ch_versions.mix(SAMTOOLS_SORT_TRGT.out.versions)
-    ch_versions = ch_versions.mix(SAMTOOLS_INDEX_TRGT.out.versions)
-    ch_versions = ch_versions.mix(BCFTOOLS_SORT.out.versions)
-    ch_versions = ch_versions.mix(TRGT_PLOT.out.versions)
+    // NOTE: all TRGT and SAMTOOLS modules are updated to version topic
+    ch_versions = ch_versions.mix(BCFTOOLS_SORT.out.versions.first())
 
     emit:
     versions       = ch_versions

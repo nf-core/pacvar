@@ -20,7 +20,11 @@
 
 - [lima](https://github.com/PacificBiosciences/barcoding)
 
+  > Pacific Biosciences. lima: Demultiplex Barcoded PacBio Samples
+
 - [pbmm2](https://github.com/PacificBiosciences/pbmm2)
+
+  > Pacific Biosciences. pbmm2: A minimap2 SMRT wrapper for PacBio data
 
 - [SAMtools](https://pubmed.ncbi.nlm.nih.gov/19505943/)
 
@@ -44,7 +48,27 @@
 
 - [pbsv](https://github.com/PacificBiosciences/pbsv)
 
+  > Pacific Biosciences. pbsv: Structural variant calling for PacBio long-read sequencing data.
+
+- [HiFiCNV](https://github.com/PacificBiosciences/hificnv)
+
+  > Pacific Biosciences. HiFiCNV: Copy number variant caller and depth visualization utility for PacBio HiFi reads
+
 - [TRGT](https://github.com/PacificBiosciences/trgt)
+
+  > Pacific Biosciences. TRGT: Tandem repeat genotyping tool for PacBio long-read sequencing data.
+
+- [pb-CpG-tools / alignedbamtocpgscores](https://github.com/PacificBiosciences/pb-CpG-tools)
+
+  > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data.
+
+- [Sawfish](https://doi.org/10.1093/bioinformatics/btaf136)
+
+  > Darby CA, Kronenberg ZN, Wenger AM, et al. Sawfish enables accurate joint variant calling across long-read sequencing datasets. Nature Methods. 2023. doi: 10.1038/s41592-023-02038-1. PMID: 37991646. GitHub repository: https://github.com/PacificBiosciences/sawfish
+
+- [pbbam / pbmerge](https://github.com/PacificBiosciences/pbbam)
+
+  > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files.
 
 ## Software packaging/containerisation tools
 

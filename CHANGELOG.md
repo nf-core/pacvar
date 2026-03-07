@@ -3,15 +3,52 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## dev
+## 1.1.0dev - [1/20/2026]
+
+This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools), and PacBio merge bam (pbtk/pbmerge). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules.
 
 ### `Added`
 
+- modules:
+  - `hificnv`: Integrated the hificnv module for copy-number variant (CNVs) calling, positioned either before or after SNVs calling depending on the skip_snp parameter.
+  - `sawfish/discover` and `sawfish/jointcall`: Integrated sawfish as an optional structural variant caller, configurable via `sv_caller = ['pbsv', 'sawfish']`.
+  - `pbcpgtools/alignedbamtoscore`: Integrated the pbcpgtools/alignedbamcpgscores module for CpG methylation profiling, placed before or after hiphase based on the skip_phase setting.
+  - `pbbam/pbmerge`: Integrated the pbbam/pbmerge module to merge multiple PacBio BAM files into a single BAM file using the PacBio BAM (pbbam) library.
+- main paramters (`nextlfow.config`):
+  - `sv_caller`: an optional structural variant caller `['pbsv', 'sawfish]`
+  - `skip_cnv` : to skip copy number variation calling by `hificnv`
+  - `skip_cpg` : tp skip CpG methylation scoring
+- genome paramters (`igenome.config`):
+  - `expected_cv`: BED files telling sawfish or hificnv what copy number it should see in each genomic interval. Files are provided by PacBio and stored in `assets/sawfish/`
+  - `cnv_excluded_regions`: BED files specifying regions excluded from CNV calling. Files are provided by PacBio and stored in `assets/sawfish/`.
+- files in `assets/sawfish/` for copy number variant calling
+
 ### `Fixed`
 
-- [#28](https://github.com/nf-core/pacvar/pull/28) Updated the JSON schema to make input validation stricter, thus preventing more errors during the pipeline run.
+- [#35](https://github.com/nf-core/pacvar/pull/37) Important! Template update for nf-core/tools v3.5.1
+- [#31](https://github.com/nf-core/pacvar/issues/31) Update deepvariant
+- [#30](https://github.com/nf-core/pacvar/issues/30) Replace pbsv with sawfish; `sawfish` added but not replacing `pbsv`
 
 ### `Dependencies`
+
+| Tool        | Previous version | New version |
+| ----------- | ---------------- | ----------- |
+| bcftools    | 1.20             | 1.22        |
+| deepvariant | 1.6              | 1.9.0       |
+| gatk4       | 4.5.0            | 4.6.2       |
+| gunzip      | (ubuntu:22.04)   | 1.13        |
+| hiphase     | 1.4.5            | 1.5.0       |
+| hificnv     | -                | 1.0.1       |
+| lima        | 2.9              | 2.12        |
+| multiqc     | 1.27             | 1.33        |
+| pbcpgtools  | -                | 3.0.0       |
+| pbmm2       | 1.14.99          | 1.14.99     |
+| pbsv        | 2.9.0            | 2.11.0      |
+| pbtk        | -                | 3.1.1       |
+| samtools    | 1.21             | 1.22.1      |
+| sawfish     | -                | 2.2.0       |
+| tabix       | 1.11             | 1.21        |
+| trgt        | 1.2              | 5.0.0       |
 
 ### `Deprecated`
 

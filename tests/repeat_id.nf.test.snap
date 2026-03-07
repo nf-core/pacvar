@@ -4,31 +4,31 @@
             28,
             {
                 "BCFTOOLS_SORT": {
-                    "bcftools": 1.2
+                    "bcftools": 1.22
                 },
                 "PBMM2_ALIGN": {
                     "pbmm2": "1.14.99"
                 },
                 "SAMTOOLS_INDEX": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_INDEX_TRGT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_SORT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "SAMTOOLS_SORT_TRGT": {
-                    "samtools": 1.21
+                    "samtools": "1.22.1"
                 },
                 "TRGT_GENOTYPE": {
-                    "trgt": "1.2.0-9eda4dd"
+                    "trgt": "5.0.0-e9acee0"
                 },
                 "TRGT_PLOT": {
-                    "trgt": "1.2.0-9eda4dd"
+                    "trgt": "5.0.0-e9acee0"
                 },
                 "Workflow": {
-                    "nf-core/pacvar": "v1.0.1"
+                    "nf-core/pacvar": "v1.1.0dev"
                 }
             },
             [
@@ -41,7 +41,9 @@
                 "bcftools/sample3.sorted.vcf.gz.csi",
                 "multiqc",
                 "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
                 "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
@@ -145,7 +147,7 @@
                     {
                         "maxReadLength": 7643,
                         "minReadLength": 100,
-                        "meanReadLength": 248,
+                        "meanReadLength": 245,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -171,7 +173,7 @@
                     {
                         "maxReadLength": 7643,
                         "minReadLength": 100,
-                        "meanReadLength": 248,
+                        "meanReadLength": 245,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -197,7 +199,7 @@
                     {
                         "maxReadLength": 7643,
                         "minReadLength": 100,
-                        "meanReadLength": 248,
+                        "meanReadLength": 245,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -210,7 +212,7 @@
                     {
                         "maxReadLength": 7643,
                         "minReadLength": 100,
-                        "meanReadLength": 248,
+                        "meanReadLength": 245,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -223,7 +225,7 @@
                     {
                         "maxReadLength": 7643,
                         "minReadLength": 100,
-                        "meanReadLength": 248,
+                        "meanReadLength": 245,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -236,7 +238,7 @@
                     {
                         "maxReadLength": 7643,
                         "minReadLength": 100,
-                        "meanReadLength": 248,
+                        "meanReadLength": 245,
                         "maxQuality": 60,
                         "minQuality": 60,
                         "meanQuality": 60,
@@ -273,9 +275,9 @@
             ]
         ],
         "meta": {
-            "nf-test": "0.9.3",
-            "nextflow": "25.04.6"
+            "nf-test": "0.9.2",
+            "nextflow": "25.10.2"
         },
-        "timestamp": "2025-12-17T16:50:30.238159115"
+        "timestamp": "2026-02-05T11:01:25.994686991"
     }
 }

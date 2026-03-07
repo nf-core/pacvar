@@ -59,8 +59,8 @@
                     "format": "file-path",
                     "exists": true,
                     "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
+                    "pattern": "^\\S+\\.(fn?a(sta)?|mmi)(\\.gz)?$",
+                    "description": "Path to FASTA genome or MMI file.",
                     "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
                     "fa_icon": "far fa-file-code"
                 },
@@ -171,7 +171,14 @@
                     "type": "string",
                     "enum": ["deepvariant", "gatk4"],
                     "default": "deepvariant",
-                    "description": "The tool to use for calling variants",
+                    "description": "The tool to use for calling SNP variants",
+                    "fa_icon": "fas fa-forward"
+                },
+                "sv_caller": {
+                    "type": "string",
+                    "enum": ["pbsv", "sawfish"],
+                    "default": "pbsv",
+                    "description": "The tool to use for calling structural variants",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_snp": {
@@ -184,10 +191,46 @@
                     "description": "Option to skip SV variant calling",
                     "fa_icon": "fas fa-forward"
                 },
+                "skip_cnv": {
+                    "type": "boolean",
+                    "description": "Skip copy number variation detection",
+                    "fa_icon": "fas fa-forward"
+                },
                 "skip_phase": {
                     "type": "boolean",
                     "description": "Option to skip phasing",
                     "fa_icon": "fas fa-forward"
+                },
+                "expected_cn": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "BED/BED.GZ file specifying expected copy-number regions (for sawfish/hificnv).",
+                    "pattern": "^\\S+\\.bed(\\.gz)?$",
+                    "fa_icon": "far fa-file-code"
+                },
+                "cnv_excluded_regions": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "BED/BED.GZ file of regions to exclude from CNV calling.",
+                    "pattern": "^\\S+\\.bed(\\.gz)?$",
+                    "fa_icon": "far fa-file-code"
+                }
+            }
+        },
+        "methylation_profiling": {
+            "title": "Methylation profiling options",
+            "type": "object",
+            "fa_icon": "fas fa-dna",
+            "description": "Options for summarizing CpG site probabilities for 5mC methylation.",
+            "help_text": "These options control 5mC methylation probability calling from PacBio long-read sequencing data.",
+            "properties": {
+                "skip_cpg": {
+                    "type": "boolean",
+                    "description": "Skip CpG site probability for 5mC methylation calling",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the pipeline will skip CpG site 5mC methylation probability scoring steps."
                 }
             }
         },
@@ -345,6 +388,18 @@
                     "fa_icon": "far calendar",
                     "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
+                },
+                "help": {
+                    "type": ["boolean", "string"],
+                    "description": "Display the help message."
+                },
+                "help_full": {
+                    "type": "boolean",
+                    "description": "Display the full detailed help message."
+                },
+                "show_hidden": {
+                    "type": "boolean",
+                    "description": "Display hidden parameters in the help message (only works when --help or --help_full are provided)."
                 }
             }
         }
@@ -367,6 +422,9 @@
         },
         {
             "$ref": "#/$defs/variant"
+        },
+        {
+            "$ref": "#/$defs/methylation_profiling"
         },
         {
             "$ref": "#/$defs/pre_processing"

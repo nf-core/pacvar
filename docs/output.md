@@ -10,21 +10,34 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [LIMA](#lima) - Demultiplex samples
-- [PBMM2](#pbmm2) - Align samples to reference genome
-- [SAMTOOLS SORT](#samtools-sort) - Sort BAM files
-- [SAMTOOLS INDEX](#samtools-sort) - Index BAM files
-- [DEEPVARIANT](#deepvariant-rundeepvariant) - Variant call SNVs
-- [HAPLOTYPECALLER](#gatk4-haplotypecaller) - Variant call SNVs
-- [pbsv](#pbsv) - Variant call SVs
-- [TRGT](#trgt) - Genotype and Plot structural variants
-- [BCFTOOLS](#bcftools-index) - Index VCF files
-- [HIPHASE](#Hiphase) - Phase VCF, and BAM files
+- Demultiplex and alignment
+  - [lima](#lima) - Demultiplex samples
+  - [pbmerge](#pbmerge) - Merge input BAM with failed BAM if specified in the sample sheet
+  - [pbmm2](#pbmm2) - Align samples to reference genome
+  - [SAMTools sort](#samtools) - Sort BAM files
+  - [SAMTools index](#samtools) - Index BAM files
+- WGS workflow
+  - [DeepVariant](#deepvariant-rundeepvariant) - Variant call SNVs
+  - [GATK4 Haplotypecaller](#gatk4-haplotypecaller) - Variant call SNVs
+  - [pbsv](#pbsv) - Variant call SVs
+  - [tabix](#tabix) - VCF zipping
+  - [bcftools index](#bcftools) - Index VCF files
+  - [Sawfish](#sawfish) - Variant call SVs and CNVs
+  - [HiPHASE](#hiphase) - Phase VCF, and BAM files
+  - [SAMTools index](#samtools) - Index BAM file
+  - [HiFiCNV](#hificnv) - Variant call CNVs
+  - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
+- Repeat workflow
+  - [TRGT](#trgt) - Genotype and plot tandem repeats
+  - [SAMTools sort](#samtools) - Sort BAM files
+  - [SAMTools index](#samtools) - Index BAM files
+  - [bcftools index](#bcftools) - Index VCF files
+- [MultiQC](#multiqc)
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
 When `--skip_demultiplexing` is false (default behavior)
 
-### LIMA
+### lima
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -38,8 +51,6 @@ When `--skip_demultiplexing` is false (default behavior)
 
 </details>
 
-[LIMA](https://lima.how) demultiplex samples
-
 Note:
 
 - If `--skip_demultiplexing` is true:
@@ -47,7 +58,9 @@ Note:
 - If `--skip_demultiplexing` is false:
   `<basename> = <sample>.<barcode-pair>`
 
-### PBMM2
+[lima](https://lima.how) is a PacBio tool for **demultiplexing HiFi sequencing data** by identifying and trimming barcode sequences, producing per-sample BAM files and associated demultiplexing reports.
+
+### pbmm2
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -57,9 +70,9 @@ Note:
 
 </details>
 
-[PBMM2](https://github.com/PacificBiosciences/pbmm2) Aligned BAM files
+[pbmm2](https://github.com/PacificBiosciences/pbmm2) aligns PacBio HiFi reads to a reference genome using a minimap2-based algorithm optimized for long reads.
 
-### SAMTOOLS
+### SAMTools
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -70,9 +83,9 @@ Note:
 
 </details>
 
-[SAMTOOLS](https://github.com/samtools/samtools) Sort and index aligned bams.
+[SAMTools](https://github.com/samtools/samtools) Sort and index aligned bams.
 
-### GATK4
+### GATK4 HaplotypeCaller
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -83,63 +96,9 @@ Note:
 
 </details>
 
-[GATK4](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) HaplotypeCaller - SNV detection and Variant Call tool.
+[GATK4 HaplotypeCaller](https://github.com/broadinstitute/gatk/tree/master/src/main/java/org/broadinstitute/hellbender/tools/walkers/haplotypecaller) is a variant caller for identifying small variants (SNVs and small indels) from high-throughput sequencing data.
 
-### PBSV
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `pbsv/`
-  - `<basename>.sv.vcf`: VCF of SV
-  - `<basename>.svsig.gz`: File containing signatures of structural variants
-
-</details>
-
-[PBSV](https://github.com/PacificBiosciences/pbsv). Discover and call structural variants
-
-### HIPHASE
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `hiphase/`
-  - `<basename>.snv.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
-  - `<basename>.sv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV
-  - `<basename>.snv.phased.vcf`: The phased Variant File (SNV) (Zipped)
-  - `<basename>.sv.phased.vcf`: The phased Variant File (SV) (Zipped)
-  - `<basename>.snv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
-  - `<basename>.sv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SV)
-
-</details>
-
-[`HIPHASE`](https://github.com/PacificBiosciences/HiPhase/tree/main)
-
-### TABIX
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `tabix/`
-  - `<basename>.sv.vcf.gz`: Zipped PBSV VCF files
-
-</details>
-
-[TABIX](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
-
-### BCFTOOLS
-
-<details markdown="1">
-<summary>Output files</summary>
-
-- `BCFTOOLS/`
-  - `<basename>.sv.vcf.gz.csi`: Index of PBSV VCF files
-
-</details>
-
-[BCFTOOLS](https://github.com/samtools/bcftools) Manipulates VCF files including Indexes them
-
-### DEEPVARIANT
+### DeepVariant (rundeepvariant)
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -150,9 +109,116 @@ Note:
 
 </details>
 
-[DEEPVARIANT](https://github.com/google/deepvariant) SNV caller
+[DeepVariant](https://github.com/google/deepvariant) is a deep learning–based variant caller that identifies small variants (SNVs and small indels) from high-throughput sequencing data. In this workflow, we use the rundeepvariant wrapper provided by DeepVariant to perform variant calling in a standardized and reproducible manner.
+
+### pbsv
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pbsv/`
+  - `<basename>.sv.vcf`: VCF of SV
+  - `<basename>.svsig.gz`: File containing signatures of structural variants
+
+</details>
+
+[pbsv](https://github.com/PacificBiosciences/pbsv) is a PacBio structural variant caller for long-read sequencing data. **Note**: In recent PacBio HiFi analysis workflows (HiFi WGS WDL pipeline 3.0.0), pbsv has been replaced by Sawfish, which integrates structural variant and copy number variant calling and is now the recommended SV caller for HiFi data.
+
+### Sawfish
+
+#### Sawfish discover
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `sawfish/<basename>/<basename>_discovery`
+  - `sv_candidates.vcf.gz`: Per-sample structural variant candidate calls from haplotype assembly.
+  - `sv_candidates.vcf.gz.tbi`: Tabix index for SV candidates VCF.
+  - `contig.alignment.bam`: Assembled haplotype contigs aligned to the reference genome.
+  - `contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
+  - `assembly.regions.bed`: Genomic regions where local assembly was performed.
+  - `copynum.bedgraph`: Preliminary copy number estimates in bedGraph format.
+  - `copynum.mpack`: Copy number data in MessagePack binary format.
+  - `depth.mpack`: Depth coverage data in MessagePack format.
+  - `maf.mpack`: Minor allele frequency data in MessagePack format if `skip_snp=false`.
+  - `expected.copy.number.bed`: Expected copy number for genomic regions (e.g., sex chromosomes).
+  - `max.depth.bed`: Regions with maximum depth thresholds.
+  - `genome.gclevels.mpack`: GC content levels across the genome.
+  - `sample.gcbias.mpack`: Sample-specific GC bias correction data.
+  - `discover.settings.json`: Configuration file with input paths and parameters.
+  - `run.data.json`: Runtime data and statistics.
+  - `run.stats.json`: Summary statistics from the discover run.
+  - `sawfish.log`: Detailed log file from the discover step.
+  - `debug.breakpoint_clusters.bed`: Debug output showing breakpoint cluster locations.
+  - `debug.cluster.refinement.txt`: Debug output with cluster refinement details.
+
+</details>
+
+#### Sawfish joint-call
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `sawfish/<basename>/<basename>_jointcall`
+  - `genotyped.sv.vcf.gz`: Integrated structural variant and copy number variant calls in VCF format.
+  - `genotyped.sv.vcf.gz.tbi`: Tabix index for the joint-called VCF.
+  - `contig.alignment.bam`: Merged contig alignments from all samples.
+  - `contig.alignment.bam.csi`: CSI index for the contig alignment BAM.
+  - `run.stats.json`: Summary statistics from the joint-call run.
+  - `sawfish.log`: Detailed log file from the joint-call step.
+
+</details>
+
+[Sawfish](https://github.com/PacificBiosciences/sawfish) is a joint structural variant (SV) and copy number variant (CNV) caller for mapped HiFi sequencing reads. It uses a two-step workflow: a per-sample **discover** step that identifies SV candidates through local haplotype assembly, followed by a **joint-call** step that merges, genotypes, and integrates SV and CNV calls across one or more samples.
+
+### HiPhase
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `hiphase/`
+  - `<basename>.snv.phased.bam`: Haplotagged BAM - outputted from phasing based on SNV
+  - `<basename>.snv.phased.bam.bai`: Haplotagged BAM index
+  - `<basename>.sv.phased.bam`: Haplotagged BAM - outputted from phasing based on SV
+  - `<basename>.sv.phased.bam.bai`: Haplotagged BAM index
+  - `<basename>.snv.phased.vcf`: The phased Variant File (SNV) (Zipped)
+  - `<basename>.sv.phased.vcf`: The phased Variant File (SV) (Zipped)
+  - `<basename>.snv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SNV)
+  - `<basename>.sv.stats.csv`: This CSV/TSV file contains information about the the phase blocks that were output by HiPhase (SV)
+
+</details>
+
+[HiPhase](https://github.com/PacificBiosciences/HiPhase) performs haplotype phasing of small variants and structural variants from PacBio HiFi sequencing data, generating phased VCFs and haplotagged BAM files for downstream haplotype-aware analyses.
+
+### tabix
+
+[tabix](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `tabix/`
+  - `<basename>.sv.vcf.gz`: Zipped PBSV VCF files
+
+</details>
+
+[tabix](https://github.com/samtools/htslib) VCF file handler - VCF zipping.
+
+### bcftools index
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `BCFTOOLS/`
+  - `<basename>.sv.vcf.gz.csi`: Index of PBSV VCF files
+
+</details>
+
+[bcftools](https://github.com/samtools/bcftools) manipulates VCF files including Indexes them
 
 ### TRGT
+
+[TRGT](https://github.com/PacificBiosciences/trgt) is a PacBio-developed software for genotyping and plot tandem repeats for HiFi long-read sequencing data.
 
 <details markdown="1">
 <summary>Output files</summary>
@@ -167,7 +233,58 @@ Example png output: sample1_C9ORF72.png
 
 </details>
 
-[TRGT](https://github.com/PacificBiosciences/trgt) Plots and Genotypes tandem repeats
+[TRGT](https://github.com/PacificBiosciences/trgt) is a PacBio-developed software for genotyping and plot tandem repeats for HiFi long-read sequencing data.
+
+### pbmerge
+
+<details markdown="1">
+<summary>Output files</summary>
+- `pbmerge/`
+  - `<basename>.merged.bam`: merged BAM
+  - `<basename>.merged.bam.pbi`: PacBio BAM index
+
+</details>
+
+[pbmerge](https://github.com/PacificBiosciences/pbmerge) is a PacBio utility used to merge multiple BAM files into a single BAM file while preserving PacBio-specific metadata.
+
+### HiFiCNV
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `hificnv/`
+  - `<basename>.cnv.<id>.vcf.gz`: Copy number variant calls in VCF format with copy number estimates, confidence intervals, and quality scores.
+  - `<basename>.cnv.<id>.copynum.bedgraph`: Copy number segmentation results in bedGraph format with copy number values for each genomic region.
+  - `<basename>.cnv.<id>.depth.bw`: Read depth coverage in BigWig format for genome browser visualization.
+
+  If `skip_snp=false`, the SNV VCF output is used to derive minor allele frequencies, and HiFiCNV additionally produces:
+  - `<basename>.cnv.<id>.maf.bw`: Minor allele frequency (MAF) in BigWig format for assessing allelic imbalance.
+
+</details>
+
+[HiFiCNV](https://github.com/PacificBiosciences/HiFiCNV) is a copy number variant (CNV) caller optimized for PacBio HiFi sequencing reads. The tool detects copy number variants using read depth analysis with optimizations specifically designed for the characteristics of HiFi data.
+
+### pb-CpG-tools (aligned_bam_to_cpg_scores)
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pgcpgtools/`
+  - `<basename>.cpgscores.combined.bed.gz`: Combined methylation scores across both haplotypes in BED format.
+  - `<basename>.cpgscores.combined.bed.gz.tbi`: Index of the combined methylation scores across both haplotypes in BED format.
+  - `<basename>.cpgscores.combined.bw`: Combined methylation scores in BigWig format for genome browser visualization.
+
+  If `skip_phase=false`, haplotype-specific methylation outputs are also generated:
+  - `<basename>.cpgscore.hap1.bed.gz`: Haplotype 1-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscore.hap1.bed.gz.tbi`: Index of the haplotype 1-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscores.hap2.bed.gz`: Haplotype 2-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscores.hap2.bed.gz.tbi`: Index of the haplotype 2-specific methylation scores (only for haplotagged reads).
+  - `<basename>.cpgscores.hap1.bw`: Haplotype 1-specific methylation scores in BigWig format.
+  - `<basename>.cpgscores.hap2.bw`: Haplotype 2-specific methylation scores in BigWig format.
+
+</details>
+
+The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
 
 ### MultiQC
 
@@ -177,7 +294,6 @@ Example png output: sample1_C9ORF72.png
 - `multiqc/`
   - `multiqc_report.html`: a standalone HTML file that can be viewed in your web browser.
   - `multiqc_data/`: directory containing parsed statistics from the different tools used in the pipeline.
-  - `multiqc_plots/`: directory containing static images from the report in various formats.
 
 </details>
 

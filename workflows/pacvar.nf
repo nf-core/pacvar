@@ -16,10 +16,10 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BAM_SNP_VARIANT_CALLING as BAM_SNP_VARIANT_CALLING    } from '../subworkflows/local/bam_snp_variant_calling'
-include { BAM_SV_VARIANT_CALLING as BAM_SV_VARIANT_CALLING      } from '../subworkflows/local/bam_sv_variant_calling'
-include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subworkflows/local/repeat_characterization'
-
+include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_calling'
+include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
+include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
+include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,16 +27,18 @@ include { REPEAT_CHARACTERIZATION as REPEAT_CHARACTERIZATION    } from '../subwo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { LIMA                                                  } from '../modules/nf-core/lima/main'
-include { PBTK_PBMERGE                                          } from '../modules/nf-core/pbtk/pbmerge/main'
-include { DEEPVARIANT_RUNDEEPVARIANT                            } from '../modules/nf-core/deepvariant/rundeepvariant/main'
-include { SAMTOOLS_INDEX                                        } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_SORT                                         } from '../modules/nf-core/samtools/sort/main'
-include { GATK4_HAPLOTYPECALLER                                 } from '../modules/nf-core/gatk4/haplotypecaller/main'
-include { PBMM2_ALIGN                                           } from '../modules/nf-core/pbmm2/align/main'
-include { HIPHASE as HIPHASE_SNP                                } from '../modules/nf-core/hiphase/main'
-include { HIPHASE as HIPHASE_SV                                 } from '../modules/nf-core/hiphase/main'
-
+include { LIMA                                         } from '../modules/nf-core/lima/main'
+include { PBTK_PBMERGE                                 } from '../modules/nf-core/pbtk/pbmerge/main'
+include { DEEPVARIANT_RUNDEEPVARIANT                   } from '../modules/nf-core/deepvariant/rundeepvariant/main'
+include { SAMTOOLS_INDEX                               } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_SORT                                } from '../modules/nf-core/samtools/sort/main'
+include { GATK4_HAPLOTYPECALLER                        } from '../modules/nf-core/gatk4/haplotypecaller/main'
+include { PBMM2_ALIGN                                  } from '../modules/nf-core/pbmm2/align/main'
+include { HIPHASE as HIPHASE_SNP                       } from '../modules/nf-core/hiphase/main'
+include { HIPHASE as HIPHASE_SV                        } from '../modules/nf-core/hiphase/main'
+include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES             } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SNP } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SV  } from '../modules/nf-core/samtools/index/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,9 +56,11 @@ workflow PACVAR {
     dbsnp
     dbsnp_tbi
     intervals
+    expected_cn
+    cnv_excluded_regions
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     // demultiplexing
     if (!params.skip_demultiplexing) {
@@ -128,10 +132,11 @@ workflow PACVAR {
             .set { samtools_input_ch }
     }
 
-    SAMTOOLS_SORT(samtools_input_ch, fasta)
+    SAMTOOLS_SORT(samtools_input_ch, fasta, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
-    ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions)
-    ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions)
+    // both SAMTOOLS_SORT and SAMTOOLS_INDEX are updated to standardize version topics
+    // ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions.first())
+    // ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions.first())
 
     //join the bam and index based off the meta id (ensure correct order)
     bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai)
@@ -158,67 +163,167 @@ workflow PACVAR {
             bam_bai_vcf_snp_ch = bam_bai_ch.join(BAM_SNP_VARIANT_CALLING.out.vcf_ch)
 
             orderd_bam_bai_vcf_tbi_snp = bam_bai_vcf_snp_ch
-            .multiMap { meta, bam, bai, vcf, tbi ->
-                bam_bai: [meta, bam, bai]
-                vcf_tbi: [meta, vcf, tbi]
-            }
+                .multiMap { meta, bam, bai, vcf, tbi ->
+                  bam_bai: [meta, bam, bai]
+                    vcf_tbi: [meta, vcf, tbi]
+                }
 
             if (!params.skip_phase) {
-                //phase snp files
-                HIPHASE_SNP(orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
+                // phase snp files
+                HIPHASE_SNP(
+                    orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_snp.bam_bai,
                     fasta)
-                ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions)
+                ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions.first())
+
+                // Index the phased BAM from HIPHASE_SNP
+                SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
+                // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
+
+                // channel for pbcpgtools_alignedbamtocpgscores
+                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
         }
 
-        if (!params.skip_sv) {
-            //pbsv structural variant calling
-            BAM_SV_VARIANT_CALLING(ordered_bam_ch,
-                ordered_bai_ch,
+        if (!params.skip_cnv) {
+            // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
+            // Prepare channel and MAF input based on skip_snp and skip_phase parameters
+            // define bam_bam_maf_ch: tuple val(meta), path(bam), path(bai), path(vcf)
+            if (!params.skip_snp && !params.skip_phase) {
+                // Use phased BAM, BAI, and VCF from HIPHASE_SNP
+                cnv_input_bam_bai_maf_ch = bam_bai_ch.join(HIPHASE_SNP.out.vcf)
+            } else if (!params.skip_snp && params.skip_phase) {
+                // Use unphased BAM, BAI, and VCF from SNP calling
+                cnv_input_bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->
+                    [meta, bam, bai, vcf]
+                    }
+            } else {
+                // Skip SNP calling - use original BAM and BAI with empty VCF
+                cnv_input_bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai ->
+                    [meta, bam, bai, []]
+                }
+            }
+
+            // Run HiFiCNV
+            BAM_CNV_VARIANT_CALLING(
+                cnv_input_bam_bai_maf_ch,
                 fasta,
-                fasta_fai)
+                expected_cn,
+                cnv_excluded_regions
+            )
+            ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
+        }
+
+        if (!params.skip_sv) {
+            //pbsv or sawfish structural variant calling
+            // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
+            if (params.sv_caller == 'sawfish' && !params.skip_snp) {
+                // Create all three channels from bam_bai_vcf_snp_ch
+                (sv_input_bam_ch, sv_input_bai_ch, sv_input_maf_ch) = bam_bai_vcf_snp_ch.multiMap { meta, bam, bai, vcf, tbi ->
+                    bam: [meta, bam]
+                    bai: [meta, bai]
+                    maf: [meta, vcf]
+                }
+            } else {
+                // Use ordered channels when:
+                // 1) sv_caller is not 'sawfish', OR
+                // 2) sv_caller is 'sawfish' but skip_snp is true
+                sv_input_bam_ch = ordered_bam_ch
+                sv_input_bai_ch = ordered_bai_ch
+                sv_input_maf_ch = channel.value([[:], []])
+            }
+
+            BAM_SV_VARIANT_CALLING(
+                sv_input_bam_ch,
+                sv_input_bai_ch,
+                fasta,
+                fasta_fai,
+                expected_cn,
+                sv_input_maf_ch,
+                cnv_excluded_regions)
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
 
-            //join the bam and bai and vcf based off the meta id (ensure correct order)
+            // join the bam and bai and vcf based off the meta id (ensure correct order)
             bam_bai_vcf_sv_ch = bam_bai_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
 
             orderd_bam_bai_vcf_tbi_sv = bam_bai_vcf_sv_ch
-            .multiMap { meta, bam, bai, vcf, tbi ->
-                bam_bai: [meta, bam, bai]
-                vcf_tbi: [meta, vcf, tbi]
-            }
+                .multiMap { meta, bam, bai, vcf, tbi ->
+                    bam_bai: [meta, bam, bai]
+                    vcf_tbi: [meta, vcf, tbi]
+                }
 
             //phase sv files
             if (!params.skip_phase) {
-                HIPHASE_SV( orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
+                HIPHASE_SV(
+                    orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
                     orderd_bam_bai_vcf_tbi_sv.bam_bai,
                     fasta)
 
-                ch_versions = ch_versions.mix(HIPHASE_SV.out.versions)
+                ch_versions = ch_versions.mix(HIPHASE_SV.out.versions.first())
+
+                // Index the phased BAM from HIPHASE_SV
+                SAMTOOLS_INDEX_HIPHASE_SV(HIPHASE_SV.out.bam)
+                // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SV.out.versions)
             }
+        }
+
+        // CpG methylation scoring with pbcpgtools
+        if (!params.skip_cpg) {
+            // Determine which BAM to use based on phasing and SNV calling
+            if (!params.skip_snp && !params.skip_phase) {
+                // Use phased BAM from HIPHASE_SNV
+                cpg_bam_bai_ch = bam_bai_snp_phased_ch
+            } else {
+                // Use original sorted BAM
+                cpg_bam_bai_ch = bam_bai_ch
+            }
+
+            // Call pbcpgtools alignedbamtocpgscores
+            PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
+                cpg_bam_bai_ch)
+
+            ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }
     }
 
     if (params.workflow == 'repeat') {
         // characterize repeats
-        REPEAT_CHARACTERIZATION(ordered_bam_ch,
+        REPEAT_CHARACTERIZATION(
+            ordered_bam_ch,
             ordered_bai_ch,
             fasta,
             fasta_fai,
             intervals)
 
-        ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions)
+        ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions.first())
     }
 
     // MODULE: MultiQC
-    ch_multiqc_files = Channel.empty()
+    ch_multiqc_files = channel.empty()
 
     //
     // Collate and save software versions
     //
-    softwareVersionsToYAML(ch_versions)
+    def topic_versions = channel.topic("versions")
+        .distinct()
+        .branch { entry ->
+            versions_file: entry instanceof Path
+            versions_tuple: true
+        }
+
+    def topic_versions_string = topic_versions.versions_tuple
+        .map { process, tool, version ->
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+        }
+        .groupTuple(by:0)
+        .map { process, tool_versions ->
+            tool_versions.unique().sort()
+            "${process}:\n${tool_versions.join('\n')}"
+        }
+
+    softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+        .mix(topic_versions_string)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
             name: 'nf_core_'  + 'pipeline_software_' +  'mqc_'  + 'versions.yml',
@@ -227,18 +332,21 @@ workflow PACVAR {
         ).set { ch_collated_versions }
 
 
-    ch_multiqc_config        = Channel.fromPath(
+    //
+    // MODULE: MultiQC
+    //
+    ch_multiqc_config        = channel.fromPath(
         "$projectDir/assets/multiqc_config.yml", checkIfExists: true)
     ch_multiqc_custom_config = params.multiqc_config ?
-        Channel.fromPath(params.multiqc_config, checkIfExists: true) :
-        Channel.empty()
+        channel.fromPath(params.multiqc_config, checkIfExists: true) :
+        channel.empty()
     ch_multiqc_logo          = params.multiqc_logo ?
-        Channel.fromPath(params.multiqc_logo, checkIfExists: true) :
-        Channel.empty()
+        channel.fromPath(params.multiqc_logo, checkIfExists: true) :
+        channel.empty()
 
     summary_params      = paramsSummaryMap(
         workflow, parameters_schema: "nextflow_schema.json")
-    ch_workflow_summary = Channel.value(paramsSummaryMultiqc(summary_params))
+    ch_workflow_summary = channel.value(paramsSummaryMultiqc(summary_params))
     ch_multiqc_files = ch_multiqc_files.mix(
         ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
     ch_multiqc_files = ch_multiqc_files.mix(
@@ -246,7 +354,7 @@ workflow PACVAR {
     ch_multiqc_custom_methods_description = params.multiqc_methods_description ?
         file(params.multiqc_methods_description, checkIfExists: true) :
         file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
-    ch_methods_description                = Channel.value(
+    ch_methods_description                = channel.value(
         methodsDescriptionText(ch_multiqc_custom_methods_description))
 
     ch_multiqc_files = ch_multiqc_files.mix(ch_collated_versions)

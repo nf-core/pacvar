@@ -21,16 +21,8 @@ process PBMM2_ALIGN {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: (meta.type ? "${meta.id}_${meta.type}" : "${meta.id}")
-
+    def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    # pbmm2 doesn't support .fna extension, so rename to .fa
-    if [[ ${fasta} == *.fna ]]; then
-        ln -s \$(readlink -f ${fasta}) \${${fasta}‰.fna}.fa
-    elif [[ ${fasta} == *.fna.gz ]]; then
-        ln -s \$(readlink -f ${fasta}) \${${fasta}‰.fna.gz}.fa.gz
-    fi
-
     pbmm2 \\
         align \\
         $args \\
