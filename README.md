@@ -115,7 +115,7 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 ## Citations
 
-If you use nf-core/pacvar for your analysis, please cite it using the following doi: [10.5281/zenodo.14813048](https://doi.org/10.5281/zenodo.14813048) and publication:
+If you use nf-core/pacvar for your analysis, please cite it using the following doi: [10.5281/zenodo.14813048](https://doi.org/10.5281/zenodo.14813048) and also publication:
 
 > Tanya Jain, Claire Clelland, nf-core/pacvar: a pipeline for analyzing longread PacBio whole genome and repeat expansion sequencing data, Bioinformatics, 2025;, btaf116, https://doi.org/10.1093/bioinformatics/btaf116
 
