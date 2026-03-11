@@ -4,9 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 1.1.0dev - [2026-03-10]
+
 Addressed the reviewers's comments on [PR #42](https://github.com/nf-core/pacvar/pull/42) by improving testing for copy number variant (CNV) calling and reorganizing files in the `assets` directory.
 
 ### Added
+
 - Moved all sample sheets used by `tests/*.nf.test` from `assets/*.csv` to the `tests/csv` directory to improve organization.
   - `tests/csv/samplesheet_karyotype.csv`
   - `tests/csv/samplesheet_pbmerge.csv`
@@ -15,13 +17,14 @@ Addressed the reviewers's comments on [PR #42](https://github.com/nf-core/pacvar
   - `conf/test_wgs_hificnv.config`
 
 ### Changed
+
 Updated `nextflow.config` to include the newly-added configuration file
 
 ### Removed
+
 - `assets/amplesheet_karyotype.csv`
 - `assets/samplesheet_pbmerge.csv`
 - `assets/samplesheet_repeat_id.csv`
-
 
 ## 1.1.0dev - [1/20/2026]
 
