@@ -9,7 +9,7 @@ nextflow_pipeline {
         when {
             params {
                 outdir = "$outputDir"
-                input = "$projectDir/assets/samplesheet_repeat_id.csv"
+                input = "$projectDir/tests/csv/samplesheet_repeat_id.csv"
                 fasta = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/GRCh38_no_alt_subset.fa"
                 fasta_fai = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/GRCh38_no_alt_subset.fa.fai"
                 barcodes = "https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/pacvar/pacbio_data/barcodes.fasta"

@@ -9,7 +9,7 @@ nextflow_pipeline {
         when {
             params {
                 outdir = "$outputDir"
-                input = "$projectDir/assets/samplesheet_pbmerge.csv"
+                input = "$projectDir/tests/csv/samplesheet_pbmerge.csv"
             }
         }
 
