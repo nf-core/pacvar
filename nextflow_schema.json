@@ -191,9 +191,9 @@
                     "description": "Option to skip SV variant calling",
                     "fa_icon": "fas fa-forward"
                 },
-                "skip_cnv": {
+                "skip_hificnv": {
                     "type": "boolean",
-                    "description": "Skip copy number variation detection",
+                    "description": "Skip HiFiCNV copy number variat calling",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_phase": {

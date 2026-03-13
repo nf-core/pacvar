@@ -37,8 +37,8 @@ CONTROL_REP1,NA03697B2_02.bam,NA03697B2_02.bam, NA03697B2_02.bam,NA03697B2_02.pb
 The typical command for running the pipeline is as follows for the wgs workflow:
 
 ```bash
-nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome 'GATK.GRCh38' -profile <docker/singularity/conda> --barcodes barcodes.fasta --intervals intervals.bed --workflow wgs --snv_caller deepvariant
-nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome  'GATK.GRCh38' -profile <docker/singularity/conda> --barcodes barcodes.fasta --intervals intervals.bed --workflow repeat --repeat_id repeat-id --snv_caller 'deepvariant'
+nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome 'GATK.GRCh38' -profile <docker/singularity/conda> --barcodes barcodes.fasta --intervals intervals.bed --workflow wgs --snv_caller deepvariant --sv_caller sawfish
+nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome  'GATK.GRCh38' -profile <docker/singularity/conda> --barcodes barcodes.fasta --intervals intervals.bed --workflow repeat --repeat_id repeat-id
 ```
 
 > See below for more information about profiles.

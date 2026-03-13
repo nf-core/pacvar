@@ -3,6 +3,27 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0dev - [2026-03-13]
+
+Renamed the parameter `skip_cnv` to `skip_hificnv` to better reflect its intended behavior. The previous name was ambiguous because the pipeline includes `sawfish`, which also performs CNV calling. Using `skip_cnv` could therefore be interpreted as disabling all CNV calling. Renaming the parameter to `skip_hificnv` clarifies that the flag controls whether the `HiFiCNV` step is executed, while sawfish’s CNV calling remains unaffected.
+
+### Added
+
+### Changed
+
+- Renamed pipeline parameter `skip_cnv` → `skip_hificnv`
+- README.md
+- conf/test_full.config
+- conf/test_wgs_deepvariant.config
+- conf/test_wgs_gatk.config
+- conf/test_wgs_hificnv.config
+- conf/test_wgs_sawfish.config
+- docs/usage.md
+- nextflow.config
+- nextflow_schema.json
+- ro-crate-metadata.json
+- workflows/pacvar.nf
+
 ## 1.1.0dev - [2026-03-10]
 
 Addressed the reviewers's comments on [PR #42](https://github.com/nf-core/pacvar/pull/42) by improving testing for copy number variant (CNV) calling and reorganizing files in the `assets` directory.
