@@ -185,7 +185,7 @@ workflow PACVAR {
             }
         }
 
-        if (!params.skip_cnv) {
+        if (!params.skip_hificnv) {
             // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
             // Prepare channel and MAF input based on skip_snp and skip_phase parameters
             // define bam_bam_maf_ch: tuple val(meta), path(bam), path(bai), path(vcf)

@@ -25,7 +25,7 @@
 
 ![nf-core/pacvar metro map](docs/images/metro_update_with_new_features.png)
 
-Workflow Overview
+Preprocessing Overview
 
 1. Demultiplex reads ([`lima`](https://lima.how))
 2. Align reads ([`pbmm2`](https://github.com/PacificBiosciences/pbmm2))
@@ -34,15 +34,17 @@ Workflow Overview
 WGS Workflow Overview
 
 1. Choice of SNVs and small indels calling routes:
-   a. [`deepvariant`](https://github.com/google/deepvariant)
+   a. [`DeepVariant`](https://github.com/google/deepvariant) (default)
    b. [`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller)
 2. Choice of SV calling routes:
-   a. [`pbsv`](https://github.com/PacificBiosciences/pbsv)
-   b. [`sawfish`](https://github.com/PacificBiosciences/sawfish)
-3. Index VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+   a. [`sawfish`](https://github.com/PacificBiosciences/sawfish) (default)
+   b. [`pbsv`](https://github.com/PacificBiosciences/pbsv)
+3. Index `pbsv`'s VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
-5. Call CNVs ([`hificnv`](https://github.com/PacificBiosciences/HiFiCNV))
+5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
+
+   Note: Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
 
 Tandem Repeat Workflow Overview
 
@@ -87,7 +89,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_cnv`, and `--skip_cpg`.
+Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, and `--skip_cpg`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
