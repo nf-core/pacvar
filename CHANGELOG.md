@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.1.0dev - [2026-03-13]
+## 1.1.0dev - [2026-03-13] [PR #44](https://github.com/nf-core/pacvar/pull/44)
 
 Renamed the parameter `skip_cnv` to `skip_hificnv` to better reflect its intended behavior. The previous name was ambiguous because the pipeline includes `sawfish`, which also performs CNV calling. Using `skip_cnv` could therefore be interpreted as disabling all CNV calling. Renaming the parameter to `skip_hificnv` clarifies that the flag controls whether the `HiFiCNV` step is executed, while sawfish’s CNV calling remains unaffected.
 
@@ -24,7 +24,7 @@ Renamed the parameter `skip_cnv` to `skip_hificnv` to better reflect its intende
 - ro-crate-metadata.json
 - workflows/pacvar.nf
 
-## 1.1.0dev - [2026-03-10]
+## 1.1.0dev - [2026-03-10] [PR #43](https://github.com/nf-core/pacvar/pull/43)
 
 Addressed the reviewers's comments on [PR #42](https://github.com/nf-core/pacvar/pull/42) by improving testing for copy number variant (CNV) calling and reorganizing files in the `assets` directory.
 
@@ -47,7 +47,7 @@ Updated `nextflow.config` to include the newly-added configuration file
 - `assets/samplesheet_pbmerge.csv`
 - `assets/samplesheet_repeat_id.csv`
 
-## 1.1.0dev - [1/20/2026]
+## 1.1.0dev - [1/20/2026] [PR #42](https://github.com/nf-core/pacvar/pull/42)
 
 This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools), and PacBio merge bam (pbtk/pbmerge). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules.
 
