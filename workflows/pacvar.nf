@@ -20,6 +20,7 @@ include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_
 include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
 include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
 include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
+include { VCF_ANNOTATE_VEP        } from '../subworkflows/local/vcf_annotate_vep'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,6 +59,10 @@ workflow PACVAR {
     intervals
     expected_cn
     cnv_excluded_regions
+    vep_cache
+    vep_cache_version
+    vep_genome
+    vep_species
 
     main:
     ch_versions = channel.empty()

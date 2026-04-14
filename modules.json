@@ -40,6 +40,16 @@
                         "git_sha": "bb9a29235b995f82bf0621825e45024802ddfdb6",
                         "installed_by": ["modules"]
                     },
+                    "ensemblvep/download": {
+                        "branch": "master",
+                        "git_sha": "09bae0b3db772c2d763e3cc1834c1370d0db1289",
+                        "installed_by": ["modules"]
+                    },
+                    "ensemblvep/vep": {
+                        "branch": "master",
+                        "git_sha": "890fdcff71928fc1470d3e669d4c430c8c770297",
+                        "installed_by": ["modules"]
+                    },
                     "fastqc": {
                         "branch": "master",
                         "git_sha": "5bdb098216aaf5df9c3b6343e6204cd932503c16",

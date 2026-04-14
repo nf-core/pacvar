@@ -42,6 +42,36 @@
                 }
             }
         },
+         "annotation": {
+            "title": "Annotation",
+            "type": "object",
+            "description": "",
+            "fa_icon": "fas fa-braille",
+            "properties": {
+                "skip_annotation": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Option to skip snv (vep) annotation with VEP.",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "By default, annotation is disabled to reduce runtime. Set to 'false' to enable SNV annotation. \nNote: VEP annotation is currently unsupported for 'CHM13v2.0' as a compatible VEP cache is not provided in the standard configuration. See https://annotation-cache.github.io/vep_cache/ for availiable vep cache."
+                },
+                "vep_custom_args": {
+                    "type": "string",
+                    "default": "--everything --filter_common --per_gene --total_length --offline --format vcf",
+                    "fa_icon": "fas fa-toolbox",
+                    "description": "Add an extra custom argument to VEP.",
+                    "help_text": "Using this params you can add custom args to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "vep_out_format": {
+                    "type": "string",
+                    "default": "vcf",
+                    "description": "VEP output-file format.",
+                    "enum": ["json", "tab", "vcf"],
+                    "help_text": "Sets the format of the output-file from VEP. Available formats: json, tab and vcf.",
+                    "fa_icon": "fas fa-table"
+                }
+            }
+        },
         "reference_genome_options": {
             "title": "Reference genome options",
             "type": "object",
@@ -110,6 +140,38 @@
                     "pattern": "^\\S+\\.dict$",
                     "description": "Path to dict for variant calling",
                     "fa_icon": "far fa-file-code"
+                },
+                "download_cache": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-download",
+                    "description": "Download annotation cache.",
+                    "help_text": "Set this parameter, if you wish to download annotation cache.\nUsing this parameter will download cache even if --vep_cache are provided."
+                },
+                "vep_cache": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "fa_icon": "fas fa-cloud-download-alt",
+                    "default": "s3://annotation-cache/vep_cache/",
+                    "description": "Path to VEP cache.",
+                    "help_text": "Path to VEP cache which should contain the relevant species, genome and build directories at the path ${vep_species}/${vep_genome}_${vep_cache_version}\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
+                },
+                "vep_cache_version": {
+                    "type": "string",
+                    "fa_icon": "fas fa-tag",
+                    "description": "VEP cache version.",
+                    "help_text": "Alternative cache version can be used to specify the correct Ensembl Genomes version number as these differ from the concurrent Ensembl/VEP version numbers.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
+                },
+                "vep_genome": {
+                    "type": "string",
+                    "fa_icon": "fas fa-microscope",
+                    "description": "VEP genome.",
+                    "help_text": "This is used to specify the genome when looking for local cache, or cloud based cache.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
+                },
+                "vep_species": {
+                    "type": "string",
+                    "fa_icon": "fas fa-microscope",
+                    "description": "VEP species.",
+                    "help_text": "Alternatively species listed in Ensembl Genomes caches can be used.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
                 }
             }
         },
@@ -183,21 +245,25 @@
                 },
                 "skip_snp": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Option to skip SNP variant calling",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_sv": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Option to skip SV variant calling",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_hificnv": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Skip HiFiCNV copy number variant calling",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_phase": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Option to skip phasing",
                     "fa_icon": "fas fa-forward"
                 },
