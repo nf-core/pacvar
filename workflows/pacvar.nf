@@ -59,7 +59,7 @@ workflow PACVAR {
     intervals
     expected_cn
     cnv_excluded_regions
-    vep_cache
+    vep_cache             // [meta, cache]
     vep_cache_version
     vep_genome
     vep_species

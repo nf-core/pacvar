@@ -31,8 +31,12 @@ workflow VEP_CACHE_INITIALISATION {
             error("Path provided with VEP cache is invalid.\nMake sure there is a directory named ${vep_cache_dir} in ${vep_cache}.")
         }
     }
-    ensemblvep_cache = channel.fromPath(file("${vep_cache}/${vep_annotation_cache_key}"), checkIfExists: true).collect()
 
+    // ensemblvep_cache = channel.fromPath(file("${vep_cache}/${vep_annotation_cache_key}"), checkIfExists: true).collect()
+    ensemblvep_cache = channel
+        .fromPath(file("${vep_cache}/${vep_annotation_cache_key}"), checkIfExists: true)
+        .first()
+        .map { [[id: "${vep_cache_version}_${vep_genome}"], it] }
 
     emit:
     ensemblvep_cache // channel: [ meta, cache ]

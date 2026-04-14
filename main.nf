@@ -53,34 +53,18 @@ workflow NFCORE_PACVAR {
 
     // Download cache or cache initialization if skip_annotation=false
     if (!params.skip_annotation) {
-        if (params.download_cache) {
-            // Prepare input for the download module: [ [id], genome, species, version ]
-            ch_ensemblvep_info = channel.of([
-                [ id:"${params.vep_cache_version}_${params.vep_genome}" ], 
-                params.vep_genome, 
-                params.vep_species, 
-                params.vep_cache_version
-            ])
-
-            // Execute Download
-            ENSEMBLVEP_DOWNLOAD(ch_ensemblvep_info, true)
+        // Logic for using existing local or cloud cache
+        VEP_CACHE_INITIALISATION (
+            params.vep_cache,
+            params.vep_species,
+            params.vep_cache_version,
+            params.vep_genome,
+            params.vep_custom_args
+        )
         
-            // Collect the downloaded cache
-            vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.map { meta, cache -> cache }
-        
-        } else {
-            // Logic for using existing local or cloud cache
-            VEP_CACHE_INITIALISATION (
-                params.vep_cache,
-                params.vep_species,
-                params.vep_cache_version,
-                params.vep_genome,
-                params.vep_custom_args
-            )
-        
-            vep_cache = VEP_CACHE_INITIALISATION.out.ensemblvep_cache
-        }
+        vep_cache = VEP_CACHE_INITIALISATION.out.ensemblvep_cache // [meta, cache]
     }
+    
 
     //
     // WORKFLOW: Run pipeline
@@ -95,7 +79,7 @@ workflow NFCORE_PACVAR {
         intervals,
         expected_cn,
         cnv_excluded_regions,
-        vep_cache,
+        vep_cache, 
         params.vep_cache_version,
         params.vep_genome,
         params.vep_species
