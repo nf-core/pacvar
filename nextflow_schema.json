@@ -141,12 +141,6 @@
                     "description": "Path to dict for variant calling",
                     "fa_icon": "far fa-file-code"
                 },
-                "download_cache": {
-                    "type": "boolean",
-                    "fa_icon": "fas fa-download",
-                    "description": "Download annotation cache.",
-                    "help_text": "Set this parameter, if you wish to download annotation cache.\nUsing this parameter will download cache even if --vep_cache are provided."
-                },
                 "vep_cache": {
                     "type": "string",
                     "format": "directory-path",
@@ -159,18 +153,21 @@
                     "type": "string",
                     "fa_icon": "fas fa-tag",
                     "description": "VEP cache version.",
+                    "default": "115",
                     "help_text": "Alternative cache version can be used to specify the correct Ensembl Genomes version number as these differ from the concurrent Ensembl/VEP version numbers.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
                 },
                 "vep_genome": {
                     "type": "string",
                     "fa_icon": "fas fa-microscope",
                     "description": "VEP genome.",
+                    "default": "GRCh38",
                     "help_text": "This is used to specify the genome when looking for local cache, or cloud based cache.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
                 },
                 "vep_species": {
                     "type": "string",
                     "fa_icon": "fas fa-microscope",
                     "description": "VEP species.",
+                    "default": "homo_sapiens",
                     "help_text": "Alternatively species listed in Ensembl Genomes caches can be used.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
                 }
             }

@@ -3,6 +3,38 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0dev - [2026-04-13] [PR #45](https://github.com/nf-core/pacvar/pull/45)
+
+### Added
+* **Annotation Support:**
+    * Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation.
+    * New subworkflow: `subworkflows/local/vcf_annotate_vep/main.nf` to coordinate the annotation process.
+    * New subworkflow: `subworkflows/local/vep_cache_initialisation/main.nf` to manage cache staging and path validation.
+* **Parameters & Schema:**
+    * Added `params.skip_annotation` to allow bypassing the annotation stage.
+    * Added `params.vep_custom_args` to allow users to pass additional flags to VEP.
+    * Added `params.vep_out_format` to toggle between VCF and Tabular output.
+    * Integrated VEP-specific genome attributes (`vep_cache_version`, `vep_genome`, `vep_species`) into `conf/igenomes.config`.
+* **Configuration:**
+    * Created `conf/modules/ensemblvep.config` for `ensemblvep` modular process configuration.
+
+### Changes
+* **Module Refactoring:**
+    * Added `ensemblvep/vep` nf-core module.
+* **Core Workflow Updates:**
+    * Modified `main.nf` to initialize VEP attributes using `getGenomeAttribute`.
+    * Updated `workflows/pacvar.nf` to include conditional logic for running annotation based on `params.skip_annotation` and `params.workflow`.
+    * Updated `nextflow_schema.json` to include all new parameters for CLI validation and documentation.
+    * Update documentation (`README.md`, `docs/images`, `docs/output.md`)
+
+### Dependencies
+| Tool        | Previous version | New version |
+| ----------- | ---------------- | ----------- |
+| ensemblvep  |                  | 115.2       |
+
+### Fixed
+
+
 ## 1.1.0dev - [2026-03-13] [PR #44](https://github.com/nf-core/pacvar/pull/44)
 
 Renamed the parameter `skip_cnv` to `skip_hificnv` to better reflect its intended behavior. The previous name was ambiguous because the pipeline includes `sawfish`, which also performs CNV calling. Using `skip_cnv` could therefore be interpreted as disabling all CNV calling. Renaming the parameter to `skip_hificnv` clarifies that the flag controls whether the `HiFiCNV` step is executed, while sawfish’s CNV calling remains unaffected.
