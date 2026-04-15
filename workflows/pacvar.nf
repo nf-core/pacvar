@@ -58,7 +58,7 @@ workflow PACVAR {
     dbsnp_tbi
     intervals
     expected_cn
-    cnv_excluded_regions
+    cnv_excluded_regions  
     vep_cache             // [meta, cache]
     vep_cache_version
     vep_genome
@@ -188,7 +188,28 @@ workflow PACVAR {
                 // channel for pbcpgtools_alignedbamtocpgscores
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
+
+            if (!params.skip_annotation) {
+                // construct ch_vcf [meta, vcf]
+                if (!params.skip_phase) {
+                    ch_vcf_to_vep = HIPHASE_SNP.out.vcf
+                }
+                else {
+                    ch_vcf_to_vep = orderd_bam_bai_vcf_tbi_snp.vcf_tbi
+                        .map { meta, vcf, tbi -> [ meta, vcf ] }
+                }   
+
+                VCF_ANNOTATE_VEP(
+                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf] },
+                    fasta,
+                    vep_genome,
+                    vep_species,
+                    vep_cache_version,
+                    vep_cache
+                )
+            }
         }
+
 
         if (!params.skip_hificnv) {
             // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)

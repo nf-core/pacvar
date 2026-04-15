@@ -50,10 +50,10 @@
             "properties": {
                 "skip_annotation": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Option to skip snv (vep) annotation with VEP.",
                     "fa_icon": "fas fa-forward",
-                    "help_text": "By default, annotation is disabled to reduce runtime. Set to 'false' to enable SNV annotation. \nNote: VEP annotation is currently unsupported for 'CHM13v2.0' as a compatible VEP cache is not provided in the standard configuration. See https://annotation-cache.github.io/vep_cache/ for availiable vep cache."
+                    "help_text": "Set to 'false' will enable SNV annotation with VEP. \nNote: VEP annotation is currently unsupported for 'CHM13v2.0' as a compatible VEP cache is not provided in the standard configuration. See https://annotation-cache.github.io/vep_cache/ for availiable vep cache."
                 },
                 "vep_custom_args": {
                     "type": "string",

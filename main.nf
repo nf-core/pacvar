@@ -51,8 +51,8 @@ workflow NFCORE_PACVAR {
 
     main:
 
-    // Download cache or cache initialization if skip_annotation=false
-    if (!params.skip_annotation) {
+    // cache initialization if skip_annotation=false and workflow == 'wgs'
+    if (!params.skip_annotation && params.workflow == 'wgs') {
         // Logic for using existing local or cloud cache
         VEP_CACHE_INITIALISATION (
             params.vep_cache,
