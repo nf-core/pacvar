@@ -490,6 +490,9 @@
             "$ref": "#/$defs/methylation_profiling"
         },
         {
+            "$ref": "#/$defs/annotation"
+        },
+        {
             "$ref": "#/$defs/pre_processing"
         },
         {
