@@ -6,21 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.1.0dev - [2026-04-16] [PR #45](https://github.com/nf-core/pacvar/pull/45)
 
 ### Added
+
 - **Annotation Support:**
-    - Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation.
-    - New subworkflow: `subworkflows/local/vcf_annotate_vep/main.nf` to coordinate the annotation process.
-    - New subworkflow: `subworkflows/local/vep_cache_initialisation/main.nf` to manage cache staging and path validation.
+  - Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation.
+  - New subworkflow: `subworkflows/local/vcf_annotate_vep/main.nf` to coordinate the annotation process.
+  - New subworkflow: `subworkflows/local/vep_cache_initialisation/main.nf` to manage cache staging and path validation.
 - **Parameters & Schema:**
-    - Added `params.skip_annotation` to allow bypassing the annotation stage.
-    - Added `params.vep_custom_args` to allow users to pass additional flags to VEP.
-    - Added `params.vep_out_format` to toggle between VCF and Tabular output.
-    - Integrated VEP-specific genome attributes (`vep_cache_version`, `vep_genome`, `vep_species`) into `conf/igenomes.config`.
+  - Added `params.skip_annotation` to allow bypassing the annotation stage.
+  - Added `params.vep_custom_args` to allow users to pass additional flags to VEP.
+  - Added `params.vep_out_format` to toggle between VCF and Tabular output.
+  - Integrated VEP-specific genome attributes (`vep_cache_version`, `vep_genome`, `vep_species`) into `conf/igenomes.config`.
 - **Configuration:**
-    - Created `conf/modules/ensemblvep.config` for `ensemblvep` modular process configuration.
+  - Created `conf/modules/ensemblvep.config` for `ensemblvep` modular process configuration.
 - **Module:**
-    - Added `ensemblvep/vep` and `ensemblvep/download` nf-core modules.    
+  - Added `ensemblvep/vep` and `ensemblvep/download` nf-core modules.
 
 ### Changes
+
 - Modified `main.nf` to initialize VEP attributes using `getGenomeAttribute` and `vep_cache_initialisation` subworkflow.
 - Updated `workflows/pacvar.nf` to include conditional logic for running SNVs annotation with VEP based on `params.skip_annotation`, `params.skip_snp`, and `params.workflow`.
 - Updated `nextflow_schema.json` to include all new parameters for CLI validation and documentation.
@@ -28,9 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update the pipeline to be compliant with template 3.5.2.
 
 ### Dependencies
-| Tool        | Previous version | New version |
-| ----------- | ---------------- | ----------- |
-| ensemblvep  |                  | 115.2       |
+
+| Tool       | Previous version | New version |
+| ---------- | ---------------- | ----------- |
+| ensemblvep |                  | 115.2       |
 
 ### Deprecated
 

@@ -42,7 +42,7 @@
                 }
             }
         },
-         "annotation": {
+        "annotation": {
             "title": "Annotation",
             "type": "object",
             "description": "",

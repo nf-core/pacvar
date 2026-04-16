@@ -61,10 +61,10 @@ workflow NFCORE_PACVAR {
             params.vep_genome,
             params.vep_custom_args
         )
-        
+
         vep_cache = VEP_CACHE_INITIALISATION.out.ensemblvep_cache // [meta, cache]
     }
-    
+
 
     //
     // WORKFLOW: Run pipeline
@@ -79,7 +79,7 @@ workflow NFCORE_PACVAR {
         intervals,
         expected_cn,
         cnv_excluded_regions,
-        vep_cache, 
+        vep_cache,
         params.vep_cache_version,
         params.vep_genome,
         params.vep_species

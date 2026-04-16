@@ -58,7 +58,7 @@ workflow PACVAR {
     dbsnp_tbi
     intervals
     expected_cn
-    cnv_excluded_regions  
+    cnv_excluded_regions
     vep_cache             // [meta, cache]
     vep_cache_version
     vep_genome
@@ -197,7 +197,7 @@ workflow PACVAR {
                 else {
                     ch_vcf_to_vep = orderd_bam_bai_vcf_tbi_snp.vcf_tbi
                         .map { meta, vcf, tbi -> [ meta, vcf ] }
-                }   
+                }
 
                 VCF_ANNOTATE_VEP(
                     ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf] },

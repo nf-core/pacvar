@@ -294,21 +294,22 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 <details markdown="1">
 <summary>Output files</summary>
 
-* `annotation/vep/`
-    * `<basename>.vep.vcf.gz`: Compressed VCF file containing the original variants with added VEP annotations in the `CSQ` INFO field.
-    * `<basename>.vep.vcf.gz.tbi`: Index file for the annotated VCF.
-    * `<basename>.vep.txt`: (Only if `vep_out_format` is 'tab') A tab-delimited file containing annotation results.
-    * `<basename>.vep.summary.html`: A summary report for the run, showing consequence distributions, coding effects, and quality metrics.
+- `annotation/vep/`
+  - `<basename>.vep.vcf.gz`: Compressed VCF file containing the original variants with added VEP annotations in the `CSQ` INFO field.
+  - `<basename>.vep.vcf.gz.tbi`: Index file for the annotated VCF.
+  - `<basename>.vep.txt`: (Only if `vep_out_format` is 'tab') A tab-delimited file containing annotation results.
+  - `<basename>.vep.summary.html`: A summary report for the run, showing consequence distributions, coding effects, and quality metrics.
 
 </details>
 
 VEP is configured to run in **offline mode** using or local cache to ensure high performance and genomic version consistency. The local cache is either staged from S3 bucket (s3://annotation-cache/vep_cache/) or provided by the user as a local directory.
 
 **Key Annotations Provided:**
-* **Consequence:** The sequence ontology term for the variant effect (e.g., `stop_gained`, `missense_variant`).
-* **Impact:** The predicted functional severity (HIGH, MODERATE, LOW, or MODIFIER).
-* **Gene/Transcript:** The Ensembl stable IDs for affected genomic features.
-* **HGVSc/HGVSp:** Standardized nomenclature for the variant at the coding and protein levels.
+
+- **Consequence:** The sequence ontology term for the variant effect (e.g., `stop_gained`, `missense_variant`).
+- **Impact:** The predicted functional severity (HIGH, MODERATE, LOW, or MODIFIER).
+- **Gene/Transcript:** The Ensembl stable IDs for affected genomic features.
+- **HGVSc/HGVSp:** Standardized nomenclature for the variant at the coding and protein levels.
 
 ### MultiQC
 

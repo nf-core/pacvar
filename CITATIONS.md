@@ -71,7 +71,7 @@
   > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files.
 
 - [Ensembl VEP](https://doi.org/10.1186/s13059-016-0974-4)
-  > McLaren W, Gil L, Hunt SE, Riat HS, Ritchie GR, Thormann A, Flicek P, Cunningham F. The Ensembl Variant Effect Predictor. Genome Biol.* 2016 Jun 6;17(1):122. doi: [10.1186/s13059-016-0974-4](https://doi.org/10.1186/s13059-016-0974-4).
+  > McLaren W, Gil L, Hunt SE, Riat HS, Ritchie GR, Thormann A, Flicek P, Cunningham F. The Ensembl Variant Effect Predictor. Genome Biol.\* 2016 Jun 6;17(1):122. doi: [10.1186/s13059-016-0974-4](https://doi.org/10.1186/s13059-016-0974-4).
 
 ## Software packaging/containerisation tools
 
