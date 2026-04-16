@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `nextflow_schema.json` to include all new parameters for CLI validation and documentation.
 - Update documentation (`README.md`, `docs/images`, `docs/output.md`, `CITATION.md`).
 - Update the pipeline to be compliant with template 3.5.2.
+- Update `test_full.config` to include VEP testing (`skip_annotation=false` as default)
+- Update `test_wgs*.config` to set `skip_annotation = true` to save time from vep cache (~ 23G) staging
 
 ### Dependencies
 
