@@ -25,13 +25,13 @@
 
 ![nf-core/pacvar metro map](docs/images/metro_update_with_new_features.png)
 
-Preprocessing Overview
+**Preprocessing Overview**
 
 1. Demultiplex reads ([`lima`](https://lima.how))
 2. Align reads ([`pbmm2`](https://github.com/PacificBiosciences/pbmm2))
 3. Sort and index alignments ([`SAMtools`](https://sourceforge.net/projects/samtools/files/samtools/))
 
-WGS Workflow Overview
+**WGS Workflow Overview**
 
 1. Choice of SNVs and small indels calling routes:
    a. [`DeepVariant`](https://github.com/google/deepvariant) (default)
@@ -43,18 +43,15 @@ WGS Workflow Overview
 4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
 5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
+7. SNVs and small indels filtering and annotaion with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
 
 > [!TIP]
-> Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
-
-Variant filtering and annotation 
-
-1. SNVs and small indels filtering and annotaion with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+> Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
 
 > [!NOTE]
-> This is a **minimal VEP process**, designed to be lightweight and does not bundle heavy data files (caches, plugins, or custom files). The current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13, set `skip_annotation=true`.
+> This is a **minimal VEP process** and does not bundle cache download, plugins/custom files features. The cache is either staged from S3 bucket (see [here](https://annotation-cache/vep_cache/)) or provided by the user as a local directory. The current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13, disable VEP using  `--skip_annotation true`.
 
-Tandem Repeat Workflow Overview
+**Tandem Repeat Workflow Overview**
 
 1. Genotype tandem repeats - produce spanning bams and vcf ([`TRGT`](https://github.com/PacificBiosciences/trgt))
 2. Index and Sort tandem tepeat spanning bam ([`SAMtools`](https://sourceforge.net/projects/samtools/files/samtools/))
@@ -116,6 +113,10 @@ For more details about the output files and reports, please refer to the
 nf-core/pacvar was originally written by Tanya Sarkin Jain. Contributions by Chao-Jen Wong and Stijn Van de Sompele were added starting with version 1.1.0dev and continuing in later releases.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
+
+- Evangelos Karatzas for his meticulous review involving 73 conversation threads.
+- Tania Jain for providing invaluable comments and guidance throughout the v1.1.0 development phase.
+- The Seqera and nf-core communities: Many members have contributed by reviewing modules and pull requests. This pipeline is truly a community effort.
 
 ## Contributions and Support
 
