@@ -44,7 +44,15 @@ WGS Workflow Overview
 5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
 
-   Note: Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
+> [!TIP]
+> Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
+
+Variant filtering and annotation 
+
+1. SNVs and small indels filtering and annotaion with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+
+> [!NOTE]
+> This is a **minimal VEP process**, designed to be lightweight and does not bundle heavy data files (caches, plugins, or custom files). The current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13, set `skip_annotation=true`.
 
 Tandem Repeat Workflow Overview
 

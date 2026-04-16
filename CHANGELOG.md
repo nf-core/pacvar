@@ -32,8 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | ----------- | ---------------- | ----------- |
 | ensemblvep  |                  | 115.2       |
 
-### Fixed
-
 
 ## 1.1.0dev - [2026-03-13] [PR #44](https://github.com/nf-core/pacvar/pull/44)
 
