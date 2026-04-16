@@ -51,6 +51,9 @@ workflow NFCORE_PACVAR {
 
     main:
 
+    // Initialize with default/fallback value
+    vep_cache = params.vep_cache    
+    
     // cache initialization if skip_annotation=false and workflow == 'wgs'
     if (!params.skip_annotation && params.workflow == 'wgs') {
         // Logic for using existing local or cloud cache
