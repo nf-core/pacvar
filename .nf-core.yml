@@ -9,3 +9,7 @@ template:
   org: nf-core
   outdir: .
   version: 1.1.0dev
+lint:
+  files_unchanged:
+    - assets/nf-core-pacvar_logo_light.png
+    - docs/images/nf-core-pacvar_logo_light.png
