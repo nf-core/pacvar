@@ -27,7 +27,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [SAMTools index](#samtools) - Index BAM file
   - [HiFiCNV](#hificnv) - Variant call CNVs
   - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
-  - [ensembl-vep](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs and small indels annotation
+  - [Ensembl VEP](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs and small indels annotation
 - Repeat workflow
   - [TRGT](#trgt) - Genotype and plot tandem repeats
   - [SAMTools sort](#samtools) - Sort BAM files

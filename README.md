@@ -115,8 +115,8 @@ nf-core/pacvar was originally written by Tanya Sarkin Jain. Contributions by Cha
 We thank the following people for their extensive assistance in the development of this pipeline:
 
 - Evangelos Karatzas for his meticulous review involving 73 conversation threads.
-- Tania Jain for providing invaluable comments and guidance throughout the v1.1.0 development phase.
-- The Seqera and nf-core communities: Many members have contributed by reviewing modules and pull requests. This pipeline is truly a community effort.
+- Tania Jain for providing comments and guidance throughout the v1.1.0 development phase.
+- The Seqera and nf-core communities: Many members have contributed by reviewing modules and pull requests. This pipeline is a community effort.
 
 ## Contributions and Support
 
