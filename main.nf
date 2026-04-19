@@ -15,8 +15,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { PACVAR                   } from './workflows/pacvar/'
-include { VEP_CACHE_INITIALISATION } from './subworkflows/local/vep_cache_initialisation'
-include { ENSEMBLVEP_DOWNLOAD      } from './modules/nf-core/ensemblvep/download/main'
+include { UTILS_ANNOTATION_CACHE   } from './subworkflows/nf-core/utils_annotation_cache/main' 
 include { PIPELINE_INITIALISATION  } from './subworkflows/local/utils_nfcore_pacvar_pipeline'
 include { PIPELINE_COMPLETION      } from './subworkflows/local/utils_nfcore_pacvar_pipeline'
 include { getGenomeAttribute	   } from './subworkflows/local/utils_nfcore_pacvar_pipeline'
@@ -51,23 +50,25 @@ workflow NFCORE_PACVAR {
 
     main:
 
-    // Initialize with default/fallback value
-    vep_cache = params.vep_cache
 
-    // cache initialization if skip_annotation=false and workflow == 'wgs'
-    if (!params.skip_annotation && params.workflow == 'wgs') {
-        // Logic for using existing local or cloud cache
-        VEP_CACHE_INITIALISATION (
-            params.vep_cache,
-            params.vep_species,
-            params.vep_cache_version,
-            params.vep_genome,
-            params.vep_custom_args
+    // vep cache initialization 
+    // 1. Define ensembl+_enable based on params.workflow and params.skip_annotation
+    def ensembl_enable = (params.workflow == 'wgs') ? !params.skip_annotation : false
+    // 2. Define vep_cache
+    UTILS_ANNOTATION_CACHE (
+        params.vep_cache,         // ensemblvep_cache
+        params.vep_cache_version, // ensemblvep_cache_version
+        params.vep_custom_args,   // ensemblvep_custom_args
+        params.vep_genome,        // ensemblvep_genome
+        params.vep_species,       // ensemblvep_species
+        ensembl_enable,           // ensemblvep_enabled
+        [],                       // snpeff_cache
+        [],                       // snpeff_db
+        false,                    // snpeff_enabled
+        []                        // help_message
         )
 
-        vep_cache = VEP_CACHE_INITIALISATION.out.ensemblvep_cache // [meta, cache]
-    }
-
+    vep_cache = UTILS_ANNOTATION_CACHE.out.ensemblvep_cache // [meta, cache] or [] depends on skip_annotation
 
     //
     // WORKFLOW: Run pipeline
