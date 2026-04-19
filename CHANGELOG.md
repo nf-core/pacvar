@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Annotation Support:**
   - Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation.
-  - New subworkflow: `subworkflows/local/vcf_annotate_vep/main.nf` to coordinate the annotation process.
-  - New subworkflow: `subworkflows/local/vep_cache_initialisation/main.nf` to manage cache staging and path validation.
+  - New subworkflow: `subworkflows/nf-core/vcf_annotate_ensemblvep` to coordinate the ensemblvep process.
+  - New subworkflow: `subworkflows/nf-core/utils_annotation_cache` to initialize vep cache validation.
 - **Parameters & Schema:**
   - Added `params.skip_annotation` to allow bypassing the annotation stage.
   - Added `params.vep_custom_args` to allow users to pass additional flags to VEP.
