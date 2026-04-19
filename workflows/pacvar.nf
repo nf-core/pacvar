@@ -189,7 +189,7 @@ workflow PACVAR {
             }
 
             // vep annotation for SNVs
-            if (!params.skip_annotation) {
+            if (!params.skip_ensemblvep) {
                 // construct ch_vcf_to_vep [meta, vcf]
                 if (!params.skip_phase) {
                     ch_vcf_to_vep = HIPHASE_SNP.out.vcf
@@ -200,7 +200,7 @@ workflow PACVAR {
                 }
 
                 VCF_ANNOTATE_ENSEMBLVEP (
-                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] },
+                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
                     fasta,
                     vep_genome,
                     vep_species,

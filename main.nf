@@ -15,7 +15,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { PACVAR                   } from './workflows/pacvar/'
-include { UTILS_ANNOTATION_CACHE   } from './subworkflows/nf-core/utils_annotation_cache/main' 
+include { UTILS_ANNOTATION_CACHE   } from './subworkflows/nf-core/utils_annotation_cache/main'
 include { PIPELINE_INITIALISATION  } from './subworkflows/local/utils_nfcore_pacvar_pipeline'
 include { PIPELINE_COMPLETION      } from './subworkflows/local/utils_nfcore_pacvar_pipeline'
 include { getGenomeAttribute	   } from './subworkflows/local/utils_nfcore_pacvar_pipeline'
@@ -51,9 +51,9 @@ workflow NFCORE_PACVAR {
     main:
 
 
-    // vep cache initialization 
-    // 1. Define ensembl+_enable based on params.workflow and params.skip_annotation
-    def ensembl_enable = (params.workflow == 'wgs') ? !params.skip_annotation : false
+    // vep cache initialization
+    // 1. Define ensembl+_enable based on params.workflow and params.skip_ensemblvep
+    def ensembl_enable = (params.workflow == 'wgs') ? !params.skip_ensemblvep : false
     // 2. Define vep_cache
     UTILS_ANNOTATION_CACHE (
         params.vep_cache,         // ensemblvep_cache

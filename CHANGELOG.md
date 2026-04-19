@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - New subworkflow: `subworkflows/nf-core/vcf_annotate_ensemblvep` to coordinate the ensemblvep process.
   - New subworkflow: `subworkflows/nf-core/utils_annotation_cache` to initialize vep cache validation.
 - **Parameters & Schema:**
-  - Added `params.skip_annotation` to allow bypassing the annotation stage.
+  - Added `params.skip_ensemblvep` to allow bypassing the annotation stage.
   - Added `params.vep_custom_args` to allow users to pass additional flags to VEP.
   - Added `params.vep_out_format` to toggle between VCF and Tabular output.
   - Integrated VEP-specific genome attributes (`vep_cache_version`, `vep_genome`, `vep_species`) into `conf/igenomes.config`.
