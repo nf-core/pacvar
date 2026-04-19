@@ -20,14 +20,13 @@ include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_
 include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
 include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
 include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
-include { VCF_ANNOTATE_VEP        } from '../subworkflows/local/vcf_annotate_vep'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
+include { VCF_ANNOTATE_ENSEMBLVEP                      } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
 include { LIMA                                         } from '../modules/nf-core/lima/main'
 include { PBTK_PBMERGE                                 } from '../modules/nf-core/pbtk/pbmerge/main'
 include { DEEPVARIANT_RUNDEEPVARIANT                   } from '../modules/nf-core/deepvariant/rundeepvariant/main'
@@ -189,8 +188,9 @@ workflow PACVAR {
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
             }
 
+            // vep annotation for SNVs
             if (!params.skip_annotation) {
-                // construct ch_vcf [meta, vcf]
+                // construct ch_vcf_to_vep [meta, vcf]
                 if (!params.skip_phase) {
                     ch_vcf_to_vep = HIPHASE_SNP.out.vcf
                 }
@@ -199,13 +199,14 @@ workflow PACVAR {
                         .map { meta, vcf, tbi -> [ meta, vcf ] }
                 }
 
-                VCF_ANNOTATE_VEP(
-                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf] },
+                VCF_ANNOTATE_ENSEMBLVEP (
+                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] },
                     fasta,
                     vep_genome,
                     vep_species,
                     vep_cache_version,
-                    vep_cache
+                    vep_cache,
+                    []
                 )
             }
         }
