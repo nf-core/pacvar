@@ -26,9 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modified `main.nf` to initialize VEP attributes using `getGenomeAttribute` and `vep_cache_initialisation` subworkflow.
 - Updated `workflows/pacvar.nf` to include conditional logic for running SNVs annotation with VEP based on `params.skip_annotation`, `params.skip_snp`, and `params.workflow`.
 - Updated `nextflow_schema.json` to include all new parameters for CLI validation and documentation.
-- Update documentation (`README.md`, `docs/images`, `docs/output.md`, `CITATION.md`).
-- Update the pipeline to be compliant with template 3.5.2.
-- Update `test_full.config` to include VEP testing (`skip_annotation=false` as default)
+- Updated documentation (`README.md`, `docs/images`, `docs/output.md`, `CITATION.md`).
+- Updated the pipeline to be compliant with template 3.5.2.
+- Updated `test_full.config` to include VEP testing (`skip_annotation=false` as default)
 - Update `test_wgs*.config` to set `skip_annotation = true` to save time from vep cache (~ 23G) staging
 
 ### Dependencies

@@ -192,7 +192,7 @@ workflow PACVAR {
             // vep annotation for SNVs
             if (!params.skip_ensemblvep) {
                 // construct ch_vcf_to_vep [meta, vcf]
-                ch_vcf_to_vep = params.skip_phase 
+                ch_vcf_to_vep = params.skip_phase
                     ? orderd_bam_bai_vcf_tbi_snp.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
                     : vcf_snp_phased_ch
 
