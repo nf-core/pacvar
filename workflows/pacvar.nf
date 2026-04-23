@@ -230,7 +230,7 @@ workflow PACVAR {
 
             // Run HiFiCNV
             BAM_CNV_VARIANT_CALLING(
-                cnv_input_bam_bai_maf_ch,
+                cnv_input_bam_bai_maf_ch.map { meta, bam, bai, vcf -> [ meta + [file_name: bam.baseName], bam, bai, vcf ] },
                 fasta,
                 expected_cn,
                 cnv_excluded_regions
@@ -305,7 +305,8 @@ workflow PACVAR {
 
             // Call pbcpgtools alignedbamtocpgscores
             PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
-                cpg_bam_bai_ch)
+                cpg_bam_bai_ch.map { meta, bam, bai -> [ meta + [file_name:bam.baseName], bam, bai ] }
+                )
 
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }
