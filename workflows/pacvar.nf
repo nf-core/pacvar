@@ -28,6 +28,7 @@ include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_character
 */
 include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_SNP  } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
 include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_SV   } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
+include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_CNV  } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
 include { LIMA                                                    } from '../modules/nf-core/lima/main'
 include { PBTK_PBMERGE                                            } from '../modules/nf-core/pbtk/pbmerge/main'
 include { DEEPVARIANT_RUNDEEPVARIANT                              } from '../modules/nf-core/deepvariant/rundeepvariant/main'
@@ -237,6 +238,19 @@ workflow PACVAR {
                 cnv_excluded_regions
             )
             ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
+            vcf_cnv_ch = BAM_CNV_VARIANT_CALLING.out.vcf_indexed.map { meta, vcf, tbi -> [ meta, vcf ] }
+
+            if (!params.skip_ensemblvep) {
+                VCF_ANNOTATE_ENSEMBLVEP_CNV (
+                    vcf_cnv_ch.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
+                    fasta,
+                    vep_genome,
+                    vep_species,
+                    vep_cache_version,
+                    vep_cache,
+                    []
+                )
+            }
         }
 
         if (!params.skip_sv) {
