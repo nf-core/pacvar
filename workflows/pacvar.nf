@@ -173,6 +173,10 @@ workflow PACVAR {
                   bam_bai: [meta, bam, bai]
                     vcf_tbi: [meta, vcf, tbi]
                 }
+            // DEBUG:
+            bam_bai_ch.view { meta, bam, bai -> "BAM channel meta: ${meta}" }
+            // DEBUG: After BAM_SNP_VARIANT_CALLING
+            BAM_SNP_VARIANT_CALLING.out.vcf_ch.view { meta, vcf, tbi -> "SNP VCF Output: ${meta.id}" } 
 
             if (!params.skip_phase) {
                 // phase snp files
@@ -189,6 +193,8 @@ workflow PACVAR {
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
                 // vcf channel for ensemblvep,  hificnv, and etc.
                 vcf_snp_phased_ch = HIPHASE_SNP.out.vcf
+                // DEBUG
+                HIPHASE_SNP.out.vcf.view { meta, vcf -> "Phased VCF Output: ${meta.id}" }
             }
 
             // vep annotation for SNVs
@@ -197,9 +203,21 @@ workflow PACVAR {
                 ch_vcf_to_vep = params.skip_phase
                     ? orderd_bam_bai_vcf_tbi_snp.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
                     : vcf_snp_phased_ch
+                
+                // DEBUG: Check how many samples are in the channel
+                ch_vcf_to_vep.view { meta, vcf -> "VEP Input: ${meta.id} - ${vcf}" }
+
+                // keep debuggin:
+                // Map to the format VEP expects
+                def ch_vep_input = ch_vcf_to_vep.map { meta, vcf -> 
+                    [meta, vcf, []]
+                     // [meta + [file_name: vcf.baseName], vcf, []]
+                }
+                // DEBUG: Check after transformation
+                ch_vep_input.view { meta, vcf, custom -> "VEP Transformed: ${meta.id} - ${vcf}" }
 
                 VCF_ANNOTATE_ENSEMBLVEP_SNP (
-                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
+                    ch_vep_input,
                     fasta,
                     vep_genome,
                     vep_species,
