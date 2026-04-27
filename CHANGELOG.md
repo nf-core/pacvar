@@ -3,7 +3,29 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.1.0dev - [2026-04-16] [PR #45](https://github.com/nf-core/pacvar/pull/45)
+
+## 1.1.0dev - [2026-04-28] [PR #49 add-vep-to-sv](https://github.com/nf-core/pacvar/pull/49)
+
+### Added
+- Added `download_vep_cache` and `outdir_vep_cache` parameters to enable VEP cache downloading.
+- Integrated `ENSEMBL_DOWNLOAD` module to download VEP cache.
+- Added VEP annotation support for Structural Variants (SV) and Copy Number Variants (CNV).
+
+### Changed
+- Refactored `modules.config` to improve output directory structure for `TABIX` and `BCFTOOLS` modules.
+- Updated `modules.config` to ensure output file names for `pb-CpG-tools` and `HiFiCNV` correctly reflect the input BAM file name (using `meta.file_name`).
+- Updated `modules.config`to ensure the `DEEPVARIANT_RUNDEEPVARIANT` module ouput file use the suffix .snv for better file type clarity.
+- Optimized `conf/modules/ensemblvep.config` to include specific `ext.args` for the `ENSEMBLVEP_DOWNLOAD` module.
+- Updated `pacvar.nf` to integrate  and VEP annotation workflows for SVs and CNVs.
+- Updated `doc/output.md` for the he `ENSEMBLVEP_DOWNLOAD` module.
+- Updated `CHANGELOG.md`
+
+### Dependencies
+
+### Deprecated
+
+
+## 1.1.0dev - [2026-04-16] [PR #48 add-annotation](https://github.com/nf-core/pacvar/pull/48)
 
 ### Added
 
