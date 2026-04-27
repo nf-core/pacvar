@@ -57,10 +57,16 @@
                 },
                 "vep_custom_args": {
                     "type": "string",
-                    "default": "--everything --filter_common --per_gene --total_length --offline --format vcf",
+                    "default": "--everything --filter_common --per_gene --total_length --offline --format vcf --force_overwrite",
                     "fa_icon": "fas fa-toolbox",
                     "description": "Add an extra custom argument to VEP.",
                     "help_text": "Using this params you can add custom args to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "outdir_cache": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The output directory where the vep cache will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "fa_icon": "fas fa-folder-open"
                 },
                 "vep_out_format": {
                     "type": "string",
@@ -140,6 +146,13 @@
                     "pattern": "^\\S+\\.dict$",
                     "description": "Path to dict for variant calling",
                     "fa_icon": "far fa-file-code"
+                },
+                "download_vep_cache": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Download Ensembl VEP cache",
+                    "fa_icon": "fas fa-download",
+                    "help_text": "Set this parameter will download vep cache even if --vep_cache are provided."
                 },
                 "vep_cache": {
                     "type": "string",
