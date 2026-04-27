@@ -67,7 +67,7 @@ workflow NFCORE_PACVAR {
 
         // Execute Download
         ENSEMBLVEP_DOWNLOAD(ch_ensemblvep_info, true)
-        vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.first() // [meta, cache]
+        vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.first() // [meta, cache] and convert it to value channel
     } else {
         UTILS_ANNOTATION_CACHE (
             params.vep_cache,         // ensemblvep_cache
