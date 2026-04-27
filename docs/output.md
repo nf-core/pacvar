@@ -27,6 +27,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [SAMTools index](#samtools) - Index BAM file
   - [HiFiCNV](#hificnv) - Variant call CNVs
   - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
+  - [Ensembl VEP](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs and small indels annotation
 - Repeat workflow
   - [TRGT](#trgt) - Genotype and plot tandem repeats
   - [SAMTools sort](#samtools) - Sort BAM files
@@ -285,6 +286,30 @@ Example png output: sample1_C9ORF72.png
 </details>
 
 The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
+
+### ensembl-vep
+
+[Ensembl Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) determines the effect of variants (SNVs, small indels, SVs, and CNVs) on genes, transcripts, and protein sequences, as well as regulatory regions. In this pipeline, we use `ensembl-vep` specifically for SNVs and small indels annotation.
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `annotation/vep/`
+  - `<basename>.vep.vcf.gz`: Compressed VCF file containing the original variants with added VEP annotations in the `CSQ` INFO field.
+  - `<basename>.vep.vcf.gz.tbi`: Index file for the annotated VCF.
+  - `<basename>.vep.txt`: (Only if `vep_out_format` is 'tab') A tab-delimited file containing annotation results.
+  - `<basename>.vep.summary.html`: A summary report for the run, showing consequence distributions, coding effects, and quality metrics.
+
+</details>
+
+VEP is configured to run in **offline mode** using or local cache to ensure high performance and genomic version consistency. The local cache is either staged from S3 bucket (s3://annotation-cache/vep_cache/) or provided by the user as a local directory.
+
+**Key Annotations Provided:**
+
+- **Consequence:** The sequence ontology term for the variant effect (e.g., `stop_gained`, `missense_variant`).
+- **Impact:** The predicted functional severity (HIGH, MODERATE, LOW, or MODIFIER).
+- **Gene/Transcript:** The Ensembl stable IDs for affected genomic features.
+- **HGVSc/HGVSp:** Standardized nomenclature for the variant at the coding and protein levels.
 
 ### MultiQC
 

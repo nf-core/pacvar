@@ -26,7 +26,7 @@ include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_character
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
+include { VCF_ANNOTATE_ENSEMBLVEP                      } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
 include { LIMA                                         } from '../modules/nf-core/lima/main'
 include { PBTK_PBMERGE                                 } from '../modules/nf-core/pbtk/pbmerge/main'
 include { DEEPVARIANT_RUNDEEPVARIANT                   } from '../modules/nf-core/deepvariant/rundeepvariant/main'
@@ -58,6 +58,10 @@ workflow PACVAR {
     intervals
     expected_cn
     cnv_excluded_regions
+    vep_cache             // [meta, cache]
+    vep_cache_version
+    vep_genome
+    vep_species
 
     main:
     ch_versions = channel.empty()
@@ -178,12 +182,32 @@ workflow PACVAR {
 
                 // Index the phased BAM from HIPHASE_SNP
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
-                // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SNP.out.versions)
 
-                // channel for pbcpgtools_alignedbamtocpgscores
+                // channel for pbcpgtools_alignedbamtocpgscores and hificnv
                 bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
+                // vcf channel for ensemblvep,  hificnv, and etc.
+                vcf_snp_phased_ch = HIPHASE_SNP.out.vcf
+            }
+
+            // vep annotation for SNVs
+            if (!params.skip_ensemblvep) {
+                // construct ch_vcf_to_vep [meta, vcf]
+                ch_vcf_to_vep = params.skip_phase
+                    ? orderd_bam_bai_vcf_tbi_snp.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
+                    : vcf_snp_phased_ch
+
+                VCF_ANNOTATE_ENSEMBLVEP (
+                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
+                    fasta,
+                    vep_genome,
+                    vep_species,
+                    vep_cache_version,
+                    vep_cache,
+                    []
+                )
             }
         }
+
 
         if (!params.skip_hificnv) {
             // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
@@ -191,7 +215,7 @@ workflow PACVAR {
             // define bam_bam_maf_ch: tuple val(meta), path(bam), path(bai), path(vcf)
             if (!params.skip_snp && !params.skip_phase) {
                 // Use phased BAM, BAI, and VCF from HIPHASE_SNP
-                cnv_input_bam_bai_maf_ch = bam_bai_ch.join(HIPHASE_SNP.out.vcf)
+                cnv_input_bam_bai_maf_ch = bam_bai_snp_phased_ch.join(vcf_snp_phased_ch)
             } else if (!params.skip_snp && params.skip_phase) {
                 // Use unphased BAM, BAI, and VCF from SNP calling
                 cnv_input_bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->

@@ -3,6 +3,42 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0dev - [2026-04-16] [PR #45](https://github.com/nf-core/pacvar/pull/45)
+
+### Added
+
+- **Annotation Support:**
+  - Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation.
+  - Added nf-core subworkflow: `subworkflows/nf-core/vcf_annotate_ensemblvep` to coordinate the ensemblvep process.
+  - Added nf-core subworkflow: `subworkflows/nf-core/utils_annotation_cache` to initialize vep cache validation.
+- **Parameters & Schema:**
+  - Added `params.skip_ensemblvep` to allow bypassing the annotation stage.
+  - Added `params.vep_custom_args` to allow users to pass additional flags to VEP.
+  - Added `params.vep_out_format` to toggle between VCF and Tabular output.
+  - Integrated VEP-specific genome attributes (`vep_cache_version`, `vep_genome`, `vep_species`) into `conf/igenomes.config`.
+- **Configuration:**
+  - Created `conf/modules/ensemblvep.config` for `ensemblvep` modular process configuration.
+- **Module:**
+  - Added `ensemblvep/vep` and `ensemblvep/download` nf-core modules.
+
+### Changes
+
+- Modified `main.nf` to initialize VEP attributes using `getGenomeAttribute` and `vep_cache_initialisation` subworkflow.
+- Updated `workflows/pacvar.nf` to include conditional logic for running SNVs annotation with VEP based on `params.skip_annotation`, `params.skip_snp`, and `params.workflow`.
+- Updated `nextflow_schema.json` to include all new parameters for CLI validation and documentation.
+- Updated documentation (`README.md`, `docs/images`, `docs/output.md`, `CITATION.md`).
+- Updated the pipeline to be compliant with template 3.5.2.
+- Updated `test_full.config` to include VEP testing (`skip_annotation=false` as default)
+- Update `test_wgs*.config` to set `skip_annotation = true` to save time from vep cache (~ 23G) staging
+
+### Dependencies
+
+| Tool       | Previous version | New version |
+| ---------- | ---------------- | ----------- |
+| ensemblvep |                  | 115.2       |
+
+### Deprecated
+
 ## 1.1.0dev - [2026-03-13] [PR #44](https://github.com/nf-core/pacvar/pull/44)
 
 Renamed the parameter `skip_cnv` to `skip_hificnv` to better reflect its intended behavior. The previous name was ambiguous because the pipeline includes `sawfish`, which also performs CNV calling. Using `skip_cnv` could therefore be interpreted as disabling all CNV calling. Renaming the parameter to `skip_hificnv` clarifies that the flag controls whether the `HiFiCNV` step is executed, while sawfish’s CNV calling remains unaffected.
