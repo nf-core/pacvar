@@ -1,4 +1,8 @@
-nf_core_version: 3.5.1
+lint:
+  files_unchanged:
+    - assets/nf-core-pacvar_logo_light.png
+    - docs/images/nf-core-pacvar_logo_light.png
+nf_core_version: 4.0.0
 repository_type: pipeline
 template:
   author: Tanya Sarkin Jain
@@ -9,4 +13,4 @@ template:
   name: pacvar
   org: nf-core
   outdir: .
-  version: 0.1.0
+  version: 1.1.0dev
