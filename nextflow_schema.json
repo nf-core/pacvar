@@ -62,7 +62,7 @@
                     "description": "Add an extra custom argument to VEP.",
                     "help_text": "Using this params you can add custom args to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
                 },
-                "outdir_cache": {
+                "outdir_vep_cache": {
                     "type": "string",
                     "format": "directory-path",
                     "description": "The output directory where the vep cache will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
