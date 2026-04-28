@@ -17,17 +17,17 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [SAMTools sort](#samtools) - Sort BAM files
   - [SAMTools index](#samtools) - Index BAM files
 - WGS workflow
-  - [DeepVariant](#deepvariant-rundeepvariant) - Variant call SNVs
-  - [GATK4 Haplotypecaller](#gatk4-haplotypecaller) - Variant call SNVs
+  - [DeepVariant](#deepvariant-rundeepvariant) - Variant call SNVs and small indels
+  - [GATK4 Haplotypecaller](#gatk4-haplotypecaller) - Variant call SNVs and small indels
   - [pbsv](#pbsv) - Variant call SVs
   - [tabix](#tabix) - VCF zipping
-  - [bcftools index](#bcftools) - Index VCF files
+  - [bcftools index](#bcftools-index) - Index VCF files
   - [Sawfish](#sawfish) - Variant call SVs and CNVs
-  - [HiPHASE](#hiphase) - Phase VCF, and BAM files
+  - [HiPHASE](#hiphase) - Phase VCF and BAM files
   - [SAMTools index](#samtools) - Index BAM file
   - [HiFiCNV](#hificnv) - Variant call CNVs
   - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
-  - [Ensembl VEP](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs and small indels annotation
+  - [Ensembl VEP](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs, SVs, and CNVs annotation
 - Repeat workflow
   - [TRGT](#trgt) - Genotype and plot tandem repeats
   - [SAMTools sort](#samtools) - Sort BAM files
@@ -198,7 +198,7 @@ Note:
 <details markdown="1">
 <summary>Output files</summary>
 
-- `tabix/`
+- `pbsv/`
   - `<basename>.sv.vcf.gz`: Zipped PBSV VCF files
 
 </details>
@@ -210,8 +210,14 @@ Note:
 <details markdown="1">
 <summary>Output files</summary>
 
-- `BCFTOOLS/`
+- `pbsv/`
   - `<basename>.sv.vcf.gz.csi`: Index of PBSV VCF files
+
+- `hificnv/`
+  - `<basename>.cnv.<sample_id>.vcf.gz.csi`: Index of HiFiCNV VCF files
+
+- `bcftools/`
+  - `<basename>.vcf.gz.csi`: Index of TRGT GENNOTYPE VCF files
 
 </details>
 
@@ -289,8 +295,6 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 
 ### ensembl-vep
 
-[Ensembl Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) determines the effect of variants (SNVs, small indels, SVs, and CNVs) on genes, transcripts, and protein sequences, as well as regulatory regions. In this pipeline, we use `ensembl-vep` specifically for SNVs and small indels annotation.
-
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -302,13 +306,21 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 
 </details>
 
-VEP is configured to run in **offline mode** using or local cache to ensure high performance and genomic version consistency. The local cache is either staged from S3 bucket (s3://annotation-cache/vep_cache/) or provided by the user as a local directory.
+[Ensembl Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) determines the effect of variants (SNVs, small indels, SVs, and CNVs) on genes, transcripts, and protein sequences, as well as regulatory regions. In this pipeline, we use `ensembl-vep` for all types of variant calls.
+
+VEP is configured to run in **offline mode** using or local cache to ensure high performance and genomic version consistency. The local cache is either staged from S3 bucket (s3://annotation-cache/vep_cache/), downloaded using `ENSEMBLVEP_DOWNLAOD` module, or provided by the user as a local directory.
 
 **Key Annotations Provided:**
 
 - **Consequence:** The sequence ontology term for the variant effect (e.g., `stop_gained`, `missense_variant`).
 - **Impact:** The predicted functional severity (HIGH, MODERATE, LOW, or MODIFIER).
-- **Gene/Transcript:** The Ensembl stable IDs for affected genomic features.
+- **Gene/Transcript/Feature:** The Ensembl stable IDs for affected genomic features.
+- **BIOTYPE:** The classification of the transcript or regulatory feature (e.g., protein_coding).
+- **SYMBOL:** The standardized gene symbol (e.g., BRCA2).
+- **EXON:** The exon number affected by the variant.
+- **SIFT/PolyPhen:** Computational predictions of whether an amino acid substitution affects protein structure or function (reported as both a qualitative rating and a numerical score).
+- **Protein_position:** The relative position of the affected amino acid within the protein sequence.
+- **CLIN_SIG:** ClinVar Significance based on NCBI ClinVar (e.g., `pathogenic`, `benign`, `uncertain_significance`).
 - **HGVSc/HGVSp:** Standardized nomenclature for the variant at the coding and protein levels.
 
 ### MultiQC
