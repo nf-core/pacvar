@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Refactored `modules.config` to improve output directory structure for `TABIX` and `BCFTOOLS` modules.
 - Updated `modules.config` to ensure output file names for `pb-CpG-tools` and `HiFiCNV` correctly reflect the input BAM file name (using `meta.file_name`).
-- Updated `modules.config`to ensure the `DEEPVARIANT_RUNDEEPVARIANT` module ouput file use the suffix .snv for better file type clarity.
+- Updated `modules.config`to ensure the `DEEPVARIANT_RUNDEEPVARIANT` module ouput file use the suffix .snv for better variant-type clarity.
 - Optimized `conf/modules/ensemblvep.config` to include specific `ext.args` for the `ENSEMBLVEP_DOWNLOAD` module.
 - Updated `pacvar.nf` to integrate  and VEP annotation workflows for SVs and CNVs.
 - Updated `doc/output.md` for the he `ENSEMBLVEP_DOWNLOAD` module.
