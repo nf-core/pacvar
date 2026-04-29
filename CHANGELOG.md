@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `download_vep_cache` and `outdir_vep_cache` parameters to enable VEP cache downloading.
 - Integrated `ENSEMBL_DOWNLOAD` module to download VEP cache.
 - Added VEP annotation support for Structural Variants (SV) and Copy Number Variants (CNV).
+- Added updated metro map, `docs/images/metro_update_v1.1.0dev_PR49.png`
 
 ### Changed
 
@@ -20,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `pacvar.nf` to integrate and VEP annotation workflows for SVs and CNVs.
 - Updated `doc/output.md` for the he `ENSEMBLVEP_DOWNLOAD` module.
 - Updated `CHANGELOG.md`
+- Updated `conf/test_wgs_hificnv.config` to test the logistics of vep annotation
+- Updated `conf/test_wgs_ensemblvep` to test downloading vep cache
+- Updated `nextflow_schema.json` for new parameters
 
 ### Dependencies
 
