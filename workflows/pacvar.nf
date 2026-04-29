@@ -197,7 +197,7 @@ workflow PACVAR {
                 ch_snv_vcf_to_vep = params.skip_phase
                     ? orderd_bam_bai_vcf_tbi_snp.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
                     : vcf_snp_phased_ch
-                
+
                 VCF_ANNOTATE_ENSEMBLVEP_SNP (
                     ch_snv_vcf_to_vep.map { meta,  vcf -> [ meta + [file_name: vcf.baseName], vcf, [] ] }, // [meta, vcf, [custom files]]
                     fasta,

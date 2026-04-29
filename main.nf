@@ -59,9 +59,9 @@ workflow NFCORE_PACVAR {
     if (params.download_vep_cache) {
         // Prepare input for the download module: [ [id], genome, species, version ]
         ch_ensemblvep_info = channel.of([
-            [ id:"${params.vep_cache_version}_${params.vep_genome}" ], 
-            params.vep_genome, 
-            params.vep_species, 
+            [ id:"${params.vep_cache_version}_${params.vep_genome}" ],
+            params.vep_genome,
+            params.vep_species,
             params.vep_cache_version
         ])
 

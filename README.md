@@ -94,7 +94,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`. 
+Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
