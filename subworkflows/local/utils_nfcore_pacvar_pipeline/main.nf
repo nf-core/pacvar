@@ -19,7 +19,9 @@ include { UTILS_NEXTFLOW_PIPELINE   } from '../../nf-core/utils_nextflow_pipelin
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW TO INITIALISE PIPELINE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -36,8 +38,8 @@ workflow PIPELINE_INITIALISATION {
     help_full         // boolean: Show the full help message
     show_hidden       // boolean: Show hidden parameters in the help message
 
-    main:
 
+    main:
     ch_versions = channel.empty()
 
     //
@@ -98,6 +100,7 @@ workflow PIPELINE_INITIALISATION {
         nextflow_cli_args
     )
 
+
     //
     // Custom validation for pipeline parameters
     //
@@ -110,31 +113,30 @@ workflow PIPELINE_INITIALISATION {
     channel
         .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
         .map {
-            meta, fastq_1, fastq_2 ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
-                } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
-                }
+            meta, bam, pbi, fail ->
+                def repeat_id = meta.repeat_id ?: params.repeat_id ?: ""
+                def new_meta = meta + [ 'repeat_id': repeat_id ]
+                return [new_meta, bam, fail]
         }
-        .groupTuple()
-        .map { samplesheet ->
-            validateInputSamplesheet(samplesheet)
-        }
-        .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
+        .flatMap { meta, bam, fail ->
+            def items = []
+            if (bam) items << [meta + [type: 'hifi'], bam]
+            if (fail) items << [meta + [type: 'fail'], fail]
+            return items
         }
         .set { ch_samplesheet }
 
     emit:
     samplesheet = ch_samplesheet
+
     versions    = ch_versions
 }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     SUBWORKFLOW FOR PIPELINE COMPLETION
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
@@ -164,7 +166,7 @@ workflow PIPELINE_COMPLETION {
                 plaintext_email,
                 outdir,
                 monochrome_logs,
-                multiqc_reports.getVal(),
+                multiqc_report.toList()
             )
         }
 
@@ -179,7 +181,9 @@ workflow PIPELINE_COMPLETION {
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     FUNCTIONS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 //
@@ -232,13 +236,15 @@ def genomeExistsError() {
 // Generate methods description for MultiQC
 //
 def toolCitationText() {
-    // TODO nf-core: Optionally add in-text citation tools to this list.
-    // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "Tool (Foo et al. 2023)" : "",
-    // Uncomment function in methodsDescriptionText to render in MultiQC report
     def citation_text = [
             "Tools used in the workflow included:",
-            "FastQC (Andrews 2010),",
             "MultiQC (Ewels et al. 2016)",
+            "SAMtools (Li et al. 2009)",
+            "BCFtools (Danecek et al. 2021)",
+            "TRGT (Dolzhenko et al. 2024)",
+            "HiPhase (Holt et al. 2024)",
+            "Deepvariant (Poplin et al. 2018)",
+            "HaplotypeCaller (Poplin et al. 2017)",
             "."
         ].join(' ').trim()
 
@@ -246,12 +252,15 @@ def toolCitationText() {
 }
 
 def toolBibliographyText() {
-    // TODO nf-core: Optionally add bibliographic entries to this list.
-    // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "<li>Author (2023) Pub name, Journal, DOI</li>" : "",
-    // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
             "<li>Andrews S, (2010) FastQC, URL: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).</li>",
-            "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
+            "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>",
+            "<li>Li H, Handsaker B, Wysoker A et al. The Sequence Alignment/Map format and SAMtools. Bioinformatics 2009;25:2078–9.</li>",
+            "<li>Danecek P, Bonfield JK, Liddle J et al. Twelve years of SAMtools and BCFtools. Gigascience 2021;10, DOI: 10.1093/gigascience/giab008.</li>",
+            "<li>Dolzhenko E, English A, Dashnow H et al. Characterization and visualization of tandem repeats at genome scale. Nat Biotechnol 2024;42:1606–14.</li>",
+            "<li>Holt JM, Saunders CT, Rowell WJ et al. HiPhase: jointly phasing small, structural, and tandem repeat variants from HiFi sequencing. Bioinformatics 2024;40, DOI: 10.1093/bioinformatics/btae042.</li>",
+            "<li>Poplin R, Chang P-C, Alexander D et al. A universal SNP and small-indel variant caller using deep neural networks. Nat Biotechnol 2018;36:983–7.</li>",
+            "<li>Poplin R, Ruano-Rubio V, DePristo MA et al. Scaling accurate genetic variant discovery to tens of thousands of samples. BioRxiv 2017, DOI: 10.1101/201178.</li>"
         ].join(' ').trim()
 
     return reference_text
@@ -280,11 +289,6 @@ def methodsDescriptionText(mqc_methods_yaml) {
     // Tool references
     meta["tool_citations"] = ""
     meta["tool_bibliography"] = ""
-
-    // TODO nf-core: Only uncomment below if logic in toolCitationText/toolBibliographyText has been filled!
-    // meta["tool_citations"] = toolCitationText().replaceAll(", \\.", ".").replaceAll("\\. \\.", ".").replaceAll(", \\.", ".")
-    // meta["tool_bibliography"] = toolBibliographyText()
-
 
     def methods_text = mqc_methods_yaml.text
 

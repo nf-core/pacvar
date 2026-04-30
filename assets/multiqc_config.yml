@@ -5,7 +5,7 @@ report_comment: >
 report_section_order:
   "nf-core-pacvar-methods-description":
     order: -1000
-  software_versions:
+  "software_versions":
     order: -1001
   "nf-core-pacvar-summary":
     order: -1002

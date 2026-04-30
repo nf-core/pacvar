@@ -138,10 +138,17 @@
                 "pacbio",
                 "puretarget",
                 "variant-calling",
+                "methylation",
+                "annotation",
+                "fiberseq",
                 "wgs"
             ],
-            "license": ["MIT"],
-            "name": ["nf-core/pacvar"],
+            "license": [
+                "MIT"
+            ],
+            "name": [
+                "nf-core/pacvar"
+            ],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },

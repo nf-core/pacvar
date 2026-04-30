@@ -8,26 +8,46 @@
         "type": "object",
         "properties": {
             "sample": {
-                "type": "string",
-                "pattern": "^\\S+$",
-                "errorMessage": "Sample name must be provided and cannot contain spaces",
-                "meta": ["id"]
+                "errorMessage": "Sample ID must be provided and must be an integer or string that cannot contain spaces",
+                "meta": ["id"],
+                "type": ["string", "integer"],
+                "pattern": "^\\S+$"
             },
-            "fastq_1": {
+            "bam": {
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This is a required input.",
                 "type": "string",
+                "pattern": "^\\S+\\.(bam|cram)$",
                 "format": "file-path",
-                "exists": true,
-                "pattern": "^([\\S\\s]*\\/)?[^\\s\\/]+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "exists": true
             },
-            "fastq_2": {
+            "pbi": {
+                "errorMessage": "BAI or CRAI index file cannot contain spaces, must exist and has the extension '.bai', '.crai' or '.pbi'",
                 "type": "string",
+                "pattern": "^\\S+\\.(bai|crai|pbi)$",
                 "format": "file-path",
-                "exists": true,
-                "pattern": "^([\\S\\s]*\\/)?[^\\s\\/]+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "exists": true
+            },
+            "fail": {
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This is an optional input in case merging of hifi and fail reads need to occur for the 'repeat' workflow.",
+                "type": "string",
+                "pattern": "^\\S+\\.(bam|cram)$",
+                "format": "file-path",
+                "exists": true
+            },
+            "repeat_id": {
+                "errorMessage": "Repeat ID to be plotted cannot contain spaces. Multiple IDs can be provided separated by semicolons ';'. If not provided, params.repeat_id will be used.",
+                "meta": ["repeat_id"],
+                "type": ["string"],
+                "default": ""
+            },
+            "karyotype": {
+                "errorMessage": "Karyotype must be equal to XX or XY",
+                "meta": ["karyotype"],
+                "type": ["string"],
+                "enum": ["XX", "XY"],
+                "default": ""
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["sample", "bam"]
     }
 }

@@ -6,11 +6,14 @@ nf_core_version: 4.0.2
 repository_type: pipeline
 template:
   author: Tanya Sarkin Jain
-  description: A variant caller for PacBio long read sequencing - also can be used
-    for PureTarget panel analysis, and quantification of repeat expansions
+  description: A variant caller for PacBio long read sequencing - also can be used for PureTarget panel analysis, and quantification of repeat expansions
   force: false
   is_nfcore: true
   name: pacvar
   org: nf-core
   outdir: .
   version: 1.1.0dev
+lint:
+  files_unchanged:
+    - assets/nf-core-pacvar_logo_light.png
+    - docs/images/nf-core-pacvar_logo_light.png
