@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.1.0dev - [2026-04-28] [PR #49 add-vep-to-sv](https://github.com/nf-core/pacvar/pull/49)
+## 1.1.0dev - [2026-04-28] [PR #52 add-vep-to-sv](https://github.com/nf-core/pacvar/pull/52)
 
 ### Added
 
