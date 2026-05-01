@@ -53,10 +53,12 @@ workflow NFCORE_PACVAR {
 
 
     // vep cache initialization
-    // 1. Define ensembl+_enable based on params.workflow and params.skip_ensemblvep
-    def ensembl_enable = (params.workflow == 'wgs') ? !params.skip_ensemblvep : false
+    // 1. Define ensemblvep_enable based on params.workflow and params.skip_ensemblvep
+    def ensemblvep_enabled = (params.workflow == 'wgs') ? !params.skip_ensemblvep : false
+    vep_cache = []
+
     // 2. Download vep_cache
-    if (params.download_vep_cache) {
+    if (params.download_vep_cache && ensemblvep_enabled) {
         // Prepare input for the download module: [ [id], genome, species, version ]
         ch_ensemblvep_info = channel.of([
             [ id:"${params.vep_cache_version}_${params.vep_genome}" ],
@@ -68,20 +70,22 @@ workflow NFCORE_PACVAR {
         // Execute Download
         ENSEMBLVEP_DOWNLOAD(ch_ensemblvep_info, true)
         vep_cache = ENSEMBLVEP_DOWNLOAD.out.cache.first() // [meta, cache] and convert it to value channel
-    } else {
+    } 
+    else if (ensemblvep_enabled) { 
+        // staging vep cache
         UTILS_ANNOTATION_CACHE (
             params.vep_cache,         // ensemblvep_cache
             params.vep_cache_version, // ensemblvep_cache_version
             params.vep_custom_args,   // ensemblvep_custom_args
             params.vep_genome,        // ensemblvep_genome
             params.vep_species,       // ensemblvep_species
-            ensembl_enable,           // ensemblvep_enabled
+            ensemblvep_enabled,       // ensemblvep_enabled
             [],                       // snpeff_cache
             [],                       // snpeff_db
             false,                    // snpeff_enabled
             []                        // help_message
         )
-        vep_cache = UTILS_ANNOTATION_CACHE.out.ensemblvep_cache // [meta, cache]  or [] depending on ensembl_enable
+        vep_cache = UTILS_ANNOTATION_CACHE.out.ensemblvep_cache // [meta, cache]  or [] depending on ensemblvep_enable
     }
 
     //
