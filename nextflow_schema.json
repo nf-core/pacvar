@@ -79,7 +79,7 @@
                 "outdir_vep_cache": {
                     "type": "string",
                     "format": "directory-path",
-                    "description": "The output directory where the vep cache will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "description": "Output directory where the downloaded VEP cache will be saved. Only used when `--download_vep_cache true`. Use absolute paths on cloud infrastructure. Note: when set, the cache is published outside `--outdir`.",
                     "fa_icon": "fas fa-folder-open"
                 },
                 "vep_out_format": {
