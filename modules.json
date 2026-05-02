@@ -5,16 +5,6 @@
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
-                    "annotsv/annotsv": {
-                        "branch": "master",
-                        "git_sha": "c5eae18cb04f1d240d7f5a202b61517add9940ce",
-                        "installed_by": ["modules"]
-                    },
-                    "annotsv/installannotations": {
-                        "branch": "master",
-                        "git_sha": "c5eae18cb04f1d240d7f5a202b61517add9940ce",
-                        "installed_by": ["modules"]
-                    },
                     "bcftools/index": {
                         "branch": "master",
                         "git_sha": "94a767478097e92dca1386ea623d9dae9edc025a",
