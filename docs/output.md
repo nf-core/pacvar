@@ -217,7 +217,7 @@ Note:
   - `<basename>.cnv.<sample_id>.vcf.gz.csi`: Index of HiFiCNV VCF files
 
 - `bcftools/`
-  - `<basename>.vcf.gz.csi`: Index of TRGT GENNOTYPE VCF files
+  - `<basename>.vcf.gz.csi`: Index of TRGT GENOTYPE VCF files
 
 </details>
 
