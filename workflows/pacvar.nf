@@ -20,6 +20,7 @@ include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_
 include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
 include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
 include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
+include { BAM_ADDNUCLEOSOMES_FIBERTOOLS } from '../subworkflows/local/bam_addnucleosomes_fibertools'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -343,6 +344,14 @@ workflow PACVAR {
                 )
 
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
+        }
+
+        if (!params.skip_fiberseq) {
+            fiberseq_bam_ch = (!params.skip_phase && !params.skip_snp) ? HIPHASE_SNP.out.bam : ordered_bam_ch
+
+            BAM_ADDNUCLEOSOMES_FIBERTOOLS(fiberseq_bam_ch)
+
+            ch_versions = ch_versions.mix(BAM_ADDNUCLEOSOMES_FIBERTOOLS.out.versions)
         }
     }
 
