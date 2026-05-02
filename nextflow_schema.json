@@ -315,9 +315,17 @@
             "properties": {
                 "skip_cpg": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Skip CpG site probability for 5mC methylation calling",
                     "fa_icon": "fas fa-forward",
-                    "help_text": "When enabled, the pipeline will skip CpG site 5mC methylation probability scoring steps."
+                    "help_text": "When enabled, the WGS workflow will skip CpG site 5mC methylation probability scoring."
+                },
+                "skip_fiberseq": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Skip Fiber-seq nucleosome annotation with fibertools-rs",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the WGS workflow will skip adding Fiber-seq BAM auxiliary tags for nucleosome and MSP positions with fibertools-rs."
                 }
             }
         },

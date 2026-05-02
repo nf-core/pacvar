@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0dev - [2026-05-02] add-fibertools
+
+### Added
+
+- Added the `fibertoolsrs/addnucleosomes` nf-core module to annotate Fiber-seq BAM files with nucleosome and MSP positions.
+- Added the `BAM_ADDNUCLEOSOMES_FIBERTOOLS` local subworkflow to run `fibertools-rs add-nucleosomes` and index the resulting BAM files with `samtools index`.
+- Added `params.skip_fiberseq` to control Fiber-seq nucleosome annotation in the WGS workflow.
+- Added `conf/modules/fibertools.config` to publish fibertools outputs to `${params.outdir}/fibertools`.
+
+### Changed
+
+- Updated `workflows/pacvar.nf` to run the fibertools add-nucleosomes subworkflow on phased SNV BAMs when phasing is available, otherwise on sorted BAMs.
+- Updated `nextflow_schema.json` and `docs/output.md` to document the new `skip_fiberseq` parameter and fibertools BAM/BAI outputs.
+
+### Dependencies
+
+| Tool          | Previous version | New version |
+| ------------- | ---------------- | ----------- |
+| fibertools-rs | -                | 0.7.1       |
+
 ## 1.1.0dev - [2026-04-28] [PR #52 add-vep-to-sv](https://github.com/nf-core/pacvar/pull/52)
 
 ### Added

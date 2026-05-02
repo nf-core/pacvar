@@ -27,6 +27,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [SAMTools index](#samtools) - Index BAM file
   - [HiFiCNV](#hificnv) - Variant call CNVs
   - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
+  - [fibertools-rs](#fibertools-rs-add-nucleosomes) - Add nucleosome annotations to Fiber-seq BAM files
   - [Ensembl VEP](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs, SVs, and CNVs annotation
 - Repeat workflow
   - [TRGT](#trgt) - Genotype and plot tandem repeats
@@ -292,6 +293,19 @@ Example png output: sample1_C9ORF72.png
 </details>
 
 The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
+
+### fibertools-rs (add-nucleosomes)
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `fibertools/`
+  - `<basename>.nucleosomes.bam`: BAM file with nucleosome and MSP annotations added by `ft add-nucleosomes`.
+  - `<basename>.nucleosomes.bam.bai`: Index for the nucleosome-annotated BAM file.
+
+</details>
+
+[`fibertools-rs`](https://github.com/fiberseq/fibertools-rs) provides tools for Fiber-seq data analysis. In this workflow, `ft add-nucleosomes` is run when `--skip_fiberseq false`; it uses the phased BAM when SNV phasing is available, otherwise it uses the sorted BAM.
 
 ### ensembl-vep
 

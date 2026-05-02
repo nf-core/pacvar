@@ -43,13 +43,17 @@
 4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
 5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
-7. SNVs and small indels filtering and annotaion with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+7. Add Fiber-seq BAM auxiliary tags for nucleosome and MSP positions to prepare for downstream FIRE analysis ([`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs))
+8. SNV, small indel, SV, and CNV annotation with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
 
 > [!TIP]
 > Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
 
 > [!NOTE]
-> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`.
+> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`. When using the default S3 VEP cache, avoid adding `--merged` or `--refseq` to custom VEP arguments because the cache does not include the additional files required by these options.
+
+> [!NOTE]
+> Use `--skip_fiberseq false` only when your HiFi sequencing BAMs contain m6A calls. The `fibertools-rs add-nucleosomes` step depends on m6A signal to add nucleosome and MSP positions for downstream FIRE analysis.
 
 **Tandem Repeat Workflow Overview**
 
@@ -94,7 +98,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
+Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, `--skip_fiberseq`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
