@@ -74,16 +74,16 @@ workflow NFCORE_PACVAR {
     else if (ensemblvep_enabled) { 
         // staging vep cache
         UTILS_ANNOTATION_CACHE (
-            params.vep_cache,         // ensemblvep_cache
-            params.vep_cache_version, // ensemblvep_cache_version
-            params.vep_custom_args,   // ensemblvep_custom_args
-            params.vep_genome,        // ensemblvep_genome
-            params.vep_species,       // ensemblvep_species
-            ensemblvep_enabled,       // ensemblvep_enabled
-            [],                       // snpeff_cache
-            [],                       // snpeff_db
-            false,                    // snpeff_enabled
-            []                        // help_message
+            params.vep_cache,           // ensemblvep_cache
+            params.vep_cache_version,   // ensemblvep_cache_version
+            params.vep_custom_args_snv, // ensemblvep_custom_args_snv (only checking args contain --merge or --refseq)
+            params.vep_genome,          // ensemblvep_genome
+            params.vep_species,         // ensemblvep_species
+            ensemblvep_enabled,         // ensemblvep_enabled
+            [],                         // snpeff_cache
+            [],                         // snpeff_db
+            false,                      // snpeff_enabled
+            []                          // help_message
         )
         vep_cache = UTILS_ANNOTATION_CACHE.out.ensemblvep_cache // [meta, cache]  or [] depending on ensemblvep_enable
     }
