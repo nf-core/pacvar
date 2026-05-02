@@ -23,7 +23,7 @@
 
 **nf-core/pacvar** is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
 
-![nf-core/pacvar metro map](docs/images/metro_update_v1.1.0dev_PR49.png)
+![nf-core/pacvar metro map](docs/images/metro_update_v1.1.0dev_PR52.png)
 
 **Preprocessing Overview**
 
@@ -49,7 +49,7 @@
 > Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
 
 > [!NOTE]
-> The Ensmbl VEP integrated in pipeline is a **minimal VEP process** and does not yet bundle with plugins/custom files features. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`.
+> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`.
 
 **Tandem Repeat Workflow Overview**
 

@@ -298,7 +298,7 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 <details markdown="1">
 <summary>Output files</summary>
 
-- `annotation/vep/`
+- `annotation/vep/{snv,sv,cnv}`
   - `<basename>.vep.vcf.gz`: Compressed VCF file containing the original variants with added VEP annotations in the `CSQ` INFO field.
   - `<basename>.vep.vcf.gz.tbi`: Index file for the annotated VCF.
   - `<basename>.vep.txt`: (Only if `vep_out_format` is 'tab') A tab-delimited file containing annotation results.
@@ -306,9 +306,9 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 
 </details>
 
-[Ensembl Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) determines the effect of variants (SNVs, small indels, SVs, and CNVs) on genes, transcripts, and protein sequences, as well as regulatory regions. In this pipeline, we use `ensembl-vep` for all types of variant calls.
+[Ensembl Variant Effect Predictor (VEP)](https://www.ensembl.org/info/docs/tools/vep/index.html) determines the effects of variants, including SNVs, small indels, SVs, and CNVs, on genes, transcripts, protein sequences, and regulatory regions. In this pipeline, `ensembl-vep` is used to annotate all supported variant types.
 
-VEP is configured to run in **offline mode** using or local cache to ensure high performance and genomic version consistency. The local cache is either staged from S3 bucket (s3://annotation-cache/vep_cache/), downloaded using `ENSEMBLVEP_DOWNLAOD` module, or provided by the user as a local directory.
+VEP runs in **offline mode** using a local cache to improve performance and ensure reference-version consistency. The cache can be staged from the default S3 bucket (`s3://annotation-cache/vep_cache/`), downloaded with the `ENSEMBLVEP_DOWNLOAD` module, or provided by the user as a local directory.
 
 **Key Annotations Provided:**
 
