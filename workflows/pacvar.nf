@@ -199,7 +199,7 @@ workflow PACVAR {
                     : vcf_snp_phased_ch
 
                 VCF_ANNOTATE_ENSEMBLVEP_SNP (
-                    ch_snv_vcf_to_vep.map { meta,  vcf -> [ meta + [file_name: vcf.baseName], vcf, [] ] }, // [meta, vcf, [custom files]]
+                    ch_snv_vcf_to_vep.map { meta,  vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
                     fasta,
                     vep_genome,
                     vep_species,
@@ -242,7 +242,7 @@ workflow PACVAR {
 
             if (!params.skip_ensemblvep) {
                 VCF_ANNOTATE_ENSEMBLVEP_CNV (
-                    ch_cnv_vcf.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
+                    ch_cnv_vcf.map { meta, vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
                     fasta,
                     vep_genome,
                     vep_species,
@@ -315,7 +315,7 @@ workflow PACVAR {
                     : vcf_sv_phased_ch
 
                 VCF_ANNOTATE_ENSEMBLVEP_SV (
-                    ch_sv_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
+                    ch_sv_vcf_to_vep.map { meta, vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
                     fasta,
                     vep_genome,
                     vep_species,
