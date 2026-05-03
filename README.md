@@ -43,8 +43,8 @@
 4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
 5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
-7. Add Fiber-seq BAM auxiliary tags for nucleosome and MSP positions to prepare for downstream FIRE analysis ([`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs))
-8. SNV, small indel, SV, and CNV annotation with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+7. SNV, small indel, SV, and CNV annotation with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+8. Add Fiber-seq BAM auxiliary tags for nucleosome and MSP positions with [`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs), then extract nucleosome positions to BED format with [`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs) to prepare for downstream FIRE analysis. 
 
 > [!TIP]
 > Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.

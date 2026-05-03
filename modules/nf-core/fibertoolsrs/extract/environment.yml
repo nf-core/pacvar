@@ -1,0 +1,6 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - "bioconda::fibertools-rs=0.7.1"

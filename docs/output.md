@@ -302,10 +302,11 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 - `fibertools/`
   - `<basename>.nucleosomes.bam`: BAM file with nucleosome and MSP annotations added by `ft add-nucleosomes`.
   - `<basename>.nucleosomes.bam.bai`: Index for the nucleosome-annotated BAM file.
+  - `<basename>.nucleosomes.bed.gz`: Nucleosome positions extracted from the annotated BAM with `ft extract --nuc`.
 
 </details>
 
-[`fibertools-rs`](https://github.com/fiberseq/fibertools-rs) provides tools for Fiber-seq data analysis. In this workflow, `ft add-nucleosomes` is run when `--skip_fiberseq false`; it uses the phased BAM when SNV phasing is available, otherwise it uses the sorted BAM.
+[`fibertools-rs`](https://github.com/fiberseq/fibertools-rs) provides tools for Fiber-seq data analysis. In this workflow, `ft add-nucleosomes` is run when `--skip_fiberseq false`; it uses the phased BAM when SNV phasing is available, otherwise it uses the sorted BAM. The nucleosome positions are then extracted to BED format with `ft extract --nuc`.
 
 ### ensembl-vep
 
