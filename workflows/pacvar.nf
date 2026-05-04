@@ -142,6 +142,7 @@ workflow PACVAR {
     fasta_with_fai = fasta
         .combine(fasta_fai)
         .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
+        .first()
 
     SAMTOOLS_SORT(samtools_input_ch, fasta_with_fai, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
