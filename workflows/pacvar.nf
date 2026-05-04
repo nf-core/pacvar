@@ -139,12 +139,12 @@ workflow PACVAR {
             .set { samtools_input_ch }
     }
 
-    fasta_with_fai = fasta
+    fasta_with_fai_ch = fasta
         .combine(fasta_fai)
         .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
         .first()
 
-    SAMTOOLS_SORT(samtools_input_ch, fasta_with_fai, '')
+    SAMTOOLS_SORT(samtools_input_ch, fasta_with_fai_ch, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
 
     //join the bam and index based off the meta id (ensure correct order)

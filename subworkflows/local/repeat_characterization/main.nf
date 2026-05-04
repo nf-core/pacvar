@@ -27,14 +27,14 @@ workflow  REPEAT_CHARACTERIZATION{
         fasta_fai,
         bed)
 
-    fasta_with_fai = fasta
+    fasta_with_fai_ch = fasta
         .combine(fasta_fai)
         .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
         .first()
 
     //sort the resulting spanning bam
     SAMTOOLS_SORT_TRGT(TRGT_GENOTYPE.out.bam,
-        fasta_with_fai, '')
+        fasta_with_fai_ch, '')
 
     //index the resulting bam
     SAMTOOLS_INDEX_TRGT(SAMTOOLS_SORT_TRGT.out.bam)
