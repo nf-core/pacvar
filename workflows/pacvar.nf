@@ -141,12 +141,9 @@ workflow PACVAR {
 
     SAMTOOLS_SORT(samtools_input_ch, fasta, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
-    // both SAMTOOLS_SORT and SAMTOOLS_INDEX are updated to standardize version topics
-    // ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions.first())
-    // ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions.first())
 
     //join the bam and index based off the meta id (ensure correct order)
-    bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai)
+    bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.index)
     ordered_bam_ch = bam_bai_ch.map { meta, bam, bai -> [meta, bam] }
     ordered_bai_ch = bam_bai_ch.map { meta, bam, bai -> [meta, bai] }
 
@@ -187,7 +184,7 @@ workflow PACVAR {
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
 
                 // channel for pbcpgtools_alignedbamtocpgscores and hificnv
-                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
+                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.index)
                 // vcf channel for ensemblvep,  hificnv, and etc.
                 vcf_snp_phased_ch = HIPHASE_SNP.out.vcf
             }

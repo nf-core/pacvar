@@ -40,8 +40,8 @@ workflow  REPEAT_CHARACTERIZATION{
     //index the VCF file
     BCFTOOLS_INDEX(BCFTOOLS_SORT.out.vcf)
 
-    bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai)
-    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
+    bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index)
+    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
     //add repeat_id to channel
     bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, meta.repeat_id] }

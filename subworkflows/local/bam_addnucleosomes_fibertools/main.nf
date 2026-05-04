@@ -22,8 +22,8 @@ workflow BAM_ADDNUCLEOSOMES_FIBERTOOLS {
 
     bam_bai_ch = FIBERTOOLSRS_ADDNUCLEOSOMES.out.bam.join(SAMTOOLS_INDEX.out.index)
 
-    ch_versions = ch_versions.mix(FIBERTOOLSRS_ADDNUCLEOSOMES.out.versions)
-    ch_versions = ch_versions.mix(FIBERTOOLSRS_EXTRACT.out.versions)
+    ch_versions = ch_versions.mix(FIBERTOOLSRS_ADDNUCLEOSOMES.out.versions.first())
+    ch_versions = ch_versions.mix(FIBERTOOLSRS_EXTRACT.out.versions.first())
 
     emit:
     bam_bai = bam_bai_ch
