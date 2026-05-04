@@ -20,7 +20,7 @@ workflow BAM_ADDNUCLEOSOMES_FIBERTOOLS {
         FIBERTOOLSRS_ADDNUCLEOSOMES.out.bam.map { meta, bam -> [ meta, bam, 'nuc' ] }
     )
 
-    bam_bai_ch = FIBERTOOLSRS_ADDNUCLEOSOMES.out.bam.join(SAMTOOLS_INDEX.out.bai)
+    bam_bai_ch = FIBERTOOLSRS_ADDNUCLEOSOMES.out.bam.join(SAMTOOLS_INDEX.out.index)
 
     ch_versions = ch_versions.mix(FIBERTOOLSRS_ADDNUCLEOSOMES.out.versions)
     ch_versions = ch_versions.mix(FIBERTOOLSRS_EXTRACT.out.versions)
