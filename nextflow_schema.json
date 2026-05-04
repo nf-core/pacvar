@@ -260,7 +260,7 @@
                 "sv_caller": {
                     "type": "string",
                     "enum": ["pbsv", "sawfish"],
-                    "default": "pbsv",
+                    "default": "sawfish",
                     "description": "The tool to use for calling structural variants",
                     "fa_icon": "fas fa-forward"
                 },
