@@ -1,7 +1,7 @@
-include { TRGT_GENOTYPE     } from '../../../modules/nf-core/trgt/genotype'
-include { TRGT_PLOT         } from '../../../modules/nf-core/trgt/plot'
-include { BCFTOOLS_SORT     } from '../../../modules/nf-core/bcftools/sort/main'
-include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
+include { TRGT_GENOTYPE                          } from '../../../modules/nf-core/trgt/genotype'
+include { TRGT_PLOT                              } from '../../../modules/nf-core/trgt/plot'
+include { BCFTOOLS_SORT                          } from '../../../modules/nf-core/bcftools/sort/main'
+include { BCFTOOLS_INDEX                         } from '../../../modules/nf-core/bcftools/index/main'
 include { SAMTOOLS_SORT  as SAMTOOLS_SORT_TRGT   } from '../../../modules/nf-core/samtools/sort/main'
 include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_TRGT  } from '../../../modules/nf-core/samtools/index/main'
 
@@ -27,9 +27,13 @@ workflow  REPEAT_CHARACTERIZATION{
         fasta_fai,
         bed)
 
+    fasta_with_fai = fasta
+        .combine(fasta_fai)
+        .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
+
     //sort the resulting spanning bam
     SAMTOOLS_SORT_TRGT(TRGT_GENOTYPE.out.bam,
-        fasta, '')
+        fasta_with_fai, '')
 
     //index the resulting bam
     SAMTOOLS_INDEX_TRGT(SAMTOOLS_SORT_TRGT.out.bam)
