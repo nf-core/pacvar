@@ -23,7 +23,7 @@
 
 **nf-core/pacvar** is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
 
-![nf-core/pacvar metro map](docs/images/metro_update_with_new_features.png)
+![nf-core/pacvar metro map](docs/images/metro_update_v1.1.0dev_PR52.png)
 
 **Preprocessing Overview**
 
@@ -49,7 +49,7 @@
 > Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
 
 > [!NOTE]
-> This is a **minimal VEP process** and does not bundle cache download, plugins/custom files features. The cache is either staged from S3 bucket (see [here](https://annotation-cache/vep_cache/)) or provided by the user as a local directory. The current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13, disable VEP using `--skip_annotation true`.
+> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`.
 
 **Tandem Repeat Workflow Overview**
 
@@ -94,7 +94,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, and `--skip_annotation`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`. Currently the annotation with Ensembl-VEP only support SNVs.
+Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).

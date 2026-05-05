@@ -3,7 +3,35 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.1.0dev - [2026-04-16] [PR #45](https://github.com/nf-core/pacvar/pull/45)
+## 1.1.0dev - [2026-04-28] [PR #52 add-vep-to-sv](https://github.com/nf-core/pacvar/pull/52)
+
+### Added
+
+- Added `download_vep_cache` and `outdir_vep_cache` parameters to enable VEP cache downloading.
+- Integrated `ENSEMBL_DOWNLOAD` module to download VEP cache.
+- Added VEP custom parameters for three variant types: `vep_custom_args_sv`, `vep_custom_args_cnv`, and `vep_custom_args_snv`, and remove `vep_custom_args`.
+- Added VEP annotation support for Structural Variants (SV) and Copy Number Variants (CNV).
+- Added updated metro map, `docs/images/metro_update_v1.1.0dev_PR52.png`
+
+### Changed
+
+- Refactored `modules.config` to improve output directory structure for `TABIX` and `BCFTOOLS` modules.
+- Updated `modules.config` to ensure output file names for `pb-CpG-tools` and `HiFiCNV` correctly reflect the input BAM file name (using `meta.file_name`).
+- Updated `modules.config`to ensure the `DEEPVARIANT_RUNDEEPVARIANT` module ouput file use the suffix .snv for better variant-type clarity.
+- Optimized `conf/modules/ensemblvep.config` to include specific `ext.args` for the `ENSEMBLVEP_DOWNLOAD` module.
+- Updated `pacvar.nf` to integrate VEP annotation workflows for SVs and CNVs.
+- Updated `docs/output.md` to document VEP cache handling and annotation outputs.
+- Updated VEP custom args defaul values.
+- Updated `CHANGELOG.md`
+- Updated `conf/test_wgs_hificnv.config` to test the logistics of vep annotation
+- Updated `conf/test_wgs_ensemblvep` to test downloading vep cache
+- Updated `nextflow_schema.json` for new parameters
+
+### Dependencies
+
+### Deprecated
+
+## 1.1.0dev - [2026-04-16] [PR #48 add-annotation](https://github.com/nf-core/pacvar/pull/48)
 
 ### Added
 

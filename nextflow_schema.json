@@ -55,12 +55,32 @@
                     "fa_icon": "fas fa-forward",
                     "help_text": "Set to 'false' will enable SNVs annotation with Ensembl VEP. \nNote: VEP annotation is currently unsupported for 'CHM13v2.0' as a compatible VEP cache is not provided in the standard configuration. See https://annotation-cache.github.io/vep_cache/ for availiable vep cache."
                 },
-                "vep_custom_args": {
+                "vep_custom_args_snv": {
                     "type": "string",
                     "default": "--everything --filter_common --per_gene --total_length --offline --format vcf",
                     "fa_icon": "fas fa-toolbox",
                     "description": "Add an extra custom argument to VEP.",
                     "help_text": "Using this params you can add custom args to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "vep_custom_args_sv": {
+                    "type": "string",
+                    "default": "--per_gene --buffer_size 5000 --max_sv_size 250000000 --offline --format vcf",
+                    "fa_icon": "fas fa-toolbox",
+                    "description": "Add extra custom arguments to VEP for SV annotation.",
+                    "help_text": "Using this parameter you can add SV-specific custom arguments to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "vep_custom_args_cnv": {
+                    "type": "string",
+                    "default": "--per_gene --buffer_size 5000 --max_sv_size 250000000 --offline --format vcf",
+                    "fa_icon": "fas fa-toolbox",
+                    "description": "Add extra custom arguments to VEP for CNV annotation.",
+                    "help_text": "Using this parameter you can add CNV-specific custom arguments to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "outdir_vep_cache": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Output directory where the downloaded VEP cache will be saved. Only used when `--download_vep_cache true`. Use absolute paths on cloud infrastructure. Note: when set, the cache is published outside `--outdir`.",
+                    "fa_icon": "fas fa-folder-open"
                 },
                 "vep_out_format": {
                     "type": "string",
@@ -140,6 +160,13 @@
                     "pattern": "^\\S+\\.dict$",
                     "description": "Path to dict for variant calling",
                     "fa_icon": "far fa-file-code"
+                },
+                "download_vep_cache": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Download Ensembl VEP cache",
+                    "fa_icon": "fas fa-download",
+                    "help_text": "Set this parameter will download vep cache even if --vep_cache are provided."
                 },
                 "vep_cache": {
                     "type": "string",

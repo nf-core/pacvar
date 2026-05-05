@@ -26,19 +26,21 @@ include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_character
     IMPORT NF-CORE MODULES/SUBWORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { VCF_ANNOTATE_ENSEMBLVEP                      } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
-include { LIMA                                         } from '../modules/nf-core/lima/main'
-include { PBTK_PBMERGE                                 } from '../modules/nf-core/pbtk/pbmerge/main'
-include { DEEPVARIANT_RUNDEEPVARIANT                   } from '../modules/nf-core/deepvariant/rundeepvariant/main'
-include { SAMTOOLS_INDEX                               } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_SORT                                } from '../modules/nf-core/samtools/sort/main'
-include { GATK4_HAPLOTYPECALLER                        } from '../modules/nf-core/gatk4/haplotypecaller/main'
-include { PBMM2_ALIGN                                  } from '../modules/nf-core/pbmm2/align/main'
-include { HIPHASE as HIPHASE_SNP                       } from '../modules/nf-core/hiphase/main'
-include { HIPHASE as HIPHASE_SV                        } from '../modules/nf-core/hiphase/main'
-include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES             } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
-include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SNP } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SV  } from '../modules/nf-core/samtools/index/main'
+include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_SNP  } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
+include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_SV   } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
+include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_CNV  } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
+include { LIMA                                                    } from '../modules/nf-core/lima/main'
+include { PBTK_PBMERGE                                            } from '../modules/nf-core/pbtk/pbmerge/main'
+include { DEEPVARIANT_RUNDEEPVARIANT                              } from '../modules/nf-core/deepvariant/rundeepvariant/main'
+include { SAMTOOLS_INDEX                                          } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_SORT                                           } from '../modules/nf-core/samtools/sort/main'
+include { GATK4_HAPLOTYPECALLER                                   } from '../modules/nf-core/gatk4/haplotypecaller/main'
+include { PBMM2_ALIGN                                             } from '../modules/nf-core/pbmm2/align/main'
+include { HIPHASE as HIPHASE_SNP                                  } from '../modules/nf-core/hiphase/main'
+include { HIPHASE as HIPHASE_SV                                   } from '../modules/nf-core/hiphase/main'
+include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                        } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SNP            } from '../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SV             } from '../modules/nf-core/samtools/index/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -192,12 +194,12 @@ workflow PACVAR {
             // vep annotation for SNVs
             if (!params.skip_ensemblvep) {
                 // construct ch_vcf_to_vep [meta, vcf]
-                ch_vcf_to_vep = params.skip_phase
+                ch_snv_vcf_to_vep = params.skip_phase
                     ? orderd_bam_bai_vcf_tbi_snp.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
                     : vcf_snp_phased_ch
 
-                VCF_ANNOTATE_ENSEMBLVEP (
-                    ch_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName], vcf, []] }, // [meta, vcf, [custom files]]
+                VCF_ANNOTATE_ENSEMBLVEP_SNP (
+                    ch_snv_vcf_to_vep.map { meta,  vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
                     fasta,
                     vep_genome,
                     vep_species,
@@ -230,12 +232,25 @@ workflow PACVAR {
 
             // Run HiFiCNV
             BAM_CNV_VARIANT_CALLING(
-                cnv_input_bam_bai_maf_ch,
+                cnv_input_bam_bai_maf_ch.map { meta, bam, bai, vcf -> [ meta + [file_name: bam.baseName], bam, bai, vcf ] },
                 fasta,
                 expected_cn,
                 cnv_excluded_regions
             )
             ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
+            ch_cnv_vcf = BAM_CNV_VARIANT_CALLING.out.vcf_indexed.map { meta, vcf, tbi -> [ meta, vcf ] }
+
+            if (!params.skip_ensemblvep) {
+                VCF_ANNOTATE_ENSEMBLVEP_CNV (
+                    ch_cnv_vcf.map { meta, vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
+                    fasta,
+                    vep_genome,
+                    vep_species,
+                    vep_cache_version,
+                    vep_cache,
+                    []
+                )
+            }
         }
 
         if (!params.skip_sv) {
@@ -288,7 +303,26 @@ workflow PACVAR {
 
                 // Index the phased BAM from HIPHASE_SV
                 SAMTOOLS_INDEX_HIPHASE_SV(HIPHASE_SV.out.bam)
+                vcf_sv_phased_ch = HIPHASE_SV.out.vcf
                 // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SV.out.versions)
+            }
+
+            // vep annotation for SVs
+            if (!params.skip_ensemblvep) {
+                // construct ch_vcf_to_vep [meta, vcf]
+                ch_sv_vcf_to_vep = params.skip_phase
+                    ? orderd_bam_bai_vcf_tbi_sv.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
+                    : vcf_sv_phased_ch
+
+                VCF_ANNOTATE_ENSEMBLVEP_SV (
+                    ch_sv_vcf_to_vep.map { meta, vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
+                    fasta,
+                    vep_genome,
+                    vep_species,
+                    vep_cache_version,
+                    vep_cache,
+                    []
+                )
             }
         }
 
@@ -305,7 +339,8 @@ workflow PACVAR {
 
             // Call pbcpgtools alignedbamtocpgscores
             PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
-                cpg_bam_bai_ch)
+                cpg_bam_bai_ch.map { meta, bam, bai -> [ meta + [file_name:bam.baseName], bam, bai ] }
+                )
 
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }

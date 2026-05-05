@@ -2,8 +2,8 @@ include { TRGT_GENOTYPE     } from '../../../modules/nf-core/trgt/genotype'
 include { TRGT_PLOT         } from '../../../modules/nf-core/trgt/plot'
 include { BCFTOOLS_SORT     } from '../../../modules/nf-core/bcftools/sort/main'
 include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
-include { SAMTOOLS_SORT as SAMTOOLS_SORT_TRGT     } from '../../../modules/nf-core/samtools/sort/main'
-include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_TRGT    } from '../../../modules/nf-core/samtools/index/main'
+include { SAMTOOLS_SORT  as SAMTOOLS_SORT_TRGT   } from '../../../modules/nf-core/samtools/sort/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_TRGT  } from '../../../modules/nf-core/samtools/index/main'
 
 
 workflow  REPEAT_CHARACTERIZATION{
