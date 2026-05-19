@@ -16,11 +16,11 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_calling'
-include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
-include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
-include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
-include { BAM_ADDNUCLEOSOMES_FIBERTOOLS } from '../subworkflows/local/bam_addnucleosomes_fibertools'
+include { BAM_SNP_VARIANT_CALLING           } from '../subworkflows/local/bam_snp_variant_calling'
+include { BAM_SV_VARIANT_CALLING            } from '../subworkflows/local/bam_sv_variant_calling'
+include { BAM_CNV_VARIANT_CALLING           } from '../subworkflows/local/bam_cnv_variant_calling'
+include { REPEAT_CHARACTERIZATION           } from '../subworkflows/local/repeat_characterization'
+include { BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS } from '../subworkflows/local/bam_m6a_addnucleosomes_fibertools'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -351,9 +351,12 @@ workflow PACVAR {
         if (!params.skip_fiberseq) {
             fiberseq_bam_ch = (!params.skip_phase && !params.skip_snp) ? HIPHASE_SNP.out.bam : ordered_bam_ch
 
-            BAM_ADDNUCLEOSOMES_FIBERTOOLS(fiberseq_bam_ch)
+            BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS(
+                fiberseq_bam_ch,
+                !params.skip_m6A_predict
+            )
 
-            ch_versions = ch_versions.mix(BAM_ADDNUCLEOSOMES_FIBERTOOLS.out.versions)
+            ch_versions = ch_versions.mix(BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS.out.versions)
         }
     }
 

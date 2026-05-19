@@ -53,7 +53,7 @@
 
 **Fiber-seq Workflow Overview**
 
-Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing. The Fiber-seq workflow can predict m6A calls with [`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs), add nucleosome and MSP BAM auxiliary tags with [`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs), and extract nucleosome positions to BED format with [`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs) to prepare inputs for the downstream FIRE Snakemake pipeline.
+Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing. The Fiber-seq workflow can predict m6A calls and add nucleosome/MSP BAM auxiliary tags with [`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs), or add nucleosome/MSP tags from existing m6A calls with [`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs). It then extracts nucleosome positions to BED format with [`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs) to prepare inputs for the downstream FIRE Snakemake pipeline.
 
 Users can disable fibertools-rs m6A prediction with `--skip_m6A_predict true` when the input BAM already contains A+a m6A calls. To enable m6A prediction, set `--skip_m6A_predict false`; the input BAM must contain PacBio kinetic signature tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`).
 
