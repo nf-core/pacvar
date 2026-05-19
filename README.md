@@ -44,7 +44,6 @@
 5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
 7. SNV, small indel, SV, and CNV annotation with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
-8. Add Fiber-seq BAM auxiliary tags for nucleosome and MSP positions with [`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs), then extract nucleosome positions to BED format with [`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs) to prepare for downstream FIRE analysis. 
 
 > [!TIP]
 > Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
@@ -52,8 +51,11 @@
 > [!NOTE]
 > The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`. When using the default S3 VEP cache, avoid adding `--merged` or `--refseq` to custom VEP arguments because the cache does not include the additional files required by these options.
 
-> [!NOTE]
-> Use `--skip_fiberseq false` only when your HiFi sequencing BAMs contain m6A calls. The `fibertools-rs add-nucleosomes` step depends on m6A signal to add nucleosome and MSP positions for downstream FIRE analysis.
+**Fiber-seq Workflow Overview**
+
+Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing. The Fiber-seq workflow can predict m6A calls with [`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs), add nucleosome and MSP BAM auxiliary tags with [`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs), and extract nucleosome positions to BED format with [`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs) to prepare inputs for the downstream FIRE Snakemake pipeline.
+
+Users can disable fibertools-rs m6A prediction with `--skip_m6A_predict true` when the input BAM already contains A+a m6A calls. To enable m6A prediction, set `--skip_m6A_predict false`; the input BAM must contain PacBio kinetic signature tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`).
 
 **Tandem Repeat Workflow Overview**
 
@@ -98,7 +100,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, `--skip_fiberseq`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
+Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, `--skip_fiberseq`, `--skip_m6A_predict`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
