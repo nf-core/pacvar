@@ -302,10 +302,10 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
 - `fibertools/`
   - `<basename>.m6A.bam`: BAM file with m6A calls, nucleosome positions, and MSP annotations added by `ft predict-m6a` when `--skip_m6A_predict false`.
   - `<basename>.m6A.bam.bai`: Index for the m6A/nucleosome-annotated BAM file when `--skip_m6A_predict false`.
-  - `<basename>.nucleosomes.bam`: BAM file with nucleosome and MSP annotations added by `ft add-nucleosomes` when `--skip_m6A_predict true`.
-  - `<basename>.nucleosomes.bam.bai`: Index for the nucleosome-annotated BAM file when `--skip_m6A_predict true`.
+  - `<basename>.nuc.bam`: BAM file with nucleosome and MSP annotations added by `ft add-nucleosomes` when `--skip_m6A_predict true`.
+  - `<basename>.nuc.bam.bai`: Index for the nucleosome-annotated BAM file when `--skip_m6A_predict true`.
   - `<basename>.m6A.bed.gz`: m6A positions extracted from the annotated BAM with `ft extract --m6a`.
-  - `<basename>.nucleosomes.bed.gz`: Nucleosome positions extracted from the annotated BAM with `ft extract --nuc`.
+  - `<basename>.nuc.bed.gz`: Nucleosome positions extracted from the annotated BAM with `ft extract --nuc`.
 
 </details>
 
