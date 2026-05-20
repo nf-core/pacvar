@@ -304,11 +304,12 @@ The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/Paci
   - `<basename>.m6A.bam.bai`: Index for the m6A/nucleosome-annotated BAM file when `--skip_m6A_predict false`.
   - `<basename>.nucleosomes.bam`: BAM file with nucleosome and MSP annotations added by `ft add-nucleosomes` when `--skip_m6A_predict true`.
   - `<basename>.nucleosomes.bam.bai`: Index for the nucleosome-annotated BAM file when `--skip_m6A_predict true`.
+  - `<basename>.m6A.bed.gz`: m6A positions extracted from the annotated BAM with `ft extract --m6a`.
   - `<basename>.nucleosomes.bed.gz`: Nucleosome positions extracted from the annotated BAM with `ft extract --nuc`.
 
 </details>
 
-[`fibertools-rs`](https://github.com/fiberseq/fibertools-rs) provides tools for Fiber-seq data analysis. In this workflow, Fiber-seq processing runs when `--skip_fiberseq false`; it uses the phased BAM when SNV phasing is available, otherwise it uses the sorted BAM. When `--skip_m6A_predict false`, `ft predict-m6a` predicts m6A and adds nucleosome/MSP annotations. When `--skip_m6A_predict true`, `ft add-nucleosomes` uses existing A+a m6A calls from the input BAM. The nucleosome positions are then extracted to BED format with `ft extract --nuc`.
+[`fibertools-rs`](https://github.com/fiberseq/fibertools-rs) provides tools for Fiber-seq data analysis. In this workflow, Fiber-seq processing runs when `--skip_fiberseq false`; it uses the phased BAM when SNV phasing is available, otherwise it uses the sorted BAM. When `--skip_m6A_predict false`, `ft predict-m6a` predicts m6A and adds nucleosome/MSP annotations. When `--skip_m6A_predict true`, `ft add-nucleosomes` uses existing A+a m6A calls from the input BAM. The m6A and nucleosome positions are then extracted to BED format with `ft extract --m6a` and `ft extract --nuc`.
 
 ### ensembl-vep
 

@@ -57,6 +57,9 @@ Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing
 
 Users can disable fibertools-rs m6A prediction with `--skip_m6A_predict true` when the input BAM already contains A+a m6A calls. To enable m6A prediction, set `--skip_m6A_predict false`; the input BAM must contain PacBio kinetic signature tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`).
 
+> [!TIP]
+> When using the Fiber-seq workflow, it is highly recommended to run SNV calling and HiPhase so Fiber-seq processing uses a phased BAM when available. Haplotype-phased BAMs preserve long-read haplotype context, helping downstream FIRE analyses take full advantage of long-read sequencing when inferring regulatory elements.
+
 **Tandem Repeat Workflow Overview**
 
 1. Genotype tandem repeats - produce spanning bams and vcf ([`TRGT`](https://github.com/PacificBiosciences/trgt))

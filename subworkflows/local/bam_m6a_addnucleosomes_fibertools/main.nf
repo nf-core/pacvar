@@ -1,6 +1,7 @@
 include { FIBERTOOLSRS_PREDICTM6A                          } from '../../../modules/nf-core/fibertoolsrs/predictm6a/main'
 include { FIBERTOOLSRS_ADDNUCLEOSOMES                      } from '../../../modules/nf-core/fibertoolsrs/addnucleosomes/main'
 include { FIBERTOOLSRS_EXTRACT as FIBERTOOLSRS_EXTRACT_NUC } from '../../../modules/nf-core/fibertoolsrs/extract/main'
+include { FIBERTOOLSRS_EXTRACT as FIBERTOOLSRS_EXTRACT_M6A } from '../../../modules/nf-core/fibertoolsrs/extract/main'
 include { SAMTOOLS_INDEX                                   } from '../../../modules/nf-core/samtools/index/main'
 
 workflow BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS {
@@ -31,12 +32,18 @@ workflow BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS {
         ch_fiberseq_tagged_bam.map { meta, bam -> [ meta, bam, 'nuc' ] }
     )
 
+    FIBERTOOLSRS_EXTRACT_M6A(
+        ch_fiberseq_tagged_bam.map { meta, bam -> [ meta, bam, 'm6a' ] }
+    )
+
     bam_bai_ch = ch_fiberseq_tagged_bam.join(SAMTOOLS_INDEX.out.index)
 
     ch_versions = ch_versions.mix(FIBERTOOLSRS_EXTRACT_NUC.out.versions.first())
+    ch_versions = ch_versions.mix(FIBERTOOLSRS_EXTRACT_M6A.out.versions.first())
 
     emit:
     bam_bai = bam_bai_ch
     nuc_bed = FIBERTOOLSRS_EXTRACT_NUC.out.bed
+    m6a_bed = FIBERTOOLSRS_EXTRACT_M6A.out.bed
     versions = ch_versions
 }

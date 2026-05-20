@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added the `fibertoolsrs/addnucleosomes` nf-core module to annotate Fiber-seq BAM files with nucleosome and MSP positions.
 - Added the `fibertoolsrs/predictm6a` nf-core module to predict m6A calls and add Fiber-seq nucleosome annotations.
-- Added the `BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS` local subworkflow to optionally run `fibertools-rs predict-m6a` or `fibertools-rs add-nucleosomes`, and index the resulting BAM files with `samtools index`.
+- Added the `BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS` local subworkflow to optionally run `fibertools-rs predict-m6a` or `fibertools-rs add-nucleosomes`, index the resulting BAM files with `samtools index`, and extract m6A and nucleosome positions.
 - Added `params.skip_fiberseq` to control Fiber-seq m6A and nucleosome position in the WGS workflow.
-- Added `params.skip_m6A_predict` to control fibertools-rs m6A prediction before nucleosome annotation.
+- Added `params.skip_m6A_predict` to control fibertools-rs m6A prediction.
 - Added `conf/modules/fibertools.config` to publish fibertools outputs to `${params.outdir}/fibertools`.
 
 ### Changed
