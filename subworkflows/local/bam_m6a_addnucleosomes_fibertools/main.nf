@@ -18,7 +18,6 @@ workflow BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS {
     if (m6a_predict_enable) {
         FIBERTOOLSRS_PREDICTM6A(ch_fiberseq_bam)
         ch_fiberseq_tagged_bam = FIBERTOOLSRS_PREDICTM6A.out.bam
-        ch_versions = ch_versions.mix(FIBERTOOLSRS_PREDICTM6A.out.versions_fibertoolsrs)
     }
     else {
         FIBERTOOLSRS_ADDNUCLEOSOMES(ch_fiberseq_bam)
