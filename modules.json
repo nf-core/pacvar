@@ -57,12 +57,12 @@
                     },
                     "fibertoolsrs/addnucleosomes": {
                         "branch": "master",
-                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "git_sha": "dc1975c423d82070ae02f45aa749aed3115bcbf4",
                         "installed_by": ["modules"]
                     },
                     "fibertoolsrs/extract": {
                         "branch": "master",
-                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "git_sha": "dc1975c423d82070ae02f45aa749aed3115bcbf4",
                         "installed_by": ["modules"]
                     },
                     "fibertoolsrs/predictm6a": {
