@@ -355,8 +355,6 @@ workflow PACVAR {
                 fiberseq_bam_ch,
                 !params.skip_m6A_predict
             )
-
-            ch_versions = ch_versions.mix(BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS.out.versions)
         }
     }
 
