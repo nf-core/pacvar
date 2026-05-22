@@ -13,16 +13,16 @@
                     "pbbam": "3.1.1"
                 },
                 "SAMTOOLS_INDEX": {
-                    "samtools": "1.22.1"
+                    "samtools": "1.23.1"
                 },
                 "SAMTOOLS_INDEX_TRGT": {
-                    "samtools": "1.22.1"
+                    "samtools": "1.23.1"
                 },
                 "SAMTOOLS_SORT": {
-                    "samtools": "1.22.1"
+                    "samtools": "1.23.1"
                 },
                 "SAMTOOLS_SORT_TRGT": {
-                    "samtools": "1.22.1"
+                    "samtools": "1.23.1"
                 },
                 "TRGT_GENOTYPE": {
                     "trgt": "5.0.0-e9acee0"
@@ -232,10 +232,10 @@
                 ]
             ]
         ],
+        "timestamp": "2026-05-21T21:57:09.546837474",
         "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.10.2"
-        },
-        "timestamp": "2026-02-05T11:00:13.600093618"
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
     }
 }
