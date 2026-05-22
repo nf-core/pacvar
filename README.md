@@ -53,11 +53,16 @@
 
 **Fiber-seq Workflow Overview**
 
-Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing. The Fiber-seq workflow can predict m6A calls and add nucleosome/MSP BAM auxiliary tags with [`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs), or add nucleosome/MSP tags from existing m6A calls with [`fibertools-rs::add-nucleosomes`](https://github.com/fiberseq/fibertools-rs). It then extracts nucleosome positions to BED format with [`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs) to prepare inputs for the downstream FIRE Snakemake pipeline.
+Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing.
 
-Users can disable fibertools-rs m6A prediction with `--skip_m6A_predict true` when the input BAM already contains A+a m6A calls. To enable m6A prediction, set `--skip_m6A_predict false`; the input BAM must contain PacBio kinetic signature tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`).
+1. Predict m6A calls ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
+2. Add nucleosome/MSP BAM auxiliary tags ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
+3. Extracts nucleosome positions ([`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs))
 
 > [!TIP]
+> Users can disable fibertools-rs m6A prediction with `--skip_m6A_predict true` when the input BAM already contains A+a m6A calls. To enable m6A prediction, set `--skip_m6A_predict false`; the input BAM must contain PacBio kinetic signature tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`).
+
+> [!NOTE]
 > When using the Fiber-seq workflow, it is highly recommended to run SNV calling and HiPhase so Fiber-seq processing uses a phased BAM when available. Haplotype-phased BAMs preserve long-read haplotype context, helping downstream FIRE analyses take full advantage of long-read sequencing when inferring regulatory elements.
 
 **Tandem Repeat Workflow Overview**
@@ -104,6 +109,8 @@ nextflow run nf-core/pacvar \
 ```
 
 Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, `--skip_fiberseq`, `--skip_m6A_predict`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
+
+For Fiber-seq analysis, set `--skip_fiberseq false` to run fibertools-rs m6A/nucleosome processing as part of the WGS workflow. Use `--skip_m6A_predict false` when the BAM contains PacBio kinetic tags and needs m6A prediction; use `--skip_m6A_predict true` when the BAM already contains A+a m6A tags and only nucleosome/MSP annotation is needed.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
