@@ -53,6 +53,8 @@
 
 **Fiber-seq Workflow Overview**
 
+Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing.
+
 1. Predict m6A calls ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
 2. Add nucleosome/MSP BAM auxiliary tags ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
 3. Extracts nucleosome positions ([`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs))
