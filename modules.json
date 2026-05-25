@@ -22,7 +22,7 @@
                     },
                     "deepvariant/callvariants": {
                         "branch": "master",
-                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
+                        "git_sha": "f2b138ee1d91f67d31c187317d7e83e429bf0309",
                         "installed_by": ["modules"]
                     },
                     "deepvariant/makeexamples": {
@@ -52,7 +52,7 @@
                     },
                     "fastqc": {
                         "branch": "master",
-                        "git_sha": "5bdb098216aaf5df9c3b6343e6204cd932503c16",
+                        "git_sha": "6d46786420b4d7bc88eba026eb389c0c5535d120",
                         "installed_by": ["modules"]
                     },
                     "fibertoolsrs/addnucleosomes": {
