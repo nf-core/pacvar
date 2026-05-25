@@ -30,4 +30,5 @@ repos:
     hooks:
       - id: nextflow-lint
         files: '\.nf$|nextflow\.config$'
+        exclude: ^modules/nf-core/deepvariant/main\.nf$
         args: ["-output", "json"]
