@@ -75,7 +75,7 @@ workflow PACVAR {
 
     // demultiplexing
     if (!params.skip_demultiplexing) {
-        ch_barcode = Channel.value(file(params.barcodes))
+        ch_barcode = channel.value(file(params.barcodes))
         LIMA(ch_samplesheet, ch_barcode)
         ch_versions = ch_versions.mix(LIMA.out.versions)
 

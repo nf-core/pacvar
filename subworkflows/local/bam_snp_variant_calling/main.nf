@@ -13,7 +13,7 @@ workflow BAM_SNP_VARIANT_CALLING {
     intervals
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     intervals_path = intervals.map{metadata, interval -> [interval]}
     //deepvariant
