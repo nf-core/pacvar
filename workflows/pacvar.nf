@@ -66,9 +66,9 @@ workflow PACVAR {
     vep_genome
     vep_species
     multiqc_config
-    multiqc_logo,
-    multiqc_methods_description,
-    outdir,
+    multiqc_logo
+    multiqc_methods_description
+    outdir
 
     main:
     ch_versions = channel.empty()

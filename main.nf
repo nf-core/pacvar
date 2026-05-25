@@ -104,7 +104,7 @@ workflow NFCORE_PACVAR {
         vep_cache,
         params.vep_cache_version,
         params.vep_genome,
-        params.vep_species
+        params.vep_species,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,
