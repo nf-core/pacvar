@@ -3,6 +3,30 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0dev - [2026-05-20] add-fibertools
+
+### Added
+
+- Added the `fibertoolsrs/addnucleosomes` nf-core module to annotate Fiber-seq BAM files with nucleosome and MSP positions.
+- Added the `fibertoolsrs/predictm6a` nf-core module to predict m6A calls and add Fiber-seq nucleosome annotations.
+- Added the `fibertoolsrs/extract` nf-core module to extract m6A and nucleosome positions from Fiber-seq BAM files.
+- Added the `BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS` local subworkflow to optionally run `fibertools-rs predict-m6a` or `fibertools-rs add-nucleosomes`, index the resulting BAM files with `samtools index`, and extract m6A and nucleosome positions.
+- Added `params.skip_fiberseq` to control Fiber-seq m6A and nucleosome position in the WGS workflow.
+- Added `params.skip_m6A_predict` to control fibertools-rs m6A prediction.
+- Added `conf/modules/fibertools.config` to publish fibertools outputs to `${params.outdir}/fibertools`.
+- Added `conf/test_fiberseq_with_kinetics.config` and `conf/test_fiberseq_with_m6A_tags.config` test profiles for Fiber-seq BAMs with kinetics-only input and pre-existing m6A tags.
+
+### Changed
+
+- Updated `workflows/pacvar.nf` to run the fibertools m6A/add-nucleosomes subworkflow on phased SNV BAMs when phasing is available, otherwise on sorted BAMs.
+- Updated `nextflow_schema.json` and `docs/output.md` to document the new Fiber-seq parameters and fibertools outputs.
+
+### Dependencies
+
+| Tool          | Previous version | New version |
+| ------------- | ---------------- | ----------- |
+| fibertools-rs | -                | 0.7.1       |
+
 ## 1.1.0dev - [2026-04-28] [PR #52 add-vep-to-sv](https://github.com/nf-core/pacvar/pull/52)
 
 ### Added

@@ -16,10 +16,11 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_pacv
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { BAM_SNP_VARIANT_CALLING } from '../subworkflows/local/bam_snp_variant_calling'
-include { BAM_SV_VARIANT_CALLING  } from '../subworkflows/local/bam_sv_variant_calling'
-include { BAM_CNV_VARIANT_CALLING } from '../subworkflows/local/bam_cnv_variant_calling'
-include { REPEAT_CHARACTERIZATION } from '../subworkflows/local/repeat_characterization'
+include { BAM_SNP_VARIANT_CALLING           } from '../subworkflows/local/bam_snp_variant_calling'
+include { BAM_SV_VARIANT_CALLING            } from '../subworkflows/local/bam_sv_variant_calling'
+include { BAM_CNV_VARIANT_CALLING           } from '../subworkflows/local/bam_cnv_variant_calling'
+include { REPEAT_CHARACTERIZATION           } from '../subworkflows/local/repeat_characterization'
+include { BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS } from '../subworkflows/local/bam_m6a_addnucleosomes_fibertools'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,14 +139,16 @@ workflow PACVAR {
             .set { samtools_input_ch }
     }
 
-    SAMTOOLS_SORT(samtools_input_ch, fasta, '')
+    fasta_with_fai_ch = fasta
+        .combine(fasta_fai)
+        .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
+        .first()
+
+    SAMTOOLS_SORT(samtools_input_ch, fasta_with_fai_ch, '')
     SAMTOOLS_INDEX(SAMTOOLS_SORT.out.bam)
-    // both SAMTOOLS_SORT and SAMTOOLS_INDEX are updated to standardize version topics
-    // ch_versions = ch_versions.mix(SAMTOOLS_SORT.out.versions.first())
-    // ch_versions = ch_versions.mix(SAMTOOLS_INDEX.out.versions.first())
 
     //join the bam and index based off the meta id (ensure correct order)
-    bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.bai)
+    bam_bai_ch = SAMTOOLS_SORT.out.bam.join(SAMTOOLS_INDEX.out.index)
     ordered_bam_ch = bam_bai_ch.map { meta, bam, bai -> [meta, bam] }
     ordered_bai_ch = bam_bai_ch.map { meta, bam, bai -> [meta, bai] }
 
@@ -186,7 +189,7 @@ workflow PACVAR {
                 SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
 
                 // channel for pbcpgtools_alignedbamtocpgscores and hificnv
-                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.bai)
+                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.index)
                 // vcf channel for ensemblvep,  hificnv, and etc.
                 vcf_snp_phased_ch = HIPHASE_SNP.out.vcf
             }
@@ -343,6 +346,15 @@ workflow PACVAR {
                 )
 
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
+        }
+
+        if (!params.skip_fiberseq) {
+            fiberseq_bam_ch = (!params.skip_phase && !params.skip_snp) ? HIPHASE_SNP.out.bam : ordered_bam_ch
+
+            BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS(
+                fiberseq_bam_ch,
+                !params.skip_m6A_predict
+            )
         }
     }
 

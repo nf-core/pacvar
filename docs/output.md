@@ -27,6 +27,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
   - [SAMTools index](#samtools) - Index BAM file
   - [HiFiCNV](#hificnv) - Variant call CNVs
   - [pb-CpG-Tools](#pb-cpg-tools-alignedbamtocpgscores) - per-CpG methylation scores and pileup
+  - [fibertools-rs](#fibertools-rs-m6a-prediction-and-add-nucleosomes) - Predict m6A or add nucleosome annotations to Fiber-seq BAM files
   - [Ensembl VEP](#ensembl-vep) - Ensembl Variant Effect Predictor used for SNVs, SVs, and CNVs annotation
 - Repeat workflow
   - [TRGT](#trgt) - Genotype and plot tandem repeats
@@ -292,6 +293,23 @@ Example png output: sample1_C9ORF72.png
 </details>
 
 The `aligned_bam_to_cpg_scores` tool from [pb-CpG-tools](https://github.com/PacificBiosciences/pb-CpG-tools) generates site-level methylation probabilities from mapped HiFi reads with 5mC base modification tags. When reads are haplotagged, it provides haplotype-specific methylation scores.
+
+### fibertools-rs (m6A prediction and add-nucleosomes)
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `fibertools/`
+  - `<basename>.m6A.bam`: BAM file with m6A calls, nucleosome positions, and MSP annotations added by `ft predict-m6a` when `--skip_m6A_predict false`.
+  - `<basename>.m6A.bam.bai`: Index for the m6A/nucleosome-annotated BAM file when `--skip_m6A_predict false`.
+  - `<basename>.add_nuc.bam`: BAM file with nucleosome and MSP annotations added by `ft add-nucleosomes` when `--skip_m6A_predict true`.
+  - `<basename>.add_nuc.bam.bai`: Index for the nucleosome-annotated BAM file when `--skip_m6A_predict true`.
+  - `<basename>.m6A.bed.gz`: m6A positions extracted from the annotated BAM with `ft extract --m6a`.
+  - `<basename>.nuc.bed.gz`: Nucleosome positions extracted from the annotated BAM with `ft extract --nuc`.
+
+</details>
+
+[`fibertools-rs`](https://github.com/fiberseq/fibertools-rs) provides tools for Fiber-seq data analysis. In this workflow, Fiber-seq processing runs when `--skip_fiberseq false`; it uses the phased BAM when SNV phasing is available, otherwise it uses the sorted BAM. When `--skip_m6A_predict false`, `ft predict-m6a` predicts m6A and adds nucleosome/MSP annotations. When `--skip_m6A_predict true`, `ft add-nucleosomes` uses existing A+a m6A calls from the input BAM. The m6A and nucleosome positions are then extracted to BED format with `ft extract --m6a` and `ft extract --nuc`.
 
 ### ensembl-vep
 

@@ -23,7 +23,7 @@
 
 **nf-core/pacvar** is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
 
-![nf-core/pacvar metro map](docs/images/metro_update_v1.1.0dev_PR52.png)
+![nf-core/pacvar metro map](docs/images/metro_update_v1.1.0.png)
 
 **Preprocessing Overview**
 
@@ -43,13 +43,27 @@
 4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
 5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
 6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
-7. SNVs and small indels filtering and annotaion with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+7. SNV, small indel, SV, and CNV annotation with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
 
 > [!TIP]
 > Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
 
 > [!NOTE]
-> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`.
+> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`. When using the default S3 VEP cache, avoid adding `--merged` or `--refseq` to custom VEP arguments because the cache does not include the additional files required by these options.
+
+**Fiber-seq Workflow Overview**
+
+Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing.
+
+1. Predict m6A calls ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
+2. Add nucleosome/MSP BAM auxiliary tags ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
+3. Extracts nucleosome positions ([`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs))
+
+> [!TIP]
+> For Fiber-seq pre-processing, set `--skip_fiberseq false` to run fibertools-rs m6A/nucleosome processing as part of the WGS workflow. Use `--skip_m6A_predict false` when the BAM contains PacBio kinetic tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`) and needs m6A prediction; use `--skip_m6A_predict true` when the BAM already contains A+a m6A tags and only nucleosome/MSP annotation is needed.
+
+> [!NOTE]
+> When using the Fiber-seq workflow, it is highly recommended to run SNV calling and HiPhase so Fiber-seq processing uses a phased BAM when available. Haplotype-phased BAMs preserve long-read haplotype context, helping downstream FIRE analyses take full advantage of long-read sequencing when inferring regulatory elements.
 
 **Tandem Repeat Workflow Overview**
 
@@ -94,7 +108,7 @@ nextflow run nf-core/pacvar \
    --outdir <OUTDIR>
 ```
 
-Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
+Optional paramaters include: `--skip_demultiplexing`, `--skip_snp`, `--skip_sv`, `--skip_phase`, `--skip_hificnv`, `--skip_cpg`, `--skip_fiberseq`, `--skip_m6A_predict`, and `--skip_ensemblvep`. The variant callers can be specified using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).

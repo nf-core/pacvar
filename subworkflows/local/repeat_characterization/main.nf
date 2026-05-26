@@ -1,7 +1,7 @@
-include { TRGT_GENOTYPE     } from '../../../modules/nf-core/trgt/genotype'
-include { TRGT_PLOT         } from '../../../modules/nf-core/trgt/plot'
-include { BCFTOOLS_SORT     } from '../../../modules/nf-core/bcftools/sort/main'
-include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
+include { TRGT_GENOTYPE                          } from '../../../modules/nf-core/trgt/genotype'
+include { TRGT_PLOT                              } from '../../../modules/nf-core/trgt/plot'
+include { BCFTOOLS_SORT                          } from '../../../modules/nf-core/bcftools/sort/main'
+include { BCFTOOLS_INDEX                         } from '../../../modules/nf-core/bcftools/index/main'
 include { SAMTOOLS_SORT  as SAMTOOLS_SORT_TRGT   } from '../../../modules/nf-core/samtools/sort/main'
 include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_TRGT  } from '../../../modules/nf-core/samtools/index/main'
 
@@ -27,9 +27,14 @@ workflow  REPEAT_CHARACTERIZATION{
         fasta_fai,
         bed)
 
+    fasta_with_fai_ch = fasta
+        .combine(fasta_fai)
+        .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
+        .first()
+
     //sort the resulting spanning bam
     SAMTOOLS_SORT_TRGT(TRGT_GENOTYPE.out.bam,
-        fasta, '')
+        fasta_with_fai_ch, '')
 
     //index the resulting bam
     SAMTOOLS_INDEX_TRGT(SAMTOOLS_SORT_TRGT.out.bam)
@@ -40,8 +45,8 @@ workflow  REPEAT_CHARACTERIZATION{
     //index the VCF file
     BCFTOOLS_INDEX(BCFTOOLS_SORT.out.vcf)
 
-    bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai)
-    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
+    bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index)
+    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
     //add repeat_id to channel
     bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, meta.repeat_id] }

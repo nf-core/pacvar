@@ -4,7 +4,4 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  # renovate: datasource=conda depName=bioconda/htslib
-  - bioconda::htslib=1.23.1
-  # renovate: datasource=conda depName=bioconda/samtools
-  - bioconda::samtools=1.23.1
+  - bioconda::fibertools-rs=0.7.1

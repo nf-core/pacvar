@@ -260,7 +260,7 @@
                 "sv_caller": {
                     "type": "string",
                     "enum": ["pbsv", "sawfish"],
-                    "default": "pbsv",
+                    "default": "sawfish",
                     "description": "The tool to use for calling structural variants",
                     "fa_icon": "fas fa-forward"
                 },
@@ -315,9 +315,24 @@
             "properties": {
                 "skip_cpg": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Skip CpG site probability for 5mC methylation calling",
                     "fa_icon": "fas fa-forward",
-                    "help_text": "When enabled, the pipeline will skip CpG site 5mC methylation probability scoring steps."
+                    "help_text": "When enabled, the WGS workflow will skip CpG site 5mC methylation probability scoring."
+                },
+                "skip_fiberseq": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Skip Fiber-seq nucleosome annotation with fibertools-rs",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the WGS workflow will skip adding Fiber-seq BAM auxiliary tags for nucleosome and MSP positions with fibertools-rs."
+                },
+                "skip_m6A_predict": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Skip fibertools-rs m6A prediction and use existing m6A calls for Fiber-seq nucleosome annotation",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the Fiber-seq workflow will use existing m6A calls in the input BAM instead of predicting m6A calls with fibertools-rs. To use fibertools-rs m6A prediction, set this to false; input BAMs must contain PacBio kinetic signature tags (ip/pw or fi/fp/ri/rp) for prediction to run."
                 }
             }
         },
