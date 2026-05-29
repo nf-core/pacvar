@@ -3,6 +3,33 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.1.0dev - [2026-05-25] template-4.0.2
+
+### Added
+
+- Added nf-core template 4.0.2 container configuration files for conda lock files, Docker, and Singularity images across `amd64` and `arm64` architectures.
+
+### Changed
+
+- Updated the pipeline template files to nf-core/tools 4.0.2, including GitHub Actions, nf-test configuration, linting/pre-commit settings, RO-Crate metadata, and documentation boilerplate.
+- Updated nf-core `fastqc`, `multiqc`, `utils_nfcore_pipeline`, and `utils_nfschema_plugin` module/subworkflow files and snapshots.
+- Updated `main.nf` and `workflows/pacvar.nf` to pass the new MultiQC workflow inputs after the template merge.
+
+### Dependencies
+
+| Tool    | Previous version | New version |
+| ------- | ---------------- | ----------- |
+| multiqc | 1.33             | 1.34        |
+
+### Fixed
+
+- Fixed PACVAR workflow argument syntax after the template merge.
+- Replaced remaining uppercase `Channel` factory calls with lowercase `channel` calls for newer Nextflow syntax compatibility.
+
+### Removed
+
+- Removed legacy `.github/CONTRIBUTING.md`, `assets/adaptivecard.json`, and `assets/slackreport.json` template files.
+
 ## 1.1.0dev - [2026-05-20] add-fibertools
 
 ### Added

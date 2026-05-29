@@ -10,7 +10,7 @@ workflow SET_VALUE_CHANNEL {
     infile // file: path to compressed or not fasta/gtf
 
     main:
-    Channel // Prepare value channel
+    channel // Prepare value channel
         .value(file(infile))
         .set { data }
 
