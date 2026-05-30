@@ -22,6 +22,7 @@ This release expands the WGS workflow with CNV, SV, 5mC methylation, Fiber-seq (
 - Updated workflow wiring, output publication, schema entries, documentation, and test profiles for the new variant calling, annotation, methylation, and Fiber-seq features. (@chaochaowong)
 
 ### Dependencies
+
 - Updated core tool versions and added new dependencies including `ensemblvep`, `fibertools-rs`, `hificnv`, `pbcpgtools`, `pbtk`, and `sawfish`. Details are listed in the `1.1.0dev` sections below. (@chaochaowong)
 
 ### Fixed
