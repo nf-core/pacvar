@@ -9,25 +9,25 @@ This release expands the WGS workflow with CNV, SV, 5mC methylation, Fiber-seq (
 
 ### Added
 
-- Added HiFiCNV for copy number variant calling.
-- Added sawfish for structural variant calling.
-- Added pb-CpG-tools for per-CpG methylation scoring.
-- Added pbtk/pbmerge for merging PacBio fail BAM files.
-- Added Ensembl VEP annotation for SNV, SV, and CNV outputs, including optional VEP cache download support.
-- Added fibertools-rs for Fiber-seq m6A and nucleosome processing.
+- Added HiFiCNV for copy number variant calling. (@chaochaowong)
+- Added sawfish for structural variant calling. (@chaochaowong)
+- Added pb-CpG-tools for per-CpG methylation scoring. (@chaochaowong)
+- Added pbtk/pbmerge for merging PacBio fail BAM files. (@chaochaowong)
+- Added Ensembl VEP annotation for SNV, SV, and CNV outputs, including optional VEP cache download support. (@chaochaowong)
+- Added fibertools-rs for Fiber-seq m6A and nucleosome processing. (@chaochaowong)
 
 ### Changed
 
-- Updated the nf-core template to 4.0.2 and refreshed associated CI, linting, documentation, RO-Crate metadata, and container configuration files.
-- Updated workflow wiring, output publication, schema entries, documentation, and test profiles for the new variant calling, annotation, methylation, and Fiber-seq features.
+- Updated the nf-core template to 4.0.2 and refreshed associated CI, linting, documentation, RO-Crate metadata, and container configuration files. (@chaochaowong)
+- Updated workflow wiring, output publication, schema entries, documentation, and test profiles for the new variant calling, annotation, methylation, and Fiber-seq features. (@chaochaowong)
 
 ### Dependencies
-- Updated core tool versions and added new dependencies including `ensemblvep`, `fibertools-rs`, `hificnv`, `pbcpgtools`, `pbtk`, and `sawfish`. Details are listed in the `1.1.0dev` sections below.
+- Updated core tool versions and added new dependencies including `ensemblvep`, `fibertools-rs`, `hificnv`, `pbcpgtools`, `pbtk`, and `sawfish`. Details are listed in the `1.1.0dev` sections below. (@chaochaowong)
 
 ### Fixed
 
-- Fixed workflow argument syntax and channel factory usage for newer Nextflow syntax compatibility.
-- Fixed output naming and publication logic for several downstream variant calling and annotation outputs.
+- Fixed workflow argument syntax and channel factory usage for newer Nextflow syntax compatibility. (@chaochaowong)
+- Fixed output naming and publication logic for several downstream variant calling and annotation outputs. (@chaochaowong)
 
 ## 1.1.0dev - [2026-05-25] template-4.0.2
 
