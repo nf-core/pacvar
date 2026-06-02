@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v1.1.0 - [2026-05-30]
+## v1.1.0 - [2026-05-30] bump-v1.1.0
 
 This release expands the WGS workflow with CNV, SV, 5mC methylation, Fiber-seq (m6A methylation), and VEP annotation capabilities, and updates the pipeline template to nf-core/tools 4.0.2. Detailed development entries for this release are listed in the `1.1.0dev` sections below.
 
