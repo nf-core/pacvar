@@ -3,6 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.0 - [2026-05-30] bump-v1.1.0
+
+This release expands the WGS workflow with CNV, SV, 5mC methylation, Fiber-seq (m6A methylation), and VEP annotation capabilities, and updates the pipeline template to nf-core/tools 4.0.2. Detailed development entries for this release are listed in the `1.1.0dev` sections below.
+
+### Changed
+
+- Updated release metadata, configuration, changelog, and test snapshots for the `v1.1.0` release bump. Files changed in the `bump-v1.1.0` branch:
+  - `.nf-core.yml`
+  - `CHANGELOG.md`
+  - `assets/multiqc_config.yml`
+  - `nextflow.config`
+  - `ro-crate-metadata.json`
+  - `tests/karyotype.nf.test.snap`
+  - `tests/pbmerge.nf.test.snap`
+  - `tests/repeat_id.nf.test.snap`
+
 ## 1.1.0dev - [2026-05-25] template-4.0.2
 
 ### Added
@@ -30,13 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed legacy `.github/CONTRIBUTING.md`, `assets/adaptivecard.json`, and `assets/slackreport.json` template files.
 
-## 1.1.0dev - [2026-05-20] add-fibertools
+## 1.1.0dev - [2026-05-20] [PR #53 add-fibertools](https://github.com/nf-core/pacvar/pull/53)
 
 ### Added
 
-- Added the `fibertoolsrs/addnucleosomes` nf-core module to annotate Fiber-seq BAM files with nucleosome and MSP positions.
-- Added the `fibertoolsrs/predictm6a` nf-core module to predict m6A calls and add Fiber-seq nucleosome annotations.
-- Added the `fibertoolsrs/extract` nf-core module to extract m6A and nucleosome positions from Fiber-seq BAM files.
+- Added the `fibertoolsrs/addnucleosomes` nf-core module to annotate Fiber-seq BAM files with nucleosome and MSP positions. (@chaochaowong, reviewed by @YiJin-Xiong)
+- Added the `fibertoolsrs/predictm6a` nf-core module to predict m6A calls and add Fiber-seq nucleosome annotations. (@chaochaowong, reviewed by @YiJin-Xiong)
+- Added the `fibertoolsrs/extract` nf-core module to extract m6A and nucleosome positions from Fiber-seq BAM files. (@chaochaowong, reviewed by @YiJin-Xiong)
 - Added the `BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS` local subworkflow to optionally run `fibertools-rs predict-m6a` or `fibertools-rs add-nucleosomes`, index the resulting BAM files with `samtools index`, and extract m6A and nucleosome positions.
 - Added `params.skip_fiberseq` to control Fiber-seq m6A and nucleosome position in the WGS workflow.
 - Added `params.skip_m6A_predict` to control fibertools-rs m6A prediction.
@@ -60,8 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `download_vep_cache` and `outdir_vep_cache` parameters to enable VEP cache downloading.
 - Integrated `ENSEMBL_DOWNLOAD` module to download VEP cache.
-- Added VEP custom parameters for three variant types: `vep_custom_args_sv`, `vep_custom_args_cnv`, and `vep_custom_args_snv`, and remove `vep_custom_args`.
-- Added VEP annotation support for Structural Variants (SV) and Copy Number Variants (CNV).
+- Added VEP custom parameters for three variant types: `vep_custom_args_sv`, `vep_custom_args_cnv`, and `vep_custom_args_snv`, and remove `vep_custom_args`. (@chaochaowong, reviewed by @pinin4fjords)
+- Added VEP annotation support for Structural Variants (SV) and Copy Number Variants (CNV). (@chaochaowong, reviewed by @pinin4fjords)
 - Added updated metro map, `docs/images/metro_update_v1.1.0dev_PR52.png`
 
 ### Changed
@@ -87,7 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Annotation Support:**
-  - Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation.
+  - Integrated **Ensembl Variant Effect Predictor (VEP)** for SNV and small indel annotation. (@chaochaowong, reviewed by @maxulysse)
   - Added nf-core subworkflow: `subworkflows/nf-core/vcf_annotate_ensemblvep` to coordinate the ensemblvep process.
   - Added nf-core subworkflow: `subworkflows/nf-core/utils_annotation_cache` to initialize vep cache validation.
 - **Parameters & Schema:**
@@ -164,7 +180,7 @@ Updated `nextflow.config` to include the newly-added configuration file
 
 ## 1.1.0dev - [1/20/2026] [PR #42](https://github.com/nf-core/pacvar/pull/42)
 
-This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools), and PacBio merge bam (pbtk/pbmerge). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules.
+This is new dev version includes new features with copy number variation calling (hificnv), PacBio’s new structural variant calling (sawfish), per-CpG methylation scores (pb-CpG-tools), and PacBio merge bam (pbtk/pbmerge). The template is also compliance with nf-core/tool 3.5.1. Additional updates include new parameters and assets incorporating withe new features, updated nf-core modules, and updated local subworkflow adapting new features and topic-based nf-core modules. (@chaochaowong, reviewed by @tanyasarkjain and @vagkaratzas)
 
 ### Added
 
