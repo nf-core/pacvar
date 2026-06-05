@@ -19,10 +19,9 @@ Kākāpō Arisen expands the WGS workflow with new copy number variant, structur
 
 ### Changed
 
-- Updated the nf-core template to nf-core/tools 4.0.2.
-- Updated MultiQC and core nf-core utility modules/subworkflows.
-- [nf-core/pacvar#44](https://github.com/nf-core/pacvar/pull/44): Renamed `skip_cnv` to `skip_hificnv` to clarify that the parameter controls HiFiCNV only.
 - Updated WGS workflow logic, documentation, schema, configuration, and tests for the expanded variant calling and annotation workflow.
+- [nf-core/pacvar#54](https://github.com/nf-core/pacvar/pull/54) Updated the nf-core template to nf-core/tools 4.0.2 and updated MultiQC and core nf-core utility modules/subworkflows.
+- [nf-core/pacvar#55](https://github.com/nf-core/pacvar/pull/55): bump version to 1.1.0 for release.
 
 ### Fixed
 
@@ -52,7 +51,7 @@ Kākāpō Arisen expands the WGS workflow with new copy number variant, structur
 | tabix         | 1.11             | 1.21        |
 | trgt          | 1.2              | 5.0.0       |
 
-## 1.1.0dev - [2026-05-25] template-4.0.2
+## 1.1.0dev - [2026-05-25] [PR #54 template-4.0.2](https://github.com/nf-core/pacvar/pull/54)
 
 ### Added
 
