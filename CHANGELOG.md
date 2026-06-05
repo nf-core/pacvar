@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - Kākāpō Arisen [2026-05-30]
+## [1.1.0] - Kākāpō Arisen [2026-06-05]
 
 Kākāpō Arisen expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure. Detailed development entries for this release are listed in the 1.1.0dev sections below.
 
