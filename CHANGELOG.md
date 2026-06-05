@@ -3,21 +3,54 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v1.1.0 - [2026-05-30] bump-v1.1.0
+## [1.1.0] - Kākāpō Arisen [2026-05-30]
 
-This release expands the WGS workflow with CNV, SV, 5mC methylation, Fiber-seq (m6A methylation), and VEP annotation capabilities, and updates the pipeline template to nf-core/tools 4.0.2. Detailed development entries for this release are listed in the `1.1.0dev` sections below.
+Kākāpō Arisen expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure. Detailed development entries for this release are listed in the 1.1.0dev sections below.
+
+### Added
+
+- [nf-core/pacvar#41](https://github.com/nf-core/pacvar/pull/41): Optional fail BAM support in the samplesheet for the repeat workflow, with HiFi and fail BAM merging after mapping.
+- [nf-core/pacvar#42](https://github.com/nf-core/pacvar/pull/42): Copy number variant (CNV) calling with HiFiCNV, structural variant (SV) calling with sawfish, 5mC methylation calling with pb-CpG-tools, and PacBio BAM merging with pbmerge.
+- [nf-core/pacvar#43](https://github.com/nf-core/pacvar/pull/43): Additional CNV testing configuration and sample sheet reorganization.
+- [nf-core/pacvar#48](https://github.com/nf-core/pacvar/pull/48): Ensembl Variant Effect Predictor (VEP) annotation for SNVs and small indels.
+- [nf-core/pacvar#50](https://github.com/nf-core/pacvar/pull/50), [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/52): VEP annotation support for SVs and CNVs, including variant-type-specific VEP custom arguments.
+- [nf-core/pacvar#50](https://github.com/nf-core/pacvar/pull/50), [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/52): Optional VEP cache download support.
+- [nf-core/pacvar#53](https://github.com/nf-core/pacvar/pull/53): Fiber-seq support with fibertools-rs for m6A prediction, nucleosome annotation, and m6A/nucleosome extraction.
 
 ### Changed
 
-- Updated release metadata, configuration, changelog, and test snapshots for the `v1.1.0` release bump. Files changed in the `bump-v1.1.0` branch:
-  - `.nf-core.yml`
-  - `CHANGELOG.md`
-  - `assets/multiqc_config.yml`
-  - `nextflow.config`
-  - `ro-crate-metadata.json`
-  - `tests/karyotype.nf.test.snap`
-  - `tests/pbmerge.nf.test.snap`
-  - `tests/repeat_id.nf.test.snap`
+- Updated the nf-core template to nf-core/tools 4.0.2.
+- Updated MultiQC and core nf-core utility modules/subworkflows.
+- [nf-core/pacvar#44](https://github.com/nf-core/pacvar/pull/44): Renamed `skip_cnv` to `skip_hificnv` to clarify that the parameter controls HiFiCNV only.
+- Updated WGS workflow logic, documentation, schema, configuration, and tests for the expanded variant calling and annotation workflow.
+
+### Fixed
+
+- Fixed PACVAR workflow argument syntax after the nf-core/tools template update.
+- Replaced remaining uppercase `Channel` factory calls with lowercase `channel` calls for newer Nextflow syntax compatibility.
+
+### Dependencies
+
+| Tool          | Previous version | New version |
+| ------------- | ---------------- | ----------- |
+| bcftools      | 1.20             | 1.22        |
+| deepvariant   | 1.6              | 1.9.0       |
+| ensemblvep    | -                | 115.2       |
+| fibertools-rs | -                | 0.7.1       |
+| gatk4         | 4.5.0            | 4.6.2       |
+| gunzip        | (ubuntu:22.04)   | 1.13        |
+| hiphase       | 1.4.5            | 1.5.0       |
+| hificnv       | -                | 1.0.1       |
+| lima          | 2.9              | 2.12        |
+| multiqc       | 1.27             | 1.34        |
+| pbcpgtools    | -                | 3.0.0       |
+| pbmm2         | 1.14.99          | 1.14.99     |
+| pbsv          | 2.9.0            | 2.11.0      |
+| pbtk          | -                | 3.1.1       |
+| samtools      | 1.21             | 1.22.1      |
+| sawfish       | -                | 2.2.0       |
+| tabix         | 1.11             | 1.21        |
+| trgt          | 1.2              | 5.0.0       |
 
 ## 1.1.0dev - [2026-05-25] template-4.0.2
 

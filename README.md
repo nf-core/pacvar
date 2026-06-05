@@ -95,6 +95,13 @@ CONTROL,AEG588A1_S1_L002_R1_001.bam
 
 Each row represents an unaligned bam file and their associated index (optional).
 
+For the repeat workflow, you can optionally provide a fail BAM in the samplesheet. When a fail BAM is provided, the repeat workflow merges the mapped HiFi and fail BAMs after mapping, before repeat-specific analysis:
+
+```csv
+sample,bam,pbi,fail
+CONTROL,AEG588A1_S1_L002_R1_001.bam,AEG588A1_S1_L002_R1_001.pbi,AEG588A1_S1_fail.bam
+```
+
 Now, you can run the pipeline. Below is an example
 
 ```bash
