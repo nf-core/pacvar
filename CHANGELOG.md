@@ -13,8 +13,8 @@ Kākāpō Awakens expands the WGS workflow with new copy number variant, structu
 - [nf-core/pacvar#42](https://github.com/nf-core/pacvar/pull/42): Copy number variant (CNV) calling with HiFiCNV, structural variant (SV) calling with sawfish, 5mC methylation calling with pb-CpG-tools, and PacBio BAM merging with pbmerge.
 - [nf-core/pacvar#43](https://github.com/nf-core/pacvar/pull/43): Additional CNV testing configuration and sample sheet reorganization.
 - [nf-core/pacvar#48](https://github.com/nf-core/pacvar/pull/48): Ensembl Variant Effect Predictor (VEP) annotation for SNVs and small indels.
-- [nf-core/pacvar#50](https://github.com/nf-core/pacvar/pull/50), [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/52): VEP annotation support for SVs and CNVs, including variant-type-specific VEP custom arguments.
-- [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/50), [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/52): Optional VEP cache download support.
+- [nf-core/pacvar#50](https://github.com/nf-core/pacvar/pull/50): VEP annotation support for SVs and CNVs, including variant-type-specific VEP custom arguments.
+- [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/52): Optional VEP cache download support.
 - [nf-core/pacvar#53](https://github.com/nf-core/pacvar/pull/53): Fiber-seq support with fibertools-rs for m6A prediction, nucleosome annotation, and m6A/nucleosome extraction.
 
 ### Changed
