@@ -16,6 +16,7 @@ Kākāpō Awakens expands the WGS workflow with new copy number variant, structu
 - [nf-core/pacvar#50](https://github.com/nf-core/pacvar/pull/50): VEP annotation support for SVs and CNVs, including variant-type-specific VEP custom arguments.
 - [nf-core/pacvar#52](https://github.com/nf-core/pacvar/pull/52): Optional VEP cache download support.
 - [nf-core/pacvar#53](https://github.com/nf-core/pacvar/pull/53): Fiber-seq support with fibertools-rs for m6A prediction, nucleosome annotation, and m6A/nucleosome extraction.
+- [nf-core/pacvar#61](https://github.com/nf-core/pacvar/pull/61): (1) remove duplicated anonymous AWS S3 client setting and fix test profile reference configuration.
 
 ### Changed
 
