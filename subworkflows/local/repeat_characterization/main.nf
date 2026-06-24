@@ -1,9 +1,9 @@
-include { TRGT_GENOTYPE     } from '../../../modules/nf-core/trgt/genotype'
-include { TRGT_PLOT         } from '../../../modules/nf-core/trgt/plot'
-include { BCFTOOLS_SORT     } from '../../../modules/nf-core/bcftools/sort/main'
-include { BCFTOOLS_INDEX    } from '../../../modules/nf-core/bcftools/index/main'
-include { SAMTOOLS_SORT as SAMTOOLS_SORT_TRGT     } from '../../../modules/nf-core/samtools/sort/main'
-include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_TRGT    } from '../../../modules/nf-core/samtools/index/main'
+include { TRGT_GENOTYPE                          } from '../../../modules/nf-core/trgt/genotype'
+include { TRGT_PLOT                              } from '../../../modules/nf-core/trgt/plot'
+include { BCFTOOLS_SORT                          } from '../../../modules/nf-core/bcftools/sort/main'
+include { BCFTOOLS_INDEX                         } from '../../../modules/nf-core/bcftools/index/main'
+include { SAMTOOLS_SORT  as SAMTOOLS_SORT_TRGT   } from '../../../modules/nf-core/samtools/sort/main'
+include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_TRGT  } from '../../../modules/nf-core/samtools/index/main'
 
 
 workflow  REPEAT_CHARACTERIZATION{
@@ -14,24 +14,27 @@ workflow  REPEAT_CHARACTERIZATION{
     fasta
     fasta_fai
     bed
-    repeat_id
-    karyotype
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
-    karyotype_value = karyotype.map { tuple -> tuple[1] }
-
-    bam_bai_ch = sorted_bam.join(sorted_bai).combine(karyotype_value)
+    bam_bai_ch = sorted_bam
+        .join(sorted_bai)
+        .map{ meta, bam, bai -> [meta, bam, bai, meta.karyotype] }
 
     TRGT_GENOTYPE(bam_bai_ch,
         fasta,
         fasta_fai,
         bed)
 
+    fasta_with_fai_ch = fasta
+        .combine(fasta_fai)
+        .map { meta_fasta, fasta_file, meta_fai, fai_file -> [meta_fasta, fasta_file, fai_file] }
+        .first()
+
     //sort the resulting spanning bam
     SAMTOOLS_SORT_TRGT(TRGT_GENOTYPE.out.bam,
-        fasta)
+        fasta_with_fai_ch, '')
 
     //index the resulting bam
     SAMTOOLS_INDEX_TRGT(SAMTOOLS_SORT_TRGT.out.bam)
@@ -39,16 +42,14 @@ workflow  REPEAT_CHARACTERIZATION{
     //sort the resulting vcf
     BCFTOOLS_SORT(TRGT_GENOTYPE.out.vcf)
 
-    //Index the VCF file
+    //index the VCF file
     BCFTOOLS_INDEX(BCFTOOLS_SORT.out.vcf)
 
-    bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai)
-    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.bai).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
+    bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index)
+    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
 
-    //add the repeat id to the channel
-    repeat_values = repeat_id.map { tuple -> tuple[1] }
-
-    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.combine(repeat_values)
+    //add repeat_id to channel
+    bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, meta.repeat_id] }
 
     //plot the vcf file -- for a specified id
     TRGT_PLOT(bam_bai_vcf_tbi_repeat_ch,
@@ -56,11 +57,8 @@ workflow  REPEAT_CHARACTERIZATION{
         fasta_fai,
         bed)
 
-    ch_versions = ch_versions.mix(TRGT_GENOTYPE.out.versions)
-    ch_versions = ch_versions.mix(SAMTOOLS_SORT_TRGT.out.versions)
-    ch_versions = ch_versions.mix(SAMTOOLS_INDEX_TRGT.out.versions)
-    ch_versions = ch_versions.mix(BCFTOOLS_SORT.out.versions)
-    ch_versions = ch_versions.mix(TRGT_PLOT.out.versions)
+    // NOTE: all TRGT and SAMTOOLS modules are updated to version topic
+    ch_versions = ch_versions.mix(BCFTOOLS_SORT.out.versions.first())
 
     emit:
     versions       = ch_versions

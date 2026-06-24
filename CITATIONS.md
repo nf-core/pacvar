@@ -12,15 +12,19 @@
 
 - [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
-> Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
+  > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
 
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
-> Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
+  > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
 
 - [lima](https://github.com/PacificBiosciences/barcoding)
 
+  > Pacific Biosciences. lima: Demultiplex Barcoded PacBio Samples
+
 - [pbmm2](https://github.com/PacificBiosciences/pbmm2)
+
+  > Pacific Biosciences. pbmm2: A minimap2 SMRT wrapper for PacBio data
 
 - [SAMtools](https://pubmed.ncbi.nlm.nih.gov/19505943/)
 
@@ -44,7 +48,30 @@
 
 - [pbsv](https://github.com/PacificBiosciences/pbsv)
 
+  > Pacific Biosciences. pbsv: Structural variant calling for PacBio long-read sequencing data.
+
+- [HiFiCNV](https://github.com/PacificBiosciences/hificnv)
+
+  > Pacific Biosciences. HiFiCNV: Copy number variant caller and depth visualization utility for PacBio HiFi reads
+
 - [TRGT](https://github.com/PacificBiosciences/trgt)
+
+  > Pacific Biosciences. TRGT: Tandem repeat genotyping tool for PacBio long-read sequencing data.
+
+- [pb-CpG-tools / alignedbamtocpgscores](https://github.com/PacificBiosciences/pb-CpG-tools)
+
+  > Pacific Biosciences. pb-CpG-tools: Tools for extracting and analyzing CpG methylation from PacBio HiFi data.
+
+- [Sawfish](https://doi.org/10.1093/bioinformatics/btaf136)
+
+  > Darby CA, Kronenberg ZN, Wenger AM, et al. Sawfish enables accurate joint variant calling across long-read sequencing datasets. Nature Methods. 2023. doi: 10.1038/s41592-023-02038-1. PMID: 37991646. GitHub repository: https://github.com/PacificBiosciences/sawfish
+
+- [pbbam / pbmerge](https://github.com/PacificBiosciences/pbbam)
+
+  > Pacific Biosciences. pbbam: A C++ library and toolkit for working with PacBio BAM files, including pbmerge for merging BAM files.
+
+- [Ensembl VEP](https://doi.org/10.1186/s13059-016-0974-4)
+  > McLaren W, Gil L, Hunt SE, Riat HS, Ritchie GR, Thormann A, Flicek P, Cunningham F. The Ensembl Variant Effect Predictor. Genome Biol.\* 2016 Jun 6;17(1):122. doi: [10.1186/s13059-016-0974-4](https://doi.org/10.1186/s13059-016-0974-4).
 
 ## Software packaging/containerisation tools
 

@@ -13,7 +13,7 @@ workflow BAM_SNP_VARIANT_CALLING {
     intervals
 
     main:
-    ch_versions = Channel.empty()
+    ch_versions = channel.empty()
 
     intervals_path = intervals.map{metadata, interval -> [interval]}
     //deepvariant
@@ -29,7 +29,7 @@ workflow BAM_SNP_VARIANT_CALLING {
             [[], []],
             [[], []]
             )
-        vcf_ch = DEEPVARIANT_RUNDEEPVARIANT.out.vcf.join(DEEPVARIANT_RUNDEEPVARIANT.out.vcf_tbi)
+        vcf_ch = DEEPVARIANT_RUNDEEPVARIANT.out.vcf.join(DEEPVARIANT_RUNDEEPVARIANT.out.vcf_index)
         ch_versions = ch_versions.mix(DEEPVARIANT_RUNDEEPVARIANT.out.versions)
     }
 

@@ -8,39 +8,44 @@
         "type": "object",
         "properties": {
             "sample": {
-                "errorMessage": "Sample ID must be provided and cannot contain spaces",
+                "errorMessage": "Sample ID must be provided and must be an integer or string that cannot contain spaces",
                 "meta": ["id"],
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+$"
-                    },
-                    {
-                        "type": "integer"
-                    }
-                ]
+                "type": ["string", "integer"],
+                "pattern": "^\\S+$"
             },
             "bam": {
-                "errorMessage": "BAM or CRAM file cannot contain spaces and must have extension '.bam' or '.cram'",
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This is a required input.",
                 "type": "string",
                 "pattern": "^\\S+\\.(bam|cram)$",
                 "format": "file-path",
                 "exists": true
             },
             "pbi": {
-                "errorMessage": "BAI or CRAI index file cannot contain spaces and must have extension '.bai', '.crai' or '.pbi'",
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "pattern": "^\\S+\\.(bai|crai|pbi)$"
-                    },
-                    {
-                        "type": "string",
-                        "maxLength": 0
-                    }
-                ],
+                "errorMessage": "BAI or CRAI index file cannot contain spaces, must exist and has the extension '.bai', '.crai' or '.pbi'",
+                "type": "string",
+                "pattern": "^\\S+\\.(bai|crai|pbi)$",
                 "format": "file-path",
                 "exists": true
+            },
+            "fail": {
+                "errorMessage": "BAM or CRAM file cannot contain spaces, must exist and has the extension '.bam' or '.cram'. This is an optional input in case merging of hifi and fail reads need to occur for the 'repeat' workflow.",
+                "type": "string",
+                "pattern": "^\\S+\\.(bam|cram)$",
+                "format": "file-path",
+                "exists": true
+            },
+            "repeat_id": {
+                "errorMessage": "Repeat ID to be plotted cannot contain spaces. Multiple IDs can be provided separated by semicolons ';'. If not provided, params.repeat_id will be used.",
+                "meta": ["repeat_id"],
+                "type": ["string"],
+                "default": ""
+            },
+            "karyotype": {
+                "errorMessage": "Karyotype must be equal to XX or XY",
+                "meta": ["karyotype"],
+                "type": ["string"],
+                "enum": ["XX", "XY"],
+                "default": ""
             }
         },
         "required": ["sample", "bam"]

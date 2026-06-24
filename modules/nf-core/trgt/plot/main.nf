@@ -4,8 +4,8 @@ process TRGT_PLOT {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/trgt:1.2.0--h9ee0642_0':
-        'biocontainers/trgt:1.2.0--h9ee0642_0' }"
+        'https://depot.galaxyproject.org/singularity/trgt:5.0.0--h9ee0642_0':
+        'biocontainers/trgt:5.0.0--h9ee0642_0' }"
 
     input:
     tuple val(meta) , path(bam), path(bai), path(vcf), path(tbi), val(repeat_id)
@@ -15,26 +15,47 @@ process TRGT_PLOT {
 
     output:
     tuple val(meta), path("*.{png,pdf,svg}"), emit: plot
-    path "versions.yml"                     , emit: versions
+    tuple val("${task.process}"), val('trgt'), eval("trgt --version | sed 's/.* //g'"), emit: versions_trgt, topic: versions
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}_${repeat_id}"
-    // If user didn't specify an output path, plot to PNG
-    def output_arg = args.contains("--image") || args.contains("-o") ? "" : "--image ${prefix}.png"
 
     """
-    trgt plot \\
-        $args \\
-        --genome ${fasta} \\
-        --repeats ${repeats} \\
-        --spanning-reads ${bam} \\
-        --vcf ${vcf} \\
-        --repeat-id ${repeat_id} \\
-        $output_arg
+    if [ -z "${repeat_id}" ]; then
+        mapfile -t repeat_ids < <(awk -F '\\t' '{ split(\$4,a,";"); gsub("ID=","",a[1]); print a[1] }' "${repeats}")
+
+    else
+        IFS=',;' read -r -a repeat_ids <<< "${repeat_id}"
+    fi
+
+    for rid in "\${repeat_ids[@]}"; do
+
+        out_png_motifs="${meta.id}_\${rid}_motifs.png"
+        out_png_meth="${meta.id}_\${rid}_meth.png"
+
+        trgt plot \\
+            $args \\
+            --genome ${fasta} \\
+            --repeats ${repeats} \\
+            --spanning-reads ${bam} \\
+            --vcf ${vcf} \\
+            --repeat-id "\${rid}" \\
+            --show motifs \\
+            --image \$out_png_motifs
+
+        trgt plot \\
+            $args \\
+            --genome ${fasta} \\
+            --repeats ${repeats} \\
+            --spanning-reads ${bam} \\
+            --vcf ${vcf} \\
+            --repeat-id "\${rid}" \\
+            --show meth \\
+            --image \$out_png_meth
+    done
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

@@ -17,8 +17,7 @@
                     "format": "file-path",
                     "exists": true,
                     "schema": "assets/schema_input.json",
-                    "mimetype": "text/csv",
-                    "pattern": "^\\S+\\.csv$",
+                    "pattern": "^\\S+\\.(csv|tsv|json|yaml|yml)$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
                     "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row. See [usage docs](https://nf-co.re/pacvar/usage#samplesheet-input).",
                     "fa_icon": "fas fa-file-csv"
@@ -43,6 +42,56 @@
                 }
             }
         },
+        "annotation": {
+            "title": "Annotation",
+            "type": "object",
+            "description": "",
+            "fa_icon": "fas fa-braille",
+            "properties": {
+                "skip_ensemblvep": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Option to skip SNVs annotation with Ensembl VEP.",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "Set to 'false' will enable SNVs annotation with Ensembl VEP. \nNote: VEP annotation is currently unsupported for 'CHM13v2.0' as a compatible VEP cache is not provided in the standard configuration. See https://annotation-cache.github.io/vep_cache/ for availiable vep cache."
+                },
+                "vep_custom_args_snv": {
+                    "type": "string",
+                    "default": "--everything --filter_common --per_gene --total_length --offline --format vcf",
+                    "fa_icon": "fas fa-toolbox",
+                    "description": "Add an extra custom argument to VEP.",
+                    "help_text": "Using this params you can add custom args to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "vep_custom_args_sv": {
+                    "type": "string",
+                    "default": "--per_gene --buffer_size 5000 --max_sv_size 250000000 --offline --format vcf",
+                    "fa_icon": "fas fa-toolbox",
+                    "description": "Add extra custom arguments to VEP for SV annotation.",
+                    "help_text": "Using this parameter you can add SV-specific custom arguments to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "vep_custom_args_cnv": {
+                    "type": "string",
+                    "default": "--per_gene --buffer_size 5000 --max_sv_size 250000000 --offline --format vcf",
+                    "fa_icon": "fas fa-toolbox",
+                    "description": "Add extra custom arguments to VEP for CNV annotation.",
+                    "help_text": "Using this parameter you can add CNV-specific custom arguments to VEP. Avoid using `--merged` and `--refseq` because https://annotation-cache.github.io/vep_cache/ does not contain `homo_sapien_refseq` and `homo_sapiens_merged` folder."
+                },
+                "outdir_vep_cache": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Output directory where the downloaded VEP cache will be saved. Only used when `--download_vep_cache true`. Use absolute paths on cloud infrastructure. Note: when set, the cache is published outside `--outdir`.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "vep_out_format": {
+                    "type": "string",
+                    "default": "vcf",
+                    "description": "VEP output-file format.",
+                    "enum": ["json", "tab", "vcf"],
+                    "help_text": "Sets the format of the output-file from VEP. Available formats: json, tab and vcf.",
+                    "fa_icon": "fas fa-table"
+                }
+            }
+        },
         "reference_genome_options": {
             "title": "Reference genome options",
             "type": "object",
@@ -60,8 +109,8 @@
                     "format": "file-path",
                     "exists": true,
                     "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
-                    "description": "Path to FASTA genome file.",
+                    "pattern": "^\\S+\\.(fn?a(sta)?|mmi)(\\.gz)?$",
+                    "description": "Path to FASTA genome or MMI file.",
                     "help_text": "This parameter is *mandatory* if `--genome` is not specified. If you don't have a BWA index available this will be generated for you automatically. Combine with `--save_reference` to save BWA index for future runs.",
                     "fa_icon": "far fa-file-code"
                 },
@@ -74,7 +123,6 @@
                 },
                 "igenomes_base": {
                     "type": "string",
-                    "format": "directory-path",
                     "description": "The base path to the igenomes reference files",
                     "fa_icon": "fas fa-ban",
                     "hidden": true,
@@ -82,23 +130,68 @@
                 },
                 "fasta_fai": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.fai$",
                     "description": "Path to FASTA index",
                     "fa_icon": "far fa-file-code"
                 },
                 "dbsnp": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.vcf\\.gz$",
                     "description": "Path to dbsnp VCF file",
                     "fa_icon": "far fa-file-code"
                 },
                 "dbsnp_tbi": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.vcf\\.gz\\.tbi$",
                     "description": "Path to index file of the dbsnp VCF file",
                     "fa_icon": "far fa-file-code"
                 },
                 "dict": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.dict$",
                     "description": "Path to dict for variant calling",
                     "fa_icon": "far fa-file-code"
+                },
+                "download_vep_cache": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Download Ensembl VEP cache",
+                    "fa_icon": "fas fa-download",
+                    "help_text": "Set this parameter will download vep cache even if --vep_cache are provided."
+                },
+                "vep_cache": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "fa_icon": "fas fa-cloud-download-alt",
+                    "default": "s3://annotation-cache/vep_cache/",
+                    "description": "Path to VEP cache.",
+                    "help_text": "Path to VEP cache which should contain the relevant species, genome and build directories at the path ${vep_species}/${vep_genome}_${vep_cache_version}\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
+                },
+                "vep_cache_version": {
+                    "type": "string",
+                    "fa_icon": "fas fa-tag",
+                    "description": "VEP cache version.",
+                    "help_text": "Alternative cache version can be used to specify the correct Ensembl Genomes version number as these differ from the concurrent Ensembl/VEP version numbers.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
+                },
+                "vep_genome": {
+                    "type": "string",
+                    "fa_icon": "fas fa-microscope",
+                    "description": "VEP genome.",
+                    "help_text": "This is used to specify the genome when looking for local cache, or cloud based cache.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
+                },
+                "vep_species": {
+                    "type": "string",
+                    "fa_icon": "fas fa-microscope",
+                    "description": "VEP species.",
+                    "help_text": "Alternatively species listed in Ensembl Genomes caches can be used.\n\nIf you use AWS iGenomes, this has already been set for you appropriately."
                 }
             }
         },
@@ -160,42 +253,98 @@
                     "type": "string",
                     "enum": ["deepvariant", "gatk4"],
                     "default": "deepvariant",
-                    "description": "variant calling tool - can either be deepvariant or gatk4",
+                    "description": "The tool to use for calling SNP variants",
+                    "fa_icon": "fas fa-forward"
+                },
+                "sv_caller": {
+                    "type": "string",
+                    "enum": ["pbsv", "sawfish"],
+                    "default": "sawfish",
+                    "description": "The tool to use for calling structural variants",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_snp": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Option to skip SNP variant calling",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_sv": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Option to skip SV variant calling",
+                    "fa_icon": "fas fa-forward"
+                },
+                "skip_hificnv": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Skip HiFiCNV copy number variant calling",
                     "fa_icon": "fas fa-forward"
                 },
                 "skip_phase": {
                     "type": "boolean",
+                    "default": false,
                     "description": "Option to skip phasing",
                     "fa_icon": "fas fa-forward"
+                },
+                "expected_cn": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "BED/BED.GZ file specifying expected copy-number regions (for sawfish/hificnv).",
+                    "pattern": "^\\S+\\.bed(\\.gz)?$",
+                    "fa_icon": "far fa-file-code"
+                },
+                "cnv_excluded_regions": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "description": "BED/BED.GZ file of regions to exclude from CNV calling.",
+                    "pattern": "^\\S+\\.bed(\\.gz)?$",
+                    "fa_icon": "far fa-file-code"
+                }
+            }
+        },
+        "methylation_profiling": {
+            "title": "Methylation profiling options",
+            "type": "object",
+            "fa_icon": "fas fa-dna",
+            "description": "Options for summarizing CpG site probabilities for 5mC methylation.",
+            "help_text": "These options control 5mC methylation probability calling from PacBio long-read sequencing data.",
+            "properties": {
+                "skip_cpg": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Skip CpG site probability for 5mC methylation calling",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the WGS workflow will skip CpG site 5mC methylation probability scoring."
+                },
+                "skip_fiberseq": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Skip Fiber-seq nucleosome annotation with fibertools-rs",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the WGS workflow will skip adding Fiber-seq BAM auxiliary tags for nucleosome and MSP positions with fibertools-rs."
+                },
+                "skip_m6A_predict": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Skip fibertools-rs m6A prediction and use existing m6A calls for Fiber-seq nucleosome annotation",
+                    "fa_icon": "fas fa-forward",
+                    "help_text": "When enabled, the Fiber-seq workflow will use existing m6A calls in the input BAM instead of predicting m6A calls with fibertools-rs. To use fibertools-rs m6A prediction, set this to false; input BAMs must contain PacBio kinetic signature tags (ip/pw or fi/fp/ri/rp) for prediction to run."
                 }
             }
         },
         "repeat": {
-            "title": "options specific to the repeat workflow",
+            "title": "Options specific to the repeat workflow",
             "type": "object",
             "description": "Options for repeat specification",
             "help_text": "These options are important for the repeat-characterization step of the workflow",
             "properties": {
                 "repeat_id": {
                     "type": "string",
-                    "description": "Id for repeat",
+                    "description": "If no sample-specific repeat ID to be plotted is provided in the samplesheet, this value will be used ",
                     "fa_icon": "fas fa-bars"
-                },
-                "karyotype": {
-                    "type": "string",
-                    "description": "Karyotype for repeat",
-                    "default": "XX",
-                    "fa_icon": "fas fa-align-justify"
                 }
             },
             "fa_icon": "fas fa-align-justify"
@@ -208,6 +357,9 @@
             "properties": {
                 "barcodes": {
                     "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
                     "description": "Fasta file of barcodes",
                     "fa_icon": "far fa-file-code"
                 },
@@ -219,6 +371,8 @@
                 "intervals": {
                     "type": "string",
                     "format": "file-path",
+                    "exists": true,
+                    "pattern": "^\\S+\\.bed$",
                     "description": "Path to BED file containing intervals for either variant calling or for repeat expansion characterization",
                     "fa_icon": "far fa-file-code"
                 }
@@ -234,7 +388,7 @@
                 "workflow": {
                     "type": "string",
                     "default": "wgs",
-                    "description": "Workflow type - can either be PureTarget or wgs",
+                    "description": "Option to choose which workflow type to run",
                     "enum": ["wgs", "repeat"],
                     "fa_icon": "fas fa-map-signs"
                 }
@@ -291,13 +445,6 @@
                     "fa_icon": "fas fa-palette",
                     "hidden": true
                 },
-                "hook_url": {
-                    "type": "string",
-                    "description": "Incoming hook URL for messaging service",
-                    "fa_icon": "fas fa-align-left",
-                    "help_text": "Incoming hook URL for messaging service. Currently, MS Teams and Slack are supported.",
-                    "hidden": true
-                },
                 "multiqc_config": {
                     "type": "string",
                     "format": "file-path",
@@ -335,6 +482,18 @@
                     "fa_icon": "far calendar",
                     "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
+                },
+                "help": {
+                    "type": ["boolean", "string"],
+                    "description": "Display the help message."
+                },
+                "help_full": {
+                    "type": "boolean",
+                    "description": "Display the full detailed help message."
+                },
+                "show_hidden": {
+                    "type": "boolean",
+                    "description": "Display hidden parameters in the help message (only works when --help or --help_full are provided)."
                 }
             }
         }
@@ -357,6 +516,12 @@
         },
         {
             "$ref": "#/$defs/variant"
+        },
+        {
+            "$ref": "#/$defs/methylation_profiling"
+        },
+        {
+            "$ref": "#/$defs/annotation"
         },
         {
             "$ref": "#/$defs/pre_processing"
