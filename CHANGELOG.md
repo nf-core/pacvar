@@ -5,7 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - Neon tetra [2026-06-05]
 
-Kākāpō Awakens expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure.
+Neon tetra expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure.
 
 ### Added
 
@@ -33,6 +33,8 @@ Kākāpō Awakens expands the WGS workflow with new copy number variant, structu
 ### Fixed
 
 - [nf-core/pacvar#54](https://github.com/nf-core/pacvar/pull/54): Replaced remaining uppercase `Channel` factory calls with lowercase `channel` calls for newer Nextflow syntax compatibility; fixed PACVAR workflow argument syntax after the nf-core/tools template update.
+- [nf-core/pacvar#61](https://github.com/nf-core/pacvar/pull/61): (1) Removed duplicated anonymous AWS S3 client setting and fixed test profile reference configuration. (2) Updated CHANGELOG.md (@chaochaowong, reviewed by @SPPearce)
+- [nf-core/pacvar#62](https://github.com/nf-core/pacvar/pull/62): Addressed reviwer's comments for the 1.1.0 release PR.
 
 ### Dependencies
 
@@ -63,16 +65,10 @@ Kākāpō Awakens expands the WGS workflow with new copy number variant, structu
 
 ## v1.0.1 - Sardine [02/26/2025]
 
-### Added
-
 ### Fixed
 
 - [#19](https://github.com/nf-core/pacvar/pull/19) Changed files produced downstream from PBSV to have an output file name containing 'sv' to indicate origin of the files, as with files downstream from GATK4 and DeepVariant having 'snv' in the output file name. (@tanyasarkjain)
 - [#21](https://github.com/nf-core/pacvar/pull/21) Tweaks to the channels passed into HiPhase - specifically ensure that the input VCF and BAM channels are ordered in the same way (according to their shared meta). (@tanyasarkjain)
-
-### Dependencies
-
-### Deprecated
 
 ## v1.0.0 - Goldfish [01/31/2025]
 
