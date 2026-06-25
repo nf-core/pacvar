@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0dev] - [2026-06-25]
+
+### Changed
+
+- [nf-core/pacvar#64](https://github.com/nf-core/pacvar/pull/64): Bumped the development version from `1.1.0` to `1.2.0dev`, updated development metadata and documentation links and snapshots.
+
 ## [1.1.0] - Neon tetra [2026-06-05]
 
 Neon tetra expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure.
