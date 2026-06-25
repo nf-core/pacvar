@@ -7,9 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Bumped the development version from `1.1.0` to `1.2.0dev`.
-- Updated development metadata and documentation links to point to the `dev` version of nf-core/pacvar, including MultiQC report links and RO-Crate metadata.
-- Updated all nf-test snapshots for the `1.2.0dev` development cycle.
+- [nf-core/pacvar#64](https://github.com/nf-core/pacvar/pull/64): Bumped the development version from `1.1.0` to `1.2.0dev`, updated development metadata and documentation links and snapshots.
 
 ## [1.1.0] - Neon tetra [2026-06-05]
 
