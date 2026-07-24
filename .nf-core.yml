@@ -3,6 +3,10 @@ lint:
     - .gitignore
     - assets/nf-core-pacvar_logo_light.png
     - docs/images/nf-core-pacvar_logo_light.png
+    - .github/workflows/branch.yml
+    - .github/workflows/linting.yml
+  files_exist:
+    - .github/workflows/linting_comment.yml
 nf_core_version: 4.0.2
 repository_type: pipeline
 template:
