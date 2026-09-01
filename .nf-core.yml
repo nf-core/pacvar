@@ -3,7 +3,7 @@ lint:
     - .gitignore
     - assets/nf-core-pacvar_logo_light.png
     - docs/images/nf-core-pacvar_logo_light.png
-nf_core_version: 4.0.3
+nf_core_version: 4.1.0
 repository_type: pipeline
 template:
   author: Tanya Sarkin Jain
