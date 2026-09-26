@@ -112,7 +112,6 @@ workflow PACVAR {
     }
 
     PBMM2_ALIGN(pbmm2_input_filter_ch, fasta)
-    ch_versions = ch_versions.mix(PBMM2_ALIGN.out.versions)
 
     // merge hifi and fail bams for repeat workflow
     if (params.workflow == 'wgs') {
