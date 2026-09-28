@@ -93,7 +93,6 @@ workflow NFCORE_PACVAR {
     //
     PACVAR (
         samplesheet,
-<<<<<<< HEAD
         fasta,
         fasta_fai,
         dict,
@@ -106,8 +105,6 @@ workflow NFCORE_PACVAR {
         params.vep_cache_version,
         params.vep_genome,
         params.vep_species,
-=======
->>>>>>> TEMPLATE
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,

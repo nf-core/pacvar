@@ -39,11 +39,7 @@ workflow UTILS_NFSCHEMA_PLUGIN {
         }
         log.info paramsHelp(
             help_options,
-<<<<<<< HEAD
-            (params.help instanceof String && params.help != "true") ? params.help : "",
-=======
             (help instanceof String && help != "true") ? help : "",
->>>>>>> TEMPLATE
         )
         exit 0
     }
