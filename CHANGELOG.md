@@ -3,6 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+<<<<<<< HEAD
 ## [1.2.0dev] - [2026-06-25]
 
 ### Changed
@@ -77,5 +78,8 @@ Neon tetra expands the WGS workflow with new copy number variant, structural var
 - [#21](https://github.com/nf-core/pacvar/pull/21) Tweaks to the channels passed into HiPhase - specifically ensure that the input VCF and BAM channels are ordered in the same way (according to their shared meta). (@tanyasarkjain)
 
 ## v1.0.0 - Goldfish [01/31/2025]
+=======
+## v1.2.0dev - [unreleased<!-- TODO nf-core: replace with date on release -->]
+>>>>>>> TEMPLATE
 
 Initial release of nf-core/pacvar, created with the [nf-core](https://nf-co.re/) template.
