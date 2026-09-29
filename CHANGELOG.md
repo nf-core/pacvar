@@ -8,14 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated the `pbmm2` module from version `1.14.99` to `26.2.0`.
+- Update the topic-based `bcftools` module from version `1.22` to `1.24`.
 - Updated the pipeline template to nf-core/tools `4.1.0`.
 - [nf-core/pacvar#64](https://github.com/nf-core/pacvar/pull/64): Bumped the development version from `1.1.0` to `1.2.0dev`, updated development metadata, documentation links, and snapshots.
 
 ### Dependencies
 
-| Tool  | Previous version | New version |
-| ----- | ---------------- | ----------- |
-| pbmm2 | 1.14.99          | 26.2.0      |
+| Tool     | Previous version | New version |
+| -------- | ---------------- | ----------- |
+| pbmm2    | 1.14.99          | 26.2.0      |
+| bcftools | 1.22             | 1.23.1      |
 
 ## [1.1.0] - Neon tetra [2026-06-05]
 

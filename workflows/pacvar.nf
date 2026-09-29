@@ -370,7 +370,6 @@ workflow PACVAR {
             fasta_fai,
             intervals)
 
-        ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions.first())
     }
 
     // MODULE: MultiQC
