@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | deepvariant | 1.9.0            | 1.10.0      |
 
 ### Removed
+
 - Removed the unused, top-level deprecated module
 
 ## [1.1.0] - Neon tetra [2026-06-05]
