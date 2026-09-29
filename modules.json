@@ -15,11 +15,6 @@
                         "git_sha": "feef37435aea56816adf4b3bde1fc76aac327a8d",
                         "installed_by": ["modules"]
                     },
-                    "deepvariant": {
-                        "branch": "master",
-                        "git_sha": "bb9a29235b995f82bf0621825e45024802ddfdb6",
-                        "installed_by": ["modules"]
-                    },
                     "deepvariant/callvariants": {
                         "branch": "master",
                         "git_sha": "4a4ccce52d5a280b0b136ff3ac841607debed92b",

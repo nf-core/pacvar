@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | deepvariant | 1.9.0            | 1.10.0      |
 
 ## [1.1.0] - Neon tetra [2026-06-05]
+
 [text](null)
 Neon tetra expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure.
 

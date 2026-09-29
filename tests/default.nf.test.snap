@@ -3,8 +3,11 @@
         "content": [
             10,
             {
+                "BCFTOOLS_INDEX": {
+                    "bcftools": "1.23.1"
+                },
                 "BCFTOOLS_SORT": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PBMM2_ALIGN": {
                     "pbmm2": "26.2.0"
@@ -64,7 +67,7 @@
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ]
         ],
-        "timestamp": "2026-09-28T12:22:07.058823277",
+        "timestamp": "2026-09-29T09:13:01.619733357",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
