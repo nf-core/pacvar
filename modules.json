@@ -103,8 +103,7 @@
                     "pbmm2/align": {
                         "branch": "master",
                         "git_sha": "82ba6390c1ed742177d64895b64b179ab3473452",
-                        "installed_by": ["modules"],
-                        "patch": "modules/nf-core/pbmm2/align/pbmm2-align.diff"
+                        "installed_by": ["modules"]
                     },
                     "pbsv/call": {
                         "branch": "master",
