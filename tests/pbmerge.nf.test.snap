@@ -3,11 +3,14 @@
         "content": [
             21,
             {
+                "BCFTOOLS_INDEX": {
+                    "bcftools": "1.23.1"
+                },
                 "BCFTOOLS_SORT": {
-                    "bcftools": 1.22
+                    "bcftools": "1.23.1"
                 },
                 "PBMM2_ALIGN": {
-                    "pbmm2": "1.14.99"
+                    "pbmm2": "26.2.0"
                 },
                 "PBTK_PBMERGE": {
                     "pbbam": "3.1.1"
@@ -58,7 +61,7 @@
                 "pbtk/sample1.merged.bam",
                 "pbtk/sample1.merged.bam.pbi",
                 "pipeline_info",
-                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "pipeline_info/nf_core_pacvar_software_mqc_versions.yml",
                 "samtools",
                 "samtools/sample1.sorted.bam",
                 "samtools/sample1.sorted.bam.bai",
@@ -232,10 +235,10 @@
                 ]
             ]
         ],
-        "timestamp": "2026-06-25T14:44:03.841651835",
+        "timestamp": "2026-10-02T10:25:42.553814767",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "25.10.4"
+            "nextflow": "26.04.6"
         }
     }
 }

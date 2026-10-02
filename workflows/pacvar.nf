@@ -32,10 +32,8 @@ include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_SV   } from '../sub
 include { VCF_ANNOTATE_ENSEMBLVEP as VCF_ANNOTATE_ENSEMBLVEP_CNV  } from '../subworkflows/nf-core/vcf_annotate_ensemblvep/main'
 include { LIMA                                                    } from '../modules/nf-core/lima/main'
 include { PBTK_PBMERGE                                            } from '../modules/nf-core/pbtk/pbmerge/main'
-include { DEEPVARIANT_RUNDEEPVARIANT                              } from '../modules/nf-core/deepvariant/rundeepvariant/main'
 include { SAMTOOLS_INDEX                                          } from '../modules/nf-core/samtools/index/main'
 include { SAMTOOLS_SORT                                           } from '../modules/nf-core/samtools/sort/main'
-include { GATK4_HAPLOTYPECALLER                                   } from '../modules/nf-core/gatk4/haplotypecaller/main'
 include { PBMM2_ALIGN                                             } from '../modules/nf-core/pbmm2/align/main'
 include { HIPHASE as HIPHASE_SNP                                  } from '../modules/nf-core/hiphase/main'
 include { HIPHASE as HIPHASE_SV                                   } from '../modules/nf-core/hiphase/main'
@@ -112,7 +110,6 @@ workflow PACVAR {
     }
 
     PBMM2_ALIGN(pbmm2_input_filter_ch, fasta)
-    ch_versions = ch_versions.mix(PBMM2_ALIGN.out.versions)
 
     // merge hifi and fail bams for repeat workflow
     if (params.workflow == 'wgs') {
@@ -371,7 +368,6 @@ workflow PACVAR {
             fasta_fai,
             intervals)
 
-        ch_versions = ch_versions.mix(REPEAT_CHARACTERIZATION.out.versions.first())
     }
 
     // MODULE: MultiQC
@@ -401,7 +397,7 @@ workflow PACVAR {
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
-            name: 'nf_core_'  + 'pipeline_software_' +  'mqc_'  + 'versions.yml',
+            name: 'nf_core_'  +  'pacvar_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         )
