@@ -82,7 +82,7 @@
                     },
                     "hiphase": {
                         "branch": "master",
-                        "git_sha": "62ca6e796e70c485214b7339612fdac003002711",
+                        "git_sha": "32d9d7b17b837f68b7f3916f53bfa90d1b434fdd",
                         "installed_by": ["modules"]
                     },
                     "lima": {
