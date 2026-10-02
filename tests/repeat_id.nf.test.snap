@@ -2,7 +2,38 @@
     "Provide sample-specific repeat_id via samplesheet, if no value is provided use params.repeat_id": {
         "content": [
             28,
-            null,
+            {
+                "BCFTOOLS_INDEX": {
+                    "bcftools": "1.23.1"
+                },
+                "BCFTOOLS_SORT": {
+                    "bcftools": "1.23.1"
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "26.2.0"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": "1.23.1"
+                },
+                "SAMTOOLS_INDEX_TRGT": {
+                    "samtools": "1.23.1"
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": "1.23.1"
+                },
+                "SAMTOOLS_SORT_TRGT": {
+                    "samtools": "1.23.1"
+                },
+                "TRGT_GENOTYPE": {
+                    "trgt": "5.0.0-e9acee0"
+                },
+                "TRGT_PLOT": {
+                    "trgt": "5.0.0-e9acee0"
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.2.0dev"
+                }
+            },
             [
                 "bcftools",
                 "bcftools/sample1.sorted.vcf.gz",
@@ -246,7 +277,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-09-28T13:06:54.901513152",
+        "timestamp": "2026-10-02T10:26:26.901168772",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
