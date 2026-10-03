@@ -6,18 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0dev] - [02026-10-03]
 
 ### Changed
-- Update the `hiphase` module from verstion `1.5.0` to `1.6.0` that co-phases SNV and SV calls in a single HiPhase haplotyping and support optional SNV- and SV-only phasing inputs
+- Update the `hiphase` module from verstion `1.5.0` to `1.6.0` that co-phases SNV and SV calls in a single HiPhase haplotagging and support optional SNV- and SV-only phasing inputs
 - Route phased outputs to VEP, HiFiCNV, CpG, and Fiber-seq
 - Update publishing rules and output documentation
 
 
 ### Fixed
 
+- [nf-core/pacvar#69](https://github.com/nf-core/pacvar/issues/69): Updated the HiPhase module to resolve the reported phasing issue.
+
 ### Dependencies
 
 | Tool        | Previous version | New version |
 | ----------- | ---------------- | ----------- |
-| hiphase     | 1.5.0.           | 1.6.0      |
+| hiphase     | 1.5.0.           | 1.6.0       |
 
 
 ## [1.2.0dev] - [02026-09-26]
