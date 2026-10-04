@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0dev] - [02026-10-03]
 
 ### Changed
+
 - Update the `hiphase` module from verstion `1.5.0` to `1.6.0` that co-phases SNV and SV calls in a single HiPhase haplotagging and support optional SNV- and SV-only phasing inputs
 - Route phased outputs to VEP, HiFiCNV, CpG, and Fiber-seq
 - Update publishing rules and output documentation
-
 
 ### Fixed
 
@@ -17,10 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 
-| Tool        | Previous version | New version |
-| ----------- | ---------------- | ----------- |
-| hiphase     | 1.5.0.           | 1.6.0       |
-
+| Tool    | Previous version | New version |
+| ------- | ---------------- | ----------- |
+| hiphase | 1.5.0.           | 1.6.0       |
 
 ## [1.2.0dev] - [02026-09-26]
 
