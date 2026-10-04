@@ -18,6 +18,7 @@ nextflow_pipeline {
             def succeeded_tasks = workflow.trace.succeeded()*.name
             def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             def stable_content = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            def vcf_files = getAllFilesFromDir(params.outdir, include: ['hiphase/*_sv_phased.vcf.gz', 'sawfish/**/*_jointcall_genotyped.sv.vcf.gz'])
 
             assertAll(
                 { assert workflow.success },
@@ -30,7 +31,10 @@ nextflow_pipeline {
                     workflow.trace.succeeded().size(),
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),
                     stable_path,
-                    stable_content
+                    stable_content,
+                    vcf_files.collect { file ->
+                        [file.getName(), path(file.toString()).linesGzip.count { line -> !line.startsWith('#') }]
+                    }
                 ).match() }
             )
         }

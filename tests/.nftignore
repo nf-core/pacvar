@@ -21,4 +21,6 @@ pbtk/*.{bam,bam.pbi}
 pbsv/*.{vcf,vcf.gz}
 lima/*.consensusreadset.xml
 lima/*.json
+sawfish/**/*.{vcf.gz,vcf.gz.tbi}
 sawfish/**/sawfish.log
+hiphase/*.{vcf.gz,vcf.gz.tbi}

@@ -176,24 +176,18 @@
                 "sample1.bc2026--bc2026.sorted_haplotagged.bam.bai:md5,0d76977b2e36046cc176112776c5fa4e",
                 "sample1.bc2026--bc2026.stats.csv:md5,d204bd90c3698879c2a0ecc30c294003",
                 "sample1.bc2026--bc2026.summary.csv:md5,e8b44d8e7a255b406a4687c11a268149",
-                "sample1.bc2026--bc2026_sv_phased.vcf.gz:md5,331ff257a2e654982332e0ec1751a5e2",
-                "sample1.bc2026--bc2026_sv_phased.vcf.gz.tbi:md5,f4ac1b73f3279823944a5c821a709e45",
                 "sample1.bc2026--bc2058.blocks.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "sample1.bc2026--bc2058.haplotag.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "sample1.bc2026--bc2058.sorted_haplotagged.bam:md5,8b92bf781341a4ef1cb88898b0b26ea1",
                 "sample1.bc2026--bc2058.sorted_haplotagged.bam.bai:md5,0d76977b2e36046cc176112776c5fa4e",
                 "sample1.bc2026--bc2058.stats.csv:md5,d204bd90c3698879c2a0ecc30c294003",
                 "sample1.bc2026--bc2058.summary.csv:md5,e8b44d8e7a255b406a4687c11a268149",
-                "sample1.bc2026--bc2058_sv_phased.vcf.gz:md5,a16762df93f890b5490dd45832a16c51",
-                "sample1.bc2026--bc2058_sv_phased.vcf.gz.tbi:md5,f4ac1b73f3279823944a5c821a709e45",
                 "sample1.bc2058--bc2058.blocks.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "sample1.bc2058--bc2058.haplotag.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "sample1.bc2058--bc2058.sorted_haplotagged.bam:md5,59857da4910e60d087518aeab35c6691",
                 "sample1.bc2058--bc2058.sorted_haplotagged.bam.bai:md5,0d76977b2e36046cc176112776c5fa4e",
                 "sample1.bc2058--bc2058.stats.csv:md5,d204bd90c3698879c2a0ecc30c294003",
                 "sample1.bc2058--bc2058.summary.csv:md5,e8b44d8e7a255b406a4687c11a268149",
-                "sample1.bc2058--bc2058_sv_phased.vcf.gz:md5,b634f0ac7960a5af2086b9e366b90204",
-                "sample1.bc2058--bc2058_sv_phased.vcf.gz.tbi:md5,f4ac1b73f3279823944a5c821a709e45",
                 "sample1.bc2026--bc2026.bam:md5,f1f1872bcb18dc30b5b13e412faf1839",
                 "sample1.bc2026--bc2026.bam.pbi:md5,bac9b54d83780dd2c89624d8b028bcc0",
                 "sample1.bc2026--bc2058.bam:md5,a0631426e3f157bbd807ad1122ed3ded",
@@ -219,8 +213,6 @@
                 "contig.alignment.bam:md5,cbe868a26e0b636a3ac740b24c07cd76",
                 "contig.alignment.bam.csi:md5,825b89ba9c4ca30e9343d1292e527b94",
                 "run.stats.json:md5,69d8bf940d36a763fced34bfc81b90d6",
-                "sample1.bc2026--bc2026_jointcall_genotyped.sv.vcf.gz:md5,20e91a3e5aa56e1bdf3602c6506606c0",
-                "sample1.bc2026--bc2026_jointcall_genotyped.sv.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
                 "depth.bw:md5,5f0db8dc456e90ad2173c427bf6f26d1",
                 "assembly.regions.bed:md5,be1d262cc140f6ee3dd6ecd8d9af26b5",
                 "candidate.sv.bcf:md5,4f8925649d9cb9cd2b0e0d4638a95b8c",
@@ -237,8 +229,6 @@
                 "contig.alignment.bam:md5,06a2f84a93759feac3836a8dbcc79077",
                 "contig.alignment.bam.csi:md5,825b89ba9c4ca30e9343d1292e527b94",
                 "run.stats.json:md5,69d8bf940d36a763fced34bfc81b90d6",
-                "sample1.bc2026--bc2058_jointcall_genotyped.sv.vcf.gz:md5,322dc8ae7b745a4ac029dfd89a687f11",
-                "sample1.bc2026--bc2058_jointcall_genotyped.sv.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
                 "depth.bw:md5,5f0db8dc456e90ad2173c427bf6f26d1",
                 "assembly.regions.bed:md5,be1d262cc140f6ee3dd6ecd8d9af26b5",
                 "candidate.sv.bcf:md5,e635cd0ba4aa31bcb35526f854f1b2f9",
@@ -255,12 +245,36 @@
                 "contig.alignment.bam:md5,c675d44458b77d314bcc832f7221bdf2",
                 "contig.alignment.bam.csi:md5,825b89ba9c4ca30e9343d1292e527b94",
                 "run.stats.json:md5,69d8bf940d36a763fced34bfc81b90d6",
-                "sample1.bc2058--bc2058_jointcall_genotyped.sv.vcf.gz:md5,a1bef575a15c022dbbc1b9b9c892cd1c",
-                "sample1.bc2058--bc2058_jointcall_genotyped.sv.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
                 "depth.bw:md5,5f0db8dc456e90ad2173c427bf6f26d1"
+            ],
+            [
+                [
+                    "sample1.bc2026--bc2026_sv_phased.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2026--bc2058_sv_phased.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2058--bc2058_sv_phased.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2026--bc2026_jointcall_genotyped.sv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2026--bc2058_jointcall_genotyped.sv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2058--bc2058_jointcall_genotyped.sv.vcf.gz",
+                    0
+                ]
             ]
         ],
-        "timestamp": "2026-10-04T09:18:25.633073928",
+        "timestamp": "2026-10-04T09:45:51.677016891",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
