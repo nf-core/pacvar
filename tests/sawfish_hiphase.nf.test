@@ -1,0 +1,38 @@
+nextflow_pipeline {
+
+    name "Test WGS Sawfish and HiPhase workflow"
+    script "../main.nf"
+    profile "test_wgs_sawfish"
+    tag "pipeline"
+    tag "hiphase"
+
+    test("Run LIMA, PBMM2, Sawfish, and HiPhase") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+        }
+
+        then {
+            def succeeded_tasks = workflow.trace.succeeded()*.name
+            def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            def stable_content = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+
+            assertAll(
+                { assert workflow.success },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('LIMA') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('PBMM2_ALIGN') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_DISCOVER') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_JOINTCALL') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('HIPHASE') } },
+                { assert snapshot(
+                    workflow.trace.succeeded().size(),
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),
+                    stable_path,
+                    stable_content
+                ).match() }
+            )
+        }
+    }
+}

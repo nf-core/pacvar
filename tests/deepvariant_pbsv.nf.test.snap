@@ -1,0 +1,168 @@
+{
+    "Run LIMA, PBMM2, DeepVariant, and PBSV": {
+        "content": [
+            26,
+            {
+                "BCFTOOLS_INDEX": {
+                    "bcftools": "1.23.1"
+                },
+                "DEEPVARIANT_RUNDEEPVARIANT": {
+                    "deepvariant": "1.10.0"
+                },
+                "LIMA": {
+                    "lima": "2.12.0"
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "26.2.0"
+                },
+                "PBSV_CALL": {
+                    "pbsv": "2.11.0 (commit v2.11.0)"
+                },
+                "PBSV_DISCOVER": {
+                    "pbsv": "2.11.0 (commit v2.11.0)"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": "1.23.1"
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": "1.23.1"
+                },
+                "TABIX_BGZIP": {
+                    "tabix": 1.21
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.2.0dev"
+                }
+            },
+            [
+                "deepvariant",
+                "deepvariant/sample1.bc2026--bc2026.snv.g.vcf.gz",
+                "deepvariant/sample1.bc2026--bc2026.snv.g.vcf.gz.tbi",
+                "deepvariant/sample1.bc2026--bc2026.snv.vcf.gz",
+                "deepvariant/sample1.bc2026--bc2026.snv.vcf.gz.tbi",
+                "deepvariant/sample1.bc2026--bc2058.snv.g.vcf.gz",
+                "deepvariant/sample1.bc2026--bc2058.snv.g.vcf.gz.tbi",
+                "deepvariant/sample1.bc2026--bc2058.snv.vcf.gz",
+                "deepvariant/sample1.bc2026--bc2058.snv.vcf.gz.tbi",
+                "deepvariant/sample1.bc2058--bc2058.snv.g.vcf.gz",
+                "deepvariant/sample1.bc2058--bc2058.snv.g.vcf.gz.tbi",
+                "deepvariant/sample1.bc2058--bc2058.snv.vcf.gz",
+                "deepvariant/sample1.bc2058--bc2058.snv.vcf.gz.tbi",
+                "lima",
+                "lima/sample1.bc2026--bc2026.bam",
+                "lima/sample1.bc2026--bc2026.bam.pbi",
+                "lima/sample1.bc2026--bc2026.consensusreadset.xml",
+                "lima/sample1.bc2026--bc2058.bam",
+                "lima/sample1.bc2026--bc2058.bam.pbi",
+                "lima/sample1.bc2026--bc2058.consensusreadset.xml",
+                "lima/sample1.bc2058--bc2058.bam",
+                "lima/sample1.bc2058--bc2058.bam.pbi",
+                "lima/sample1.bc2058--bc2058.consensusreadset.xml",
+                "lima/sample1.consensusreadset.xml",
+                "lima/sample1.json",
+                "lima/sample1.lima.counts",
+                "lima/sample1.lima.report",
+                "lima/sample1.lima.summary",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbmm2",
+                "pbmm2/sample1.bc2026--bc2026_hifi.aligned.bam",
+                "pbmm2/sample1.bc2026--bc2058_hifi.aligned.bam",
+                "pbmm2/sample1.bc2058--bc2058_hifi.aligned.bam",
+                "pbsv",
+                "pbsv/sample1.bc2026--bc2026.sv.vcf",
+                "pbsv/sample1.bc2026--bc2026.sv.vcf.gz",
+                "pbsv/sample1.bc2026--bc2026.sv.vcf.gz.csi",
+                "pbsv/sample1.bc2026--bc2026.svsig.gz",
+                "pbsv/sample1.bc2026--bc2058.sv.vcf",
+                "pbsv/sample1.bc2026--bc2058.sv.vcf.gz",
+                "pbsv/sample1.bc2026--bc2058.sv.vcf.gz.csi",
+                "pbsv/sample1.bc2026--bc2058.svsig.gz",
+                "pbsv/sample1.bc2058--bc2058.sv.vcf",
+                "pbsv/sample1.bc2058--bc2058.sv.vcf.gz",
+                "pbsv/sample1.bc2058--bc2058.sv.vcf.gz.csi",
+                "pbsv/sample1.bc2058--bc2058.svsig.gz",
+                "pbsv/versions.yml",
+                "pipeline_info",
+                "pipeline_info/nf_core_pacvar_software_mqc_versions.yml",
+                "samtools",
+                "samtools/sample1.bc2026--bc2026.sorted.bam",
+                "samtools/sample1.bc2026--bc2026.sorted.bam.bai",
+                "samtools/sample1.bc2026--bc2058.sorted.bam",
+                "samtools/sample1.bc2026--bc2058.sorted.bam.bai",
+                "samtools/sample1.bc2058--bc2058.sorted.bam",
+                "samtools/sample1.bc2058--bc2058.sorted.bam.bai"
+            ],
+            [
+                "sample1.bc2026--bc2026.snv.g.vcf.gz:md5,e97ed73101e91e69fa19a2f3c9821039",
+                "sample1.bc2026--bc2026.snv.g.vcf.gz.tbi:md5,bdcd5ddb70b26cf9d64617c749c66d9b",
+                "sample1.bc2026--bc2026.snv.vcf.gz:md5,8ddb2df79de18f64e9dcf5053859eae0",
+                "sample1.bc2026--bc2026.snv.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
+                "sample1.bc2026--bc2058.snv.g.vcf.gz:md5,e97ed73101e91e69fa19a2f3c9821039",
+                "sample1.bc2026--bc2058.snv.g.vcf.gz.tbi:md5,bdcd5ddb70b26cf9d64617c749c66d9b",
+                "sample1.bc2026--bc2058.snv.vcf.gz:md5,8ddb2df79de18f64e9dcf5053859eae0",
+                "sample1.bc2026--bc2058.snv.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
+                "sample1.bc2058--bc2058.snv.g.vcf.gz:md5,e97ed73101e91e69fa19a2f3c9821039",
+                "sample1.bc2058--bc2058.snv.g.vcf.gz.tbi:md5,bdcd5ddb70b26cf9d64617c749c66d9b",
+                "sample1.bc2058--bc2058.snv.vcf.gz:md5,8ddb2df79de18f64e9dcf5053859eae0",
+                "sample1.bc2058--bc2058.snv.vcf.gz.tbi:md5,4cb176febbc8c26d717a6c6e67b9c905",
+                "sample1.bc2026--bc2026.bam:md5,f1f1872bcb18dc30b5b13e412faf1839",
+                "sample1.bc2026--bc2026.bam.pbi:md5,bac9b54d83780dd2c89624d8b028bcc0",
+                "sample1.bc2026--bc2058.bam:md5,a0631426e3f157bbd807ad1122ed3ded",
+                "sample1.bc2026--bc2058.bam.pbi:md5,39714cd7ed074370cda5b628eac32d97",
+                "sample1.bc2058--bc2058.bam:md5,d698c0ede13443db9efe9a969063b4c4",
+                "sample1.bc2058--bc2058.bam.pbi:md5,efd4f06764c6a50443d22cd2724ea858",
+                "sample1.lima.counts:md5,c9894ff26bd6924a633fe974d0146f81",
+                "sample1.lima.report:md5,8c0d326d17ba30e6cb18503ffbb05436",
+                "sample1.lima.summary:md5,767ccdf05d95d9dd5789cac4f42e7daf",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "sample1.bc2026--bc2026.sv.vcf.gz.csi:md5,e3b2e0b612551a1e91aa62c10c44bed0",
+                "sample1.bc2026--bc2026.svsig.gz:md5,46d10b985e77cffdab4d58be9d097faf",
+                "sample1.bc2026--bc2058.sv.vcf.gz.csi:md5,e3b2e0b612551a1e91aa62c10c44bed0",
+                "sample1.bc2026--bc2058.svsig.gz:md5,f20da91f67b705721d014008b97881b6",
+                "sample1.bc2058--bc2058.sv.vcf.gz.csi:md5,e3b2e0b612551a1e91aa62c10c44bed0",
+                "sample1.bc2058--bc2058.svsig.gz:md5,1dfed0282c8a1b49048a13a8a1906252",
+                "versions.yml:md5,e49d57e872b8a278257945c093d4e63e"
+            ],
+            [
+                [
+                    "sample1.bc2026--bc2026.snv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2026--bc2058.snv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2058--bc2058.snv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2026--bc2026.sv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2026--bc2058.sv.vcf.gz",
+                    0
+                ],
+                [
+                    "sample1.bc2058--bc2058.sv.vcf.gz",
+                    0
+                ]
+            ]
+        ],
+        "timestamp": "2026-10-04T09:33:25.930039624",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}

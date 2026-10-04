@@ -18,3 +18,7 @@ pbmm2/*.bam
 samtools/*.{bam,bam.bai}
 trgt/*.{bam,vcf.gz}
 pbtk/*.{bam,bam.pbi}
+pbsv/*.{vcf,vcf.gz}
+lima/*.consensusreadset.xml
+lima/*.json
+sawfish/**/sawfish.log
