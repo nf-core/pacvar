@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Route phased outputs to VEP, HiFiCNV, CpG, and Fiber-seq
 - Update publishing rules and output documentation
 
+### Added
+
+- Added end-to-end nf-test for m6A-tagged Fiber-seq workflow, exercising PBMM2, DeepVariant, Sawfish, HiPhase, fibertools-rs, pb-CpG-tools testing and output snapshots.
+
 ### Fixed
 
 - [nf-core/pacvar#69](https://github.com/nf-core/pacvar/issues/69): Updated the HiPhase module to resolve the reported phasing issue.
