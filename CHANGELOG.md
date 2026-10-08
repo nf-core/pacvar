@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added nf-test consolidating DeepVariant, Sawfish, and HiPhase integration test
+- Added config and nf-test coverage for PBSV workflow
 
 ### Fixed
 
