@@ -2,7 +2,7 @@ nextflow_pipeline {
 
     name "Test WGS DeepVariant, Sawfish, and HiPhase workflow"
     script "../main.nf"
-    profile "test_fiberseq_with_m6A_tags"
+    profile "test_deepvariant_sawfish_hiphase"
     tag "pipeline"
     tag "deepvariant"
     tag "sawfish"
@@ -13,8 +13,6 @@ nextflow_pipeline {
         when {
             params {
                 outdir = "$outputDir"
-                skip_fiberseq = true
-                skip_cpg = true
             }
         }
 

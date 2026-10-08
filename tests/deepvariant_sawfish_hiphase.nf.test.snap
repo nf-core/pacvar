@@ -104,22 +104,22 @@
                 "revio-with-m6a-tags.summary.csv:md5,43e11fd524a0fff09937b26b17f376b0",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "assembly.regions.bed:md5,45c43104127f2da659365612e36fc252",
-                "candidate.sv.bcf:md5,3f2b760a9ac5e6591d49e8fb86a080eb",
-                "candidate.sv.bcf.csi:md5,65914328c85b9e7bb5159a42ac73758f",
+                "candidate.sv.bcf:md5,19e695eb87ba1748281f83019022df08",
+                "candidate.sv.bcf.csi:md5,c7f3038cf6b709fe0f2059b709265240",
                 "contig.alignment.bam:md5,09dc3686bbe17e055a2759918c6c440d",
                 "contig.alignment.bam.csi:md5,b9d2a29eee842649923c1e3b1b504b3c",
                 "debug.breakpoint_clusters.bed:md5,7ddb2d1c27150cab914a07728f109b73",
-                "debug.cluster.refinement.txt:md5,b4dea0f4032f86a9466f6d44eaff9cec",
-                "depth.mpack:md5,cabe4b5a952941b4485fa844f78a8c7b",
+                "debug.cluster.refinement.txt:md5,e3822e8427a765dd3aa6b90150fb76c0",
+                "depth.mpack:md5,0e5bc97e15e4f3b2c7a220b7f16efaec",
                 "discover.settings.json:md5,725b03b7cb4645671279f7aa61e4461b",
                 "expected.copy.number.bed:md5,cda5604d4cc4645657cf3e5c755ccb5b",
                 "maf.mpack:md5,52f79e4a2fddc1ae71e2bc74b8659149",
                 "max.depth.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "run.data.json:md5,07324901537aede4294982844e0632f6",
-                "run.stats.json:md5,de0614605c2f23d55563a793ee7e462d",
+                "run.stats.json:md5,671789252e4c94ff2c15e44bd0ba4ebc",
                 "contig.alignment.bam:md5,3e1028c681a80da2e550887389439e09",
                 "contig.alignment.bam.csi:md5,b10944737d77d528dcc1aa109bd966b4",
-                "run.stats.json:md5,5ff368f6695f5a3448bde19cd350e9c3",
+                "run.stats.json:md5,acb7d256eaa070e33d23ca58f08ff254",
                 "depth.bw:md5,d1ede5e35fd38f3f2a0c726e6eedb3a5"
             ],
             [
@@ -141,7 +141,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-07T21:51:20.474602587",
+        "timestamp": "2026-10-08T15:00:23.248224507",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
