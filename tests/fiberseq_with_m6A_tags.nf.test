@@ -1,0 +1,61 @@
+nextflow_pipeline {
+
+    name "Test WGS Fiber-seq workflow with existing m6A tags"
+    script "../main.nf"
+    profile "test_fiberseq_with_m6A_tags"
+    tag "pipeline"
+    tag "deepvariant"
+    tag "sawfish"
+    tag "hiphase"
+    tag "fibertoolsrs"
+    tag "pbcpgtools"
+
+    test("Run PBMM2, DeepVariant, Sawfish, HiPhase, fibertools-rs, and pb-CpG-tools") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+            }
+        }
+
+        then {
+            def succeeded_tasks = workflow.trace.succeeded()*.name
+            def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            def stable_content = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            def vcf_files = getAllFilesFromDir(params.outdir, include: [
+                'deepvariant/*.snv.vcf.gz',
+                'sawfish/**/*_jointcall_genotyped.sv.vcf.gz',
+                'hiphase/*_{snv,sv}_phased.vcf.gz',
+            ])
+            def bed_files = getAllFilesFromDir(params.outdir, include: [
+                'fibertools/*.{m6A,nuc}.bed.gz',
+                'pbcpgtools/*.combined.bed.gz',
+            ])
+
+            assertAll(
+                { assert workflow.success },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('PBMM2_ALIGN') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('DEEPVARIANT_RUNDEEPVARIANT') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_DISCOVER') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_JOINTCALL') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('HIPHASE') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('FIBERTOOLSRS_ADDNUCLEOSOMES') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('FIBERTOOLSRS_EXTRACT_M6A') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('FIBERTOOLSRS_EXTRACT_NUC') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES') } },
+                { assert snapshot(
+                    workflow.trace.succeeded().size(),
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),
+                    stable_path,
+                    stable_content,
+                    vcf_files.collect { file ->
+                        [file.getName(), path(file.toString()).linesGzip.count { line -> !line.startsWith('#') }]
+                    },
+                    bed_files.collect { file ->
+                        [file.getName(), path(file.toString()).linesGzip.count { line -> !line.startsWith('#') }]
+                    }
+                ).match() }
+            )
+        }
+    }
+}

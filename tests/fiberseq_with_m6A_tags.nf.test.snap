@@ -1,0 +1,192 @@
+{
+    "Run PBMM2, DeepVariant, Sawfish, HiPhase, fibertools-rs, and pb-CpG-tools": {
+        "content": [
+            13,
+            {
+                "DEEPVARIANT_RUNDEEPVARIANT": {
+                    "deepvariant": "1.10.0"
+                },
+                "FIBERTOOLSRS_ADDNUCLEOSOMES": {
+                    "fibertools-rs": "0.7.0"
+                },
+                "FIBERTOOLSRS_EXTRACT_M6A": {
+                    "fibertools-rs": "0.7.0"
+                },
+                "FIBERTOOLSRS_EXTRACT_NUC": {
+                    "fibertools-rs": "0.7.0"
+                },
+                "HIPHASE": {
+                    "hiphase": "1.6.0-ac3f399"
+                },
+                "PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES": {
+                    "pbcpgtools": "3.0.0"
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "26.2.0"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": "1.23.1"
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": "1.23.1"
+                },
+                "SAWFISH_DISCOVER": {
+                    "sawfish": "2.2.0"
+                },
+                "SAWFISH_JOINTCALL": {
+                    "sawfish": "2.2.0"
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.2.0dev"
+                }
+            },
+            [
+                "deepvariant",
+                "deepvariant/revio-with-m6a-tags.snv.g.vcf.gz",
+                "deepvariant/revio-with-m6a-tags.snv.g.vcf.gz.tbi",
+                "deepvariant/revio-with-m6a-tags.snv.vcf.gz",
+                "deepvariant/revio-with-m6a-tags.snv.vcf.gz.tbi",
+                "fibertools",
+                "fibertools/revio-with-m6a-tags.sorted_haplotagged.add_nuc.bam",
+                "fibertools/revio-with-m6a-tags.sorted_haplotagged.add_nuc.bam.bai",
+                "fibertools/revio-with-m6a-tags.sorted_haplotagged.m6A.bed.gz",
+                "fibertools/revio-with-m6a-tags.sorted_haplotagged.nuc.bed.gz",
+                "hiphase",
+                "hiphase/revio-with-m6a-tags.blocks.csv",
+                "hiphase/revio-with-m6a-tags.haplotag.csv",
+                "hiphase/revio-with-m6a-tags.sorted_haplotagged.bam",
+                "hiphase/revio-with-m6a-tags.sorted_haplotagged.bam.bai",
+                "hiphase/revio-with-m6a-tags.stats.csv",
+                "hiphase/revio-with-m6a-tags.summary.csv",
+                "hiphase/revio-with-m6a-tags_snv_phased.vcf.gz",
+                "hiphase/revio-with-m6a-tags_snv_phased.vcf.gz.tbi",
+                "hiphase/revio-with-m6a-tags_sv_phased.vcf.gz",
+                "hiphase/revio-with-m6a-tags_sv_phased.vcf.gz.tbi",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbcpgtools",
+                "pbcpgtools/revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bed.gz",
+                "pbcpgtools/revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bed.gz.tbi",
+                "pbcpgtools/revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bw",
+                "pbmm2",
+                "pbmm2/revio-with-m6a-tags_hifi.aligned.bam",
+                "pipeline_info",
+                "pipeline_info/nf_core_pacvar_software_mqc_versions.yml",
+                "samtools",
+                "samtools/revio-with-m6a-tags.sorted.bam",
+                "samtools/revio-with-m6a-tags.sorted.bam.bai",
+                "sawfish",
+                "sawfish/revio-with-m6a-tags",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/assembly.regions.bed",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/candidate.sv.bcf",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/candidate.sv.bcf.csi",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/contig.alignment.bam",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/contig.alignment.bam.csi",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/debug.breakpoint_clusters.bed",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/debug.cluster.refinement.txt",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/depth.mpack",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/discover.settings.json",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/expected.copy.number.bed",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/maf.mpack",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/max.depth.bed",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/run.data.json",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/run.stats.json",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_discovery/sawfish.log",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/contig.alignment.bam",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/contig.alignment.bam.csi",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/revio-with-m6a-tags_jointcall_genotyped.sv.vcf.gz",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/revio-with-m6a-tags_jointcall_genotyped.sv.vcf.gz.tbi",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/run.stats.json",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/samples",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/samples/sample0001_revio-with-m6a-tags",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/samples/sample0001_revio-with-m6a-tags/depth.bw",
+                "sawfish/revio-with-m6a-tags/revio-with-m6a-tags_jointcall/sawfish.log"
+            ],
+            [
+                "revio-with-m6a-tags.snv.g.vcf.gz:md5,a62cbbf23d9eb8eed4705bc98007e652",
+                "revio-with-m6a-tags.snv.g.vcf.gz.tbi:md5,b96f3dd9886cf4b362e0a0d98f547eeb",
+                "revio-with-m6a-tags.snv.vcf.gz:md5,c6c96936dcf6b27393d7517c88b51fbf",
+                "revio-with-m6a-tags.snv.vcf.gz.tbi:md5,c67be759ee356ac8824705a625a97a26",
+                "revio-with-m6a-tags.sorted_haplotagged.add_nuc.bam:md5,7163fb032d80c11a0d3b30005504c859",
+                "revio-with-m6a-tags.sorted_haplotagged.add_nuc.bam.bai:md5,a972faf34fd5dab7ce85afe921d72af4",
+                "revio-with-m6a-tags.sorted_haplotagged.m6A.bed.gz:md5,e402a93d8400d7e8a10256ee22f8b70e",
+                "revio-with-m6a-tags.sorted_haplotagged.nuc.bed.gz:md5,22d673498cc1da4f662a6bd6b65289f0",
+                "revio-with-m6a-tags.blocks.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "revio-with-m6a-tags.haplotag.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "revio-with-m6a-tags.sorted_haplotagged.bam:md5,d0a37296c843c0ed56b13f3ca7d22201",
+                "revio-with-m6a-tags.sorted_haplotagged.bam.bai:md5,8d964e010b4b4fae33d77cbf80c6495a",
+                "revio-with-m6a-tags.stats.csv:md5,fe347dc5ab43216b53a46b1827589482",
+                "revio-with-m6a-tags.summary.csv:md5,43e11fd524a0fff09937b26b17f376b0",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bed.gz:md5,82570ac3baa25b6fd9580fa57acb22eb",
+                "revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bed.gz.tbi:md5,dc55f38678651304de7e624cde641684",
+                "revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bw:md5,0870e043333018e4fc0a2c7bb850bf94",
+                "assembly.regions.bed:md5,45c43104127f2da659365612e36fc252",
+                "candidate.sv.bcf:md5,3f2b760a9ac5e6591d49e8fb86a080eb",
+                "candidate.sv.bcf.csi:md5,65914328c85b9e7bb5159a42ac73758f",
+                "contig.alignment.bam:md5,09dc3686bbe17e055a2759918c6c440d",
+                "contig.alignment.bam.csi:md5,b9d2a29eee842649923c1e3b1b504b3c",
+                "debug.breakpoint_clusters.bed:md5,7ddb2d1c27150cab914a07728f109b73",
+                "debug.cluster.refinement.txt:md5,933407aeda772da9caac1e153e786eac",
+                "depth.mpack:md5,edd3cce2d847de8bc388d4b1ef082ed0",
+                "discover.settings.json:md5,725b03b7cb4645671279f7aa61e4461b",
+                "expected.copy.number.bed:md5,cda5604d4cc4645657cf3e5c755ccb5b",
+                "maf.mpack:md5,52f79e4a2fddc1ae71e2bc74b8659149",
+                "max.depth.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "run.data.json:md5,07324901537aede4294982844e0632f6",
+                "run.stats.json:md5,ccdb0725bb1955ed3aa9a2ac51ebc501",
+                "contig.alignment.bam:md5,3e1028c681a80da2e550887389439e09",
+                "contig.alignment.bam.csi:md5,b10944737d77d528dcc1aa109bd966b4",
+                "run.stats.json:md5,7bcab145f2f23ff492a7967e36373dd1",
+                "depth.bw:md5,d1ede5e35fd38f3f2a0c726e6eedb3a5"
+            ],
+            [
+                [
+                    "revio-with-m6a-tags.snv.vcf.gz",
+                    195
+                ],
+                [
+                    "revio-with-m6a-tags_snv_phased.vcf.gz",
+                    195
+                ],
+                [
+                    "revio-with-m6a-tags_sv_phased.vcf.gz",
+                    1
+                ],
+                [
+                    "revio-with-m6a-tags_jointcall_genotyped.sv.vcf.gz",
+                    1
+                ]
+            ],
+            [
+                [
+                    "revio-with-m6a-tags.sorted_haplotagged.m6A.bed.gz",
+                    98
+                ],
+                [
+                    "revio-with-m6a-tags.sorted_haplotagged.nuc.bed.gz",
+                    98
+                ],
+                [
+                    "revio-with-m6a-tags.sorted_haplotagged.cpgscores.combined.bed.gz",
+                    0
+                ]
+            ]
+        ],
+        "timestamp": "2026-10-07T17:01:24.576541525",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}
