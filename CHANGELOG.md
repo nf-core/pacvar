@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added end-to-end nf-test for m6A-tagged Fiber-seq workflow, exercising PBMM2, DeepVariant, Sawfish, HiPhase, fibertools-rs, pb-CpG-tools testing and output snapshots.
+- Added nf-test consolidating DeepVariant, Sawfish, and HiPhase integration test
 
 ### Fixed
 
