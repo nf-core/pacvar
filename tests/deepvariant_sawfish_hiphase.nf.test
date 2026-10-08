@@ -1,16 +1,20 @@
 nextflow_pipeline {
 
-    name "Test WGS Sawfish and HiPhase workflow"
+    name "Test WGS DeepVariant, Sawfish, and HiPhase workflow"
     script "../main.nf"
-    profile "test_wgs_sawfish"
+    profile "test_fiberseq_with_m6A_tags"
     tag "pipeline"
+    tag "deepvariant"
+    tag "sawfish"
     tag "hiphase"
 
-    test("Run LIMA, PBMM2, Sawfish, and HiPhase") {
+    test("Run PBMM2, DeepVariant, Sawfish, and HiPhase") {
 
         when {
             params {
                 outdir = "$outputDir"
+                skip_fiberseq = true
+                skip_cpg = true
             }
         }
 
@@ -18,15 +22,21 @@ nextflow_pipeline {
             def succeeded_tasks = workflow.trace.succeeded()*.name
             def stable_path = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             def stable_content = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
-            def vcf_files = getAllFilesFromDir(params.outdir, include: ['hiphase/*_sv_phased.vcf.gz', 'sawfish/**/*_jointcall_genotyped.sv.vcf.gz'])
+            def vcf_files = getAllFilesFromDir(params.outdir, include: [
+                'deepvariant/*.snv.vcf.gz',
+                'sawfish/**/*_jointcall_genotyped.sv.vcf.gz',
+                'hiphase/*_{snv,sv}_phased.vcf.gz',
+            ])
 
             assertAll(
                 { assert workflow.success },
-                { assert succeeded_tasks.any { task_name -> task_name.contains('LIMA') } },
                 { assert succeeded_tasks.any { task_name -> task_name.contains('PBMM2_ALIGN') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('DEEPVARIANT_RUNDEEPVARIANT') } },
                 { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_DISCOVER') } },
                 { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_JOINTCALL') } },
                 { assert succeeded_tasks.any { task_name -> task_name.contains('HIPHASE') } },
+                { assert succeeded_tasks.every { task_name -> !task_name.contains('FIBERTOOLSRS') } },
+                { assert succeeded_tasks.every { task_name -> !task_name.contains('PBCPGTOOLS') } },
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),
