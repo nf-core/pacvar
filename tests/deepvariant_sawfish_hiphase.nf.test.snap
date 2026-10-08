@@ -98,9 +98,6 @@
                 "revio-with-m6a-tags.snv.vcf.gz.tbi:md5,c67be759ee356ac8824705a625a97a26",
                 "revio-with-m6a-tags.blocks.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "revio-with-m6a-tags.haplotag.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "revio-with-m6a-tags.sorted_haplotagged.bam:md5,d0a37296c843c0ed56b13f3ca7d22201",
-                "revio-with-m6a-tags.sorted_haplotagged.bam.bai:md5,8d964e010b4b4fae33d77cbf80c6495a",
-                "revio-with-m6a-tags.stats.csv:md5,265950c5f6a201121d01d0aa2432b375",
                 "revio-with-m6a-tags.summary.csv:md5,43e11fd524a0fff09937b26b17f376b0",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "assembly.regions.bed:md5,45c43104127f2da659365612e36fc252",
@@ -109,17 +106,17 @@
                 "contig.alignment.bam:md5,09dc3686bbe17e055a2759918c6c440d",
                 "contig.alignment.bam.csi:md5,b9d2a29eee842649923c1e3b1b504b3c",
                 "debug.breakpoint_clusters.bed:md5,7ddb2d1c27150cab914a07728f109b73",
-                "debug.cluster.refinement.txt:md5,e3822e8427a765dd3aa6b90150fb76c0",
-                "depth.mpack:md5,0e5bc97e15e4f3b2c7a220b7f16efaec",
+                "debug.cluster.refinement.txt:md5,f958336a60a8f111610618255fb9e970",
+                "depth.mpack:md5,e661aab135eeb48baaaaae85d57afb51",
                 "discover.settings.json:md5,725b03b7cb4645671279f7aa61e4461b",
                 "expected.copy.number.bed:md5,cda5604d4cc4645657cf3e5c755ccb5b",
                 "maf.mpack:md5,52f79e4a2fddc1ae71e2bc74b8659149",
                 "max.depth.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "run.data.json:md5,07324901537aede4294982844e0632f6",
-                "run.stats.json:md5,671789252e4c94ff2c15e44bd0ba4ebc",
+                "run.stats.json:md5,f312467fa02e5ebeb7854880b0ebfe24",
                 "contig.alignment.bam:md5,3e1028c681a80da2e550887389439e09",
                 "contig.alignment.bam.csi:md5,b10944737d77d528dcc1aa109bd966b4",
-                "run.stats.json:md5,acb7d256eaa070e33d23ca58f08ff254",
+                "run.stats.json:md5,2d2282fea0073d3e2f91b1e977013537",
                 "depth.bw:md5,d1ede5e35fd38f3f2a0c726e6eedb3a5"
             ],
             [
@@ -141,7 +138,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-08T15:00:23.248224507",
+        "timestamp": "2026-10-08T16:30:17.753807986",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

@@ -23,4 +23,4 @@ lima/*.consensusreadset.xml
 lima/*.json
 sawfish/**/*.{vcf.gz,vcf.gz.tbi}
 sawfish/**/sawfish.log
-hiphase/*.{vcf.gz,vcf.gz.tbi}
+hiphase/*.{bam,bam.bai,bam.csi,vcf.gz,vcf.gz.tbi,stats.csv}
