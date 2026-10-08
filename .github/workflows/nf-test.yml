@@ -138,6 +138,7 @@ jobs:
     runs-on: # use self-hosted runners
       - runs-on=${{ github.run_id }}-confirm-pass
       - runner=2cpu-linux-x64
+      - volume=80gb
     steps:
       - name: One or more tests failed (excluding latest-everything)
         if: ${{ contains(needs.*.result, 'failure') }}
