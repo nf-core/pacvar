@@ -101,22 +101,20 @@
                 "revio-with-m6a-tags.summary.csv:md5,43e11fd524a0fff09937b26b17f376b0",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "assembly.regions.bed:md5,45c43104127f2da659365612e36fc252",
-                "candidate.sv.bcf:md5,19e695eb87ba1748281f83019022df08",
-                "candidate.sv.bcf.csi:md5,c7f3038cf6b709fe0f2059b709265240",
                 "contig.alignment.bam:md5,09dc3686bbe17e055a2759918c6c440d",
                 "contig.alignment.bam.csi:md5,b9d2a29eee842649923c1e3b1b504b3c",
                 "debug.breakpoint_clusters.bed:md5,7ddb2d1c27150cab914a07728f109b73",
-                "debug.cluster.refinement.txt:md5,f958336a60a8f111610618255fb9e970",
-                "depth.mpack:md5,e661aab135eeb48baaaaae85d57afb51",
+                "debug.cluster.refinement.txt:md5,3821c063056f87c2f83c04c42155cfd4",
+                "depth.mpack:md5,6f4dd772c1eb2565b8a7928779079666",
                 "discover.settings.json:md5,725b03b7cb4645671279f7aa61e4461b",
                 "expected.copy.number.bed:md5,cda5604d4cc4645657cf3e5c755ccb5b",
                 "maf.mpack:md5,52f79e4a2fddc1ae71e2bc74b8659149",
                 "max.depth.bed:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "run.data.json:md5,07324901537aede4294982844e0632f6",
-                "run.stats.json:md5,f312467fa02e5ebeb7854880b0ebfe24",
+                "run.stats.json:md5,8089732f0a33e5db82615fd6f4269828",
                 "contig.alignment.bam:md5,3e1028c681a80da2e550887389439e09",
                 "contig.alignment.bam.csi:md5,b10944737d77d528dcc1aa109bd966b4",
-                "run.stats.json:md5,2d2282fea0073d3e2f91b1e977013537",
+                "run.stats.json:md5,fc6751c1ab3604c3402a609e679669aa",
                 "depth.bw:md5,d1ede5e35fd38f3f2a0c726e6eedb3a5"
             ],
             [
@@ -138,7 +136,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-08T16:30:17.753807986",
+        "timestamp": "2026-10-08T17:22:17.270431276",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

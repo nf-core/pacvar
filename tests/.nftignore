@@ -22,5 +22,7 @@ pbsv/*.{vcf,vcf.gz,vcf.gz.csi}
 lima/*.consensusreadset.xml
 lima/*.json
 sawfish/**/*.{vcf.gz,vcf.gz.tbi}
+sawfish/**/candidate.sv.bcf
+sawfish/**/candidate.sv.bcf.csi
 sawfish/**/sawfish.log
 hiphase/*.{bam,bam.bai,bam.csi,vcf.gz,vcf.gz.tbi,stats.csv}
