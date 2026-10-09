@@ -18,3 +18,14 @@ pbmm2/*.bam
 samtools/*.{bam,bam.bai}
 trgt/*.{bam,vcf.gz}
 pbtk/*.{bam,bam.pbi}
+pbsv/*.{vcf,vcf.gz,vcf.gz.csi}
+lima/*.consensusreadset.xml
+lima/*.json
+sawfish/**/*.{vcf.gz,vcf.gz.tbi}
+sawfish/**/candidate.sv.bcf
+sawfish/**/candidate.sv.bcf.csi
+sawfish/**/sawfish.log
+sawfish/**/debug.cluster.refinement.txt
+sawfish/**/depth.mpack
+sawfish/**/run.stats.json
+hiphase/*.{bam,bam.bai,bam.csi,vcf.gz,vcf.gz.tbi,stats.csv}

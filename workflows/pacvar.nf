@@ -35,11 +35,8 @@ include { PBTK_PBMERGE                                            } from '../mod
 include { SAMTOOLS_INDEX                                          } from '../modules/nf-core/samtools/index/main'
 include { SAMTOOLS_SORT                                           } from '../modules/nf-core/samtools/sort/main'
 include { PBMM2_ALIGN                                             } from '../modules/nf-core/pbmm2/align/main'
-include { HIPHASE as HIPHASE_SNP                                  } from '../modules/nf-core/hiphase/main'
-include { HIPHASE as HIPHASE_SV                                   } from '../modules/nf-core/hiphase/main'
+include { HIPHASE                                                 } from '../modules/nf-core/hiphase/main'
 include { PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES                        } from '../modules/nf-core/pbcpgtools/alignedbamtocpgscores/main'
-include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SNP            } from '../modules/nf-core/samtools/index/main'
-include { SAMTOOLS_INDEX as SAMTOOLS_INDEX_HIPHASE_SV             } from '../modules/nf-core/samtools/index/main'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -171,98 +168,14 @@ workflow PACVAR {
 
             //join the bam and bai and vcf based off the meta id (ensure correct order)
             bam_bai_vcf_snp_ch = bam_bai_ch.join(BAM_SNP_VARIANT_CALLING.out.vcf_ch)
-
-            orderd_bam_bai_vcf_tbi_snp = bam_bai_vcf_snp_ch
-                .multiMap { meta, bam, bai, vcf, tbi ->
-                  bam_bai: [meta, bam, bai]
-                    vcf_tbi: [meta, vcf, tbi]
-                }
-
-            if (!params.skip_phase) {
-                // phase snp files
-                HIPHASE_SNP(
-                    orderd_bam_bai_vcf_tbi_snp.vcf_tbi,
-                    orderd_bam_bai_vcf_tbi_snp.bam_bai,
-                    fasta)
-                ch_versions = ch_versions.mix(HIPHASE_SNP.out.versions.first())
-
-                // Index the phased BAM from HIPHASE_SNP
-                SAMTOOLS_INDEX_HIPHASE_SNP(HIPHASE_SNP.out.bam)
-
-                // channel for pbcpgtools_alignedbamtocpgscores and hificnv
-                bam_bai_snp_phased_ch = HIPHASE_SNP.out.bam.join(SAMTOOLS_INDEX_HIPHASE_SNP.out.index)
-                // vcf channel for ensemblvep,  hificnv, and etc.
-                vcf_snp_phased_ch = HIPHASE_SNP.out.vcf
-            }
-
-            // vep annotation for SNVs
-            if (!params.skip_ensemblvep) {
-                // construct ch_vcf_to_vep [meta, vcf]
-                ch_snv_vcf_to_vep = params.skip_phase
-                    ? orderd_bam_bai_vcf_tbi_snp.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
-                    : vcf_snp_phased_ch
-
-                VCF_ANNOTATE_ENSEMBLVEP_SNP (
-                    ch_snv_vcf_to_vep.map { meta,  vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
-                    fasta,
-                    vep_genome,
-                    vep_species,
-                    vep_cache_version,
-                    vep_cache,
-                    []
-                )
-            }
-        }
-
-
-        if (!params.skip_hificnv) {
-            // CNV calling with HiFiCNV (before or after DeepVariant/HiPhase)
-            // Prepare channel and MAF input based on skip_snp and skip_phase parameters
-            // define bam_bam_maf_ch: tuple val(meta), path(bam), path(bai), path(vcf)
-            if (!params.skip_snp && !params.skip_phase) {
-                // Use phased BAM, BAI, and VCF from HIPHASE_SNP
-                cnv_input_bam_bai_maf_ch = bam_bai_snp_phased_ch.join(vcf_snp_phased_ch)
-            } else if (!params.skip_snp && params.skip_phase) {
-                // Use unphased BAM, BAI, and VCF from SNP calling
-                cnv_input_bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, tbi ->
-                    [meta, bam, bai, vcf]
-                    }
-            } else {
-                // Skip SNP calling - use original BAM and BAI with empty VCF
-                cnv_input_bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai ->
-                    [meta, bam, bai, []]
-                }
-            }
-
-            // Run HiFiCNV
-            BAM_CNV_VARIANT_CALLING(
-                cnv_input_bam_bai_maf_ch.map { meta, bam, bai, vcf -> [ meta + [file_name: bam.baseName], bam, bai, vcf ] },
-                fasta,
-                expected_cn,
-                cnv_excluded_regions
-            )
-            ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
-            ch_cnv_vcf = BAM_CNV_VARIANT_CALLING.out.vcf_indexed.map { meta, vcf, tbi -> [ meta, vcf ] }
-
-            if (!params.skip_ensemblvep) {
-                VCF_ANNOTATE_ENSEMBLVEP_CNV (
-                    ch_cnv_vcf.map { meta, vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
-                    fasta,
-                    vep_genome,
-                    vep_species,
-                    vep_cache_version,
-                    vep_cache,
-                    []
-                )
-            }
         }
 
         if (!params.skip_sv) {
             //pbsv or sawfish structural variant calling
-            // Prepare MAF VCF input only for SAWFISH based on skip_snp and skip_phase parameters
+            // Prepare MAF VCF input only for SAWFISH when SNV calls are available
             if (params.sv_caller == 'sawfish' && !params.skip_snp) {
                 // Create all three channels from bam_bai_vcf_snp_ch
-                (sv_input_bam_ch, sv_input_bai_ch, sv_input_maf_ch) = bam_bai_vcf_snp_ch.multiMap { meta, bam, bai, vcf, tbi ->
+                (sv_input_bam_ch, sv_input_bai_ch, sv_input_maf_ch) = bam_bai_vcf_snp_ch.multiMap { meta, bam, bai, vcf, _tbi ->
                     bam: [meta, bam]
                     bai: [meta, bai]
                     maf: [meta, vcf]
@@ -287,39 +200,120 @@ workflow PACVAR {
 
             ch_versions = ch_versions.mix(BAM_SV_VARIANT_CALLING.out.versions)
 
-            // join the bam and bai and vcf based off the meta id (ensure correct order)
-            bam_bai_vcf_sv_ch = bam_bai_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
+        }
 
-            orderd_bam_bai_vcf_tbi_sv = bam_bai_vcf_sv_ch
-                .multiMap { meta, bam, bai, vcf, tbi ->
-                    bam_bai: [meta, bam, bai]
-                    vcf_tbi: [meta, vcf, tbi]
+        // Co-phase all available SNV and SV calls in a single HiPhase invocation.
+        hiphase_enabled = !params.skip_phase && (!params.skip_snp || !params.skip_sv)
+        if (hiphase_enabled) {
+            hiphase_input_ch = bam_bai_ch
+
+            if (!params.skip_snp) {
+                hiphase_input_ch = hiphase_input_ch.join(BAM_SNP_VARIANT_CALLING.out.vcf_ch)
+            }
+            else {
+                hiphase_input_ch = hiphase_input_ch.map { meta, bam, bai ->
+                    [meta, bam, bai, [], []]
                 }
-
-            //phase sv files
-            if (!params.skip_phase) {
-                HIPHASE_SV(
-                    orderd_bam_bai_vcf_tbi_sv.vcf_tbi,
-                    orderd_bam_bai_vcf_tbi_sv.bam_bai,
-                    fasta)
-
-                ch_versions = ch_versions.mix(HIPHASE_SV.out.versions.first())
-
-                // Index the phased BAM from HIPHASE_SV
-                SAMTOOLS_INDEX_HIPHASE_SV(HIPHASE_SV.out.bam)
-                vcf_sv_phased_ch = HIPHASE_SV.out.vcf
-                // ch_versions = ch_versions.mix(SAMTOOLS_INDEX_HIPHASE_SV.out.versions)
             }
 
-            // vep annotation for SVs
-            if (!params.skip_ensemblvep) {
-                // construct ch_vcf_to_vep [meta, vcf]
-                ch_sv_vcf_to_vep = params.skip_phase
-                    ? orderd_bam_bai_vcf_tbi_sv.vcf_tbi.map { meta, vcf, tbi -> [ meta, vcf ] }
-                    : vcf_sv_phased_ch
+            if (!params.skip_sv) {
+                hiphase_input_ch = hiphase_input_ch.join(BAM_SV_VARIANT_CALLING.out.vcf_ch)
+            }
+            else {
+                hiphase_input_ch = hiphase_input_ch.map { meta, bam, bai, snv, snv_index ->
+                    [meta, bam, bai, snv, snv_index, [], []]
+                }
+            }
 
-                VCF_ANNOTATE_ENSEMBLVEP_SV (
-                    ch_sv_vcf_to_vep.map { meta, vcf -> [ meta + [file_name: vcf.baseName - '.vcf'], vcf, [] ] }, // [meta, vcf, [custom files]]
+            hiphase_input_ch = hiphase_input_ch.map { meta, bam, bai, snv, snv_index, sv, sv_index ->
+                [meta, bam, bai, snv, snv_index, sv, sv_index, []]
+            }
+
+            HIPHASE(
+                hiphase_input_ch,
+                fasta_with_fai_ch,
+                true,  // output haplotagged BAM and its index
+                true, // summary file
+                true, // blocks file
+                true,  // phasing statistics
+                true, // haplotag assignments
+                'csv'  // file format
+            )
+
+            phased_bam_bai_ch = HIPHASE.out.bams.join(HIPHASE.out.bams_indexes)
+        }
+
+        // Annotate SNVs only after the combined HiPhase stage has completed.
+        if (!params.skip_snp && !params.skip_ensemblvep) {
+            ch_snv_vcf_to_vep = hiphase_enabled
+                ? HIPHASE.out.vcfs
+                : BAM_SNP_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, _tbi -> [meta, vcf] }
+
+            VCF_ANNOTATE_ENSEMBLVEP_SNP (
+                ch_snv_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName - '.vcf'], vcf, []] }, // [meta, vcf, [custom files]]
+                fasta,
+                vep_genome,
+                vep_species,
+                vep_cache_version,
+                vep_cache,
+                []
+            )
+        }
+
+        // Annotate SVs only after the combined HiPhase stage has completed.
+        if (!params.skip_sv && !params.skip_ensemblvep) {
+            ch_sv_vcf_to_vep = hiphase_enabled
+                ? HIPHASE.out.sv_vcfs
+                : BAM_SV_VARIANT_CALLING.out.vcf_ch.map { meta, vcf, _tbi -> [meta, vcf] }
+
+            VCF_ANNOTATE_ENSEMBLVEP_SV (
+                ch_sv_vcf_to_vep.map { meta, vcf -> [meta + [file_name: vcf.baseName - '.vcf'], vcf, []] }, // [meta, vcf, [custom files]]
+                fasta,
+                vep_genome,
+                vep_species,
+                vep_cache_version,
+                vep_cache,
+                []
+            )
+        }
+
+        if (!params.skip_hificnv) {
+            // Use phased alignments and phased SNV calls for minor-allele-frequency information  when HiPhase ran.
+            if (hiphase_enabled && !params.skip_snp) {
+                cnv_input_bam_bai_maf_ch = phased_bam_bai_ch
+                    .join(HIPHASE.out.vcfs)
+            }
+            // HiPhase ran without SNV calls (SV-only): use the phased BAM/BAI and no MAF VCF.
+            else if (hiphase_enabled) {
+                cnv_input_bam_bai_maf_ch = phased_bam_bai_ch.map { meta, bam, bai ->
+                    [meta, bam, bai, []]
+                }
+            }
+            // HiPhase did not run, but SNV calls exist: use the original BAM/BAI and unphased SNV VCF.
+            else if (!params.skip_snp) {
+                cnv_input_bam_bai_maf_ch = bam_bai_vcf_snp_ch.map { meta, bam, bai, vcf, _tbi ->
+                    [meta, bam, bai, vcf]
+                }
+            }
+            // Neither HiPhase nor SNV calls are available: use the original BAM/BAI and no MAF VCF.
+            else {
+                cnv_input_bam_bai_maf_ch = bam_bai_ch.map { meta, bam, bai ->
+                    [meta, bam, bai, []]
+                }
+            }
+
+            BAM_CNV_VARIANT_CALLING(
+                cnv_input_bam_bai_maf_ch.map { meta, bam, bai, vcf -> [meta + [file_name: bam.baseName], bam, bai, vcf] },
+                fasta,
+                expected_cn,
+                cnv_excluded_regions
+            )
+            ch_versions = ch_versions.mix(BAM_CNV_VARIANT_CALLING.out.versions)
+            ch_cnv_vcf = BAM_CNV_VARIANT_CALLING.out.vcf_indexed.map { meta, vcf, _tbi -> [meta, vcf] }
+
+            if (!params.skip_ensemblvep) {
+                VCF_ANNOTATE_ENSEMBLVEP_CNV (
+                    ch_cnv_vcf.map { meta, vcf -> [meta + [file_name: vcf.baseName - '.vcf'], vcf, []] }, // [meta, vcf, [custom files]]
                     fasta,
                     vep_genome,
                     vep_species,
@@ -332,25 +326,18 @@ workflow PACVAR {
 
         // CpG methylation scoring with pbcpgtools
         if (!params.skip_cpg) {
-            // Determine which BAM to use based on phasing and SNV calling
-            if (!params.skip_snp && !params.skip_phase) {
-                // Use phased BAM from HIPHASE_SNV
-                cpg_bam_bai_ch = bam_bai_snp_phased_ch
-            } else {
-                // Use original sorted BAM
-                cpg_bam_bai_ch = bam_bai_ch
-            }
+            cpg_bam_bai_ch = hiphase_enabled ? phased_bam_bai_ch : bam_bai_ch
 
             // Call pbcpgtools alignedbamtocpgscores
             PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES(
-                cpg_bam_bai_ch.map { meta, bam, bai -> [ meta + [file_name:bam.baseName], bam, bai ] }
+                cpg_bam_bai_ch.map { meta, bam, bai -> [meta + [file_name: bam.baseName], bam, bai] }
                 )
 
             ch_versions = ch_versions.mix(PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES.out.versions)
         }
 
         if (!params.skip_fiberseq) {
-            fiberseq_bam_ch = (!params.skip_phase && !params.skip_snp) ? HIPHASE_SNP.out.bam : ordered_bam_ch
+            fiberseq_bam_ch = hiphase_enabled ? HIPHASE.out.bams : ordered_bam_ch
 
             BAM_M6A_ADDNUCLEOSOMES_FIBERTOOLS(
                 fiberseq_bam_ch,

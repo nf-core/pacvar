@@ -1,0 +1,74 @@
+{
+    "Run PBMM2 and PBSV": {
+        "content": [
+            8,
+            {
+                "BCFTOOLS_INDEX": {
+                    "bcftools": "1.23.1"
+                },
+                "PBMM2_ALIGN": {
+                    "pbmm2": "26.2.0"
+                },
+                "PBSV_CALL": {
+                    "pbsv": "2.11.0 (commit v2.11.0)"
+                },
+                "PBSV_DISCOVER": {
+                    "pbsv": "2.11.0 (commit v2.11.0)"
+                },
+                "SAMTOOLS_INDEX": {
+                    "samtools": "1.23.1"
+                },
+                "SAMTOOLS_SORT": {
+                    "samtools": "1.23.1"
+                },
+                "TABIX_BGZIP": {
+                    "tabix": 1.21
+                },
+                "Workflow": {
+                    "nf-core/pacvar": "v1.2.0dev"
+                }
+            },
+            [
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pbmm2",
+                "pbmm2/revio-with-m6a-tags_hifi.aligned.bam",
+                "pbsv",
+                "pbsv/revio-with-m6a-tags.sv.vcf",
+                "pbsv/revio-with-m6a-tags.sv.vcf.gz",
+                "pbsv/revio-with-m6a-tags.sv.vcf.gz.csi",
+                "pbsv/revio-with-m6a-tags.svsig.gz",
+                "pbsv/versions.yml",
+                "pipeline_info",
+                "pipeline_info/nf_core_pacvar_software_mqc_versions.yml",
+                "samtools",
+                "samtools/revio-with-m6a-tags.sorted.bam",
+                "samtools/revio-with-m6a-tags.sorted.bam.bai"
+            ],
+            [
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "revio-with-m6a-tags.svsig.gz:md5,b87212641f2c967cadf1a17192180afe",
+                "versions.yml:md5,e49d57e872b8a278257945c093d4e63e"
+            ],
+            [
+                [
+                    "revio-with-m6a-tags.sv.vcf.gz",
+                    1
+                ]
+            ]
+        ],
+        "timestamp": "2026-10-08T12:24:28.148217417",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.6"
+        }
+    }
+}
