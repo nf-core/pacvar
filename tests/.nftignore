@@ -25,4 +25,7 @@ sawfish/**/*.{vcf.gz,vcf.gz.tbi}
 sawfish/**/candidate.sv.bcf
 sawfish/**/candidate.sv.bcf.csi
 sawfish/**/sawfish.log
+sawfish/**/debug.cluster.refinement.txt
+sawfish/**/depth.mpack
+sawfish/**/run.stats.json
 hiphase/*.{bam,bam.bai,bam.csi,vcf.gz,vcf.gz.tbi,stats.csv}
