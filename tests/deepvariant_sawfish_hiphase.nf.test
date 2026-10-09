@@ -2,7 +2,6 @@ nextflow_pipeline {
 
     name "Test WGS DeepVariant, Sawfish, and HiPhase workflow"
     script "../main.nf"
-    config "/data/hps/assoc/private/sarthy_lab/user/cwo11/projects/nf-config/sasquatch-cpu-pacvar.config"
     profile "test_deepvariant_sawfish_hiphase"
     tag "pipeline"
     tag "deepvariant"
