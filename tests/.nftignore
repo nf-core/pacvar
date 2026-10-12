@@ -18,6 +18,8 @@ pbmm2/*.bam
 samtools/*.{bam,bam.bai}
 trgt/*.{bam,vcf.gz}
 pbtk/*.{bam,bam.pbi}
+# PBSV fileDate headers and the derived CSI bytes vary;
+# pbsv.nf.test snapshots the VCF records instead.
 pbsv/*.{vcf,vcf.gz,vcf.gz.csi}
 lima/*.consensusreadset.xml
 lima/*.json

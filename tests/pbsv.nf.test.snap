@@ -55,17 +55,19 @@
             ],
             [
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "revio-with-m6a-tags.svsig.gz:md5,b87212641f2c967cadf1a17192180afe",
+                "revio-with-m6a-tags.svsig.gz:md5,f379538356eb975ad4e48ab3961fb192",
                 "versions.yml:md5,e49d57e872b8a278257945c093d4e63e"
             ],
             [
                 [
                     "revio-with-m6a-tags.sv.vcf.gz",
-                    1
+                    [
+                        "chr12_42381197_42461234\t30160\tpbsv.INS.DUP.0\tG\t<DUP>\t.\tPASS\tSVTYPE=DUP;END=30195;SVLEN=35\tGT:AD:DP\t1/1:0,3:3"
+                    ]
                 ]
             ]
         ],
-        "timestamp": "2026-10-08T12:24:28.148217417",
+        "timestamp": "2026-10-08T22:11:05.644047041",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

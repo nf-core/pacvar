@@ -1,6 +1,6 @@
 nextflow_pipeline {
 
-    name "Test WGS DeepVariant, Sawfish, and HiPhase workflow"
+    name "Test WGS workflow with DeepVariant, Sawfish, HiPhase, and pb-CpG-tools"
     script "../main.nf"
     profile "test_deepvariant_sawfish_hiphase"
     tag "pipeline"
@@ -8,7 +8,7 @@ nextflow_pipeline {
     tag "sawfish"
     tag "hiphase"
 
-    test("Run PBMM2, DeepVariant, Sawfish, and HiPhase") {
+    test("Run PBMM2, DeepVariant, Sawfish, HiPhase and pb-CpG-tools") {
 
         when {
             params {
@@ -34,7 +34,7 @@ nextflow_pipeline {
                 { assert succeeded_tasks.any { task_name -> task_name.contains('SAWFISH_JOINTCALL') } },
                 { assert succeeded_tasks.any { task_name -> task_name.contains('HIPHASE') } },
                 { assert succeeded_tasks.every { task_name -> !task_name.contains('FIBERTOOLSRS') } },
-                { assert succeeded_tasks.every { task_name -> !task_name.contains('PBCPGTOOLS') } },
+                { assert succeeded_tasks.any { task_name -> task_name.contains('PBCPGTOOLS_ALIGNEDBAMTOCPGSCORES') } },
                 { assert snapshot(
                     workflow.trace.succeeded().size(),
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),

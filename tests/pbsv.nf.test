@@ -35,7 +35,9 @@ nextflow_pipeline {
                     removeNextflowVersion("$outputDir/pipeline_info/nf_core_pacvar_software_mqc_versions.yml"),
                     stable_path,
                     stable_content,
-                    vcf_files.collect { file -> [file.getName(), path(file.toString()).vcf.variants.size()] }
+                    vcf_files.collect { file ->
+                        [file.getName(), path(file.toString()).linesGzip.findAll { line -> !line.startsWith('#') }]
+                    }
                 ).match() }
             )
         }
