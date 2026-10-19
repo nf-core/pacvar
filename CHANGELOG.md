@@ -9,8 +9,8 @@ Cocos batfish updates core alignment, variant-calling, and phasing modules, impr
 
 ### Changed
 
-- [nf-core/pacvar#73](https://github.com/nf-core/pacvar/pull/73): Updated the `hiphase` module to co-phase SNV and SV calls in a single HiPhase run, support SNV-only and SV-only phasing, and route phased outputs to downstream analyses.
-- [nf-core/pacvar#72](https://github.com/nf-core/pacvar/pull/72): Updated the `pbmm2`, `bcftools`, and `deepvariant` modules and brought the pipeline into compliance with nf-core/tools 4.1.0.
+- [nf-core/pacvar#73](https://github.com/nf-core/pacvar/pull/73): Updated the `hiphase` module to co-phase SNV and SV calls in a single HiPhase run, support SNV-only and SV-only phasing, and route phased outputs to downstream analyses. (@chaochaowong, reviewed by @erikrikarddaniel)
+- [nf-core/pacvar#72](https://github.com/nf-core/pacvar/pull/72): Updated the `pbmm2`, `bcftools`, and `deepvariant` modules and brought the pipeline into compliance with nf-core/tools 4.1.0. (@chaochaowong, reviewed by @erikrikarddaniel)
 
 ### Added
 
