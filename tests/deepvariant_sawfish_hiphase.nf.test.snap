@@ -28,7 +28,7 @@
                     "sawfish": "2.2.0"
                 },
                 "Workflow": {
-                    "nf-core/pacvar": "v1.2.0dev"
+                    "nf-core/pacvar": "v1.2.0"
                 }
             },
             [
@@ -146,7 +146,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-12T14:19:56.402062901",
+        "timestamp": "2026-10-19T17:17:42.045456097",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
