@@ -25,7 +25,7 @@
                     "tabix": 1.21
                 },
                 "Workflow": {
-                    "nf-core/pacvar": "v1.2.0dev"
+                    "nf-core/pacvar": "v1.2.0"
                 }
             },
             [
@@ -67,7 +67,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-10-08T22:11:05.644047041",
+        "timestamp": "2026-10-19T17:05:30.018477111",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"

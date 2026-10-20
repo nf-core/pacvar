@@ -3,50 +3,37 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0dev] - [02026-10-03]
+## [1.2.0] - Cocos batfish [2026-10-20]
+
+Cocos batfish updates core alignment, variant-calling, and phasing modules, improves SNV and SV co-phasing and downstream routing, updates the pipeline to nf-core/tools 4.1.0, and expands integration test coverage.
 
 ### Changed
 
-- Update the `hiphase` module from verstion `1.5.0` to `1.6.0` that co-phases SNV and SV calls in a single HiPhase haplotagging and support optional SNV- and SV-only phasing inputs
-- Route phased outputs to VEP, HiFiCNV, CpG, and Fiber-seq
-- Update publishing rules and output documentation
+- [nf-core/pacvar#73](https://github.com/nf-core/pacvar/pull/73): Updated the `hiphase` module to co-phase SNV and SV calls in a single HiPhase run, support SNV-only and SV-only phasing, and route phased outputs to downstream analyses. (@chaochaowong, reviewed by @erikrikarddaniel)
+- [nf-core/pacvar#72](https://github.com/nf-core/pacvar/pull/72): Updated the `pbmm2`, `bcftools`, and `deepvariant` modules and brought the pipeline into compliance with nf-core/tools 4.1.0. (@chaochaowong, reviewed by @erikrikarddaniel)
 
 ### Added
 
-- Added nf-test consolidating DeepVariant, Sawfish, and HiPhase integration test
-- Added config and nf-test coverage for PBSV workflow
+- Added an nf-test that consolidates DeepVariant, Sawfish, and HiPhase integration testing.
+- Added configuration and nf-test coverage for the PBSV workflow.
 
 ### Fixed
 
-- [nf-core/pacvar#69](https://github.com/nf-core/pacvar/issues/69): Updated the HiPhase module to resolve the reported phasing issue.
-
-### Dependencies
-
-| Tool    | Previous version | New version |
-| ------- | ---------------- | ----------- |
-| hiphase | 1.5.0.           | 1.6.0       |
-
-## [1.2.0dev] - [02026-09-26]
-
-### Changed
-
-- Updated the `pbmm2` module from version `1.14.99` to `26.2.0`.
-- Updated the topic-based `bcftools` module from version `1.22` to `1.24`.
-- Updated the topic-based `deepvariant` module from version `1.9.0` to `1.10.0`.
-- Updated the pipeline template to nf-core/tools `4.1.0`.
-- [nf-core/pacvar#64](https://github.com/nf-core/pacvar/pull/64): Bumped the development version from `1.1.0` to `1.2.0dev`, updated development metadata, documentation links, and snapshots.
+- [nf-core/pacvar#69](https://github.com/nf-core/pacvar/issues/69): Updated the HiPhase module to correct phased VCF filename extensions and generate the associated index files.
+- [nf-core/pacvar#68](https://github.com/nf-core/pacvar/issues/68): Updated the `pbmm2` module to resolve failures when processing PacBio Vega data.
 
 ### Dependencies
 
 | Tool        | Previous version | New version |
 | ----------- | ---------------- | ----------- |
+| hiphase     | 1.5.0            | 1.6.0       |
 | pbmm2       | 1.14.99          | 26.2.0      |
 | bcftools    | 1.22             | 1.23.1      |
 | deepvariant | 1.9.0            | 1.10.0      |
 
 ### Removed
 
-- Removed the unused, top-level deprecated module
+- Removed the unused, deprecated top-level `deepvariant` module.
 
 ## [1.1.0] - Neon tetra [2026-06-05]
 

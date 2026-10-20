@@ -31,7 +31,7 @@
                     "trgt": "5.0.0-e9acee0"
                 },
                 "Workflow": {
-                    "nf-core/pacvar": "v1.2.0dev"
+                    "nf-core/pacvar": "v1.2.0"
                 }
             },
             [
@@ -67,7 +67,7 @@
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ]
         ],
-        "timestamp": "2026-09-29T09:13:01.619733357",
+        "timestamp": "2026-10-19T17:00:56.506418128",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.6"
