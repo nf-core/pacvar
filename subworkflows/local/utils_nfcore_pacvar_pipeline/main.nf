@@ -91,7 +91,7 @@ workflow PIPELINE_INITIALISATION {
         before_text,
         after_text,
         command,
-        false
+        null
     )
 
     //
@@ -167,7 +167,7 @@ workflow PIPELINE_COMPLETION {
                 plaintext_email,
                 outdir,
                 monochrome_logs,
-                multiqc_report.toList()
+                multiqc_report.isBound() ? multiqc_report.toList() : []
             )
         }
 
