@@ -1,0 +1,26 @@
+Changes in module 'nf-core/samtools/sort'
+--- modules/nf-core/samtools/sort/main.nf
++++ modules/nf-core/samtools/sort/main.nf
+@@ -7,8 +7,9 @@
+         'https://depot.galaxyproject.org/singularity/samtools:1.21--h50ea8bc_0' :
+         'biocontainers/samtools:1.21--h50ea8bc_0' }"
+
++    meta = null
+     input:
+-    tuple val(meta) , path(bam)
++    tuple val(meta), path(bam)
+     tuple val(meta2), path(fasta)
+
+     output:
+@@ -39,8 +40,7 @@
+         -T ${prefix} \\
+         --threads $task.cpus \\
+         ${reference} \\
+-        -o ${prefix}.${extension} \\
+-        -
++        -o ${prefix}.${extension}
+
+     cat <<-END_VERSIONS > versions.yml
+     "${task.process}":
+
+************************************************************

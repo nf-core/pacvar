@@ -1,0 +1,80 @@
+{
+    "homo_sapiens - bam - cpg": {
+        "content": [
+            {
+                "bed": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.bed.gz:md5,ed4f4ea245c88cb2c40c0866eb779fb0"
+                    ]
+                ],
+                "versions_fibertoolsrs": [
+                    [
+                        "FIBERTOOLSRS_EXTRACT",
+                        "fibertools-rs",
+                        "0.7.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-04T20:55:18.743716548",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    },
+    "homo_sapiens - bam": {
+        "content": [
+            {
+                "bed": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.bed.gz:md5,3bdde73d10c5369f509cfac1e59b5f68"
+                    ]
+                ],
+                "versions_fibertoolsrs": [
+                    [
+                        "FIBERTOOLSRS_EXTRACT",
+                        "fibertools-rs",
+                        "0.7.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-04T20:55:11.487159978",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    },
+    "homo_sapiens - bam - stub": {
+        "content": [
+            {
+                "bed": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.bed.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "versions_fibertoolsrs": [
+                    [
+                        "FIBERTOOLSRS_EXTRACT",
+                        "fibertools-rs",
+                        "0.7.0"
+                    ]
+                ]
+            }
+        ],
+        "timestamp": "2026-05-04T20:55:33.468591936",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.0"
+        }
+    }
+}
