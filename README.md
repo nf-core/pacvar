@@ -7,7 +7,7 @@
 
 [![Open in GitHub Codespaces](https://img.shields.io/badge/Open_In_GitHub_Codespaces-black?labelColor=grey&logo=github)](https://github.com/codespaces/new/nf-core/pacvar)
 [![GitHub Actions CI Status](https://github.com/nf-core/pacvar/actions/workflows/nf-test.yml/badge.svg)](https://github.com/nf-core/pacvar/actions/workflows/nf-test.yml)
-[![GitHub Actions Linting Status](https://github.com/nf-core/pacvar/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/pacvar/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/pacvar/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![GitHub Actions Linting Status](https://github.com/nf-core/rnaseq/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/rnaseq/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/rnaseq/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.1400710-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.1400710)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
@@ -21,49 +21,103 @@
 
 ## Introduction
 
-**nf-core/pacvar** is a bioinformatics pipeline that ...
+**nf-core/pacvar** is a bioinformatics pipeline that processes long-read PacBio data. Specifically, the pipeline provides two workflows: one for processing whole-genome sequencing data, and another for processing reads from the PureTarget expansion panel offered by PacBio. This second workflow characterizes tandem repeats. Because the pipeline is designed for PacBio reads, it uses PacBio’s officially released tools.
 
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+![nf-core/pacvar metro map](docs/images/metro_update_v1.2.0.png)
 
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/community/brand/workflow-schematics#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+**Preprocessing Overview**
+
+1. Demultiplex reads ([`lima`](https://lima.how))
+2. Align reads ([`pbmm2`](https://github.com/PacificBiosciences/pbmm2))
+3. Sort and index alignments ([`SAMtools`](https://sourceforge.net/projects/samtools/files/samtools/))
+
+**WGS Workflow Overview**
+
+1. Choice of SNVs and small indels calling routes:
+   a. [`DeepVariant`](https://github.com/google/deepvariant) (default)
+   b. [`HaplotypeCaller`](https://gatk.broadinstitute.org/hc/en-us/articles/360037225632-HaplotypeCaller)
+2. Choice of SV calling routes:
+   a. [`sawfish`](https://github.com/PacificBiosciences/sawfish) (default)
+   b. [`pbsv`](https://github.com/PacificBiosciences/pbsv)
+3. Index `pbsv`'s VCF files ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+4. Phase SNVs, SVs and BAM files ([`hiphase`](https://github.com/PacificBiosciences/HiPhase))
+5. CNV calling ([`HiFiCNV`](https://github.com/PacificBiosciences/HiFiCNV))
+6. Extracts per-CpG methylation scores ([`pb-CpG-tools::aligned_bam_to_cpg_scores`](https://github.com/PacificBiosciences/pb-CpG-tools))
+7. SNV, small indel, SV, and CNV annotation with [Ensembl VEP](https://www.ensembl.org/info/docs/tools/vep/index.html)
+
+> [!TIP]
+> Because `sawfish` consolidates both SV and CNV-related events, users may optionally disable the `HiFiCNV` step using `--skip_hificnv true` when sawfish is selected as the SV caller to avoid redundant CNV analyses.
+
+> [!NOTE]
+> The Ensembl VEP integration in this pipeline does not bundle plugins or custom files. Also, the current VEP cache (115) does not support the CHM13 homo sapiens genome. If using CHM13 for the `wgs` workflow, disable VEP using `--skip_ensemblvep true`. When using the default S3 VEP cache, avoid adding `--merged` or `--refseq` to custom VEP arguments because the cache does not include the additional files required by these options.
+
+**Fiber-seq Workflow Overview**
+
+Set `--skip_fiberseq false` to extend the WGS workflow with Fiber-seq processing.
+
+1. Predict m6A calls ([`fibertools-rs::predict-m6a`](https://github.com/fiberseq/fibertools-rs))
+2. Add nucleosome/MSP BAM auxiliary tags ([`fibertools-rs::addnucleosome`](https://github.com/fiberseq/fibertools-rs))
+3. Extracts nucleosome positions ([`fibertools-rs::extract`](https://github.com/fiberseq/fibertools-rs))
+
+> [!TIP]
+> For Fiber-seq pre-processing, set `--skip_fiberseq false` to run fibertools-rs m6A/nucleosome processing as part of the WGS workflow. Use `--skip_m6A_predict false` when the BAM contains PacBio kinetic tags (`ip`/`pw` or `fi`/`fp`/`ri`/`rp`) and needs m6A prediction; use `--skip_m6A_predict true` when the BAM already contains A+a m6A tags and only nucleosome/MSP annotation is needed.
+
+> [!NOTE]
+> When using the Fiber-seq workflow, it is highly recommended to run SNV calling and HiPhase so Fiber-seq processing uses a phased BAM when available. Haplotype-phased BAMs preserve long-read haplotype context, helping downstream FIRE analyses take full advantage of long-read sequencing when inferring regulatory elements.
+
+**Tandem Repeat Workflow Overview**
+
+1. Genotype tandem repeats - produce spanning bams and vcf ([`TRGT`](https://github.com/PacificBiosciences/trgt))
+2. Index and Sort tandem tepeat spanning bam ([`SAMtools`](https://sourceforge.net/projects/samtools/files/samtools/))
+3. Plot repeat motif plots ([`TRGT`](https://github.com/PacificBiosciences/trgt))
+4. Sort spanning VCF ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/get_started/environment_setup/overview) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/get_started/run-your-first-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
 First, prepare a samplesheet with your input data that looks as follows:
 
 `samplesheet.csv`:
 
 ```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+sample,bam,pbi
+CONTROL,AEG588A1_S1_L002_R1_001.bam,AEG588A1_S1_L002_R1_001.pbi
 ```
 
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
+Note that the `.pbi` file is not required. If you choose not to include it, your input file might look like this:
 
--->
+```csv
+sample,bam,pbi
+CONTROL,AEG588A1_S1_L002_R1_001.bam
+```
 
-Now, you can run the pipeline using:
+Each row represents an unaligned bam file and their associated index (optional).
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+For the repeat workflow, you can optionally provide a fail BAM in the samplesheet. When a fail BAM is provided, the repeat workflow merges the mapped HiFi and fail BAMs after mapping, before repeat-specific analysis:
+
+```csv
+sample,bam,pbi,fail
+CONTROL,AEG588A1_S1_L002_R1_001.bam,AEG588A1_S1_L002_R1_001.pbi,AEG588A1_S1_fail.bam
+```
+
+Now, you can run the pipeline. Below is an example
 
 ```bash
 nextflow run nf-core/pacvar \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
+   --workflow <wgs/repeat> \
+   --barcodes barcodes.bed \
+   --intervals intervals.bed \
+   --genome <GENOME NAME (e.g. GATK.GRCh38)> \
    --outdir <OUTDIR>
 ```
+
+Optional Boolean parameters include: `skip_demultiplexing`, `skip_snp`, `skip_sv`, `skip_phase`, `skip_hificnv`, `skip_cpg`, `skip_fiberseq`, `skip_m6A_predict`, and `skip_ensemblvep`. With Nextflow 26.04 or later, provide Boolean parameters through a YAML or JSON parameter file.
+
+The variant callers can be specified (on command line) using `--snv_caller <deepvariant/haplotypecaller>` and `--sv_caller <sawfish/pbsv>`.
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/running/run-pipelines#using-parameter-files).
@@ -78,11 +132,13 @@ For more details about the output files and reports, please refer to the
 
 ## Credits
 
-nf-core/pacvar was originally written by Tanya Sarkin Jain.
+nf-core/pacvar was originally written by Tanya Sarkin Jain. Contributions by Chao-Jen Wong and Stijn Van de Sompele were added starting with version 1.1.0dev and continuing in later releases.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+- Evangelos Karatzas for his meticulous review involving 73 conversation threads.
+- Tania Jain for providing comments and guidance throughout the v1.1.0 development phase.
+- The Seqera and nf-core communities: Many members have contributed by reviewing modules and pull requests. This pipeline is a community effort.
 
 ## Contributions and Support
 
@@ -92,10 +148,9 @@ For further information or help, don't hesitate to get in touch on the [Slack `#
 
 ## Citations
 
-<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
-<!-- If you use nf-core/pacvar for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+If you use nf-core/pacvar for your analysis, please cite it using the following doi: [10.5281/zenodo.14813048](https://doi.org/10.5281/zenodo.14813048) and also publication:
 
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+> Tanya Jain, Claire Clelland, nf-core/pacvar: a pipeline for analyzing longread PacBio whole genome and repeat expansion sequencing data, Bioinformatics, 2025;, btaf116, https://doi.org/10.1093/bioinformatics/btaf116
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
