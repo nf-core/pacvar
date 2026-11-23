@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0] - Cocos batfish [2026-10-20]
+## [1.2.0] - Cocos batfish [2026-11-23]
 
 Cocos batfish updates core alignment, variant-calling, and phasing modules, improves SNV and SV co-phasing and downstream routing, updates the pipeline to nf-core/tools 4.1.0, and expands integration test coverage.
 
