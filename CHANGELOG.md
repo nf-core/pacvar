@@ -3,6 +3,40 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - Cocos batfish [2026-11-24]
+
+Cocos batfish updates core alignment, variant-calling, and phasing modules, improves SNV and SV co-phasing and downstream routing, updates the pipeline to nf-core/tools 4.1.0, and expands integration test coverage.
+
+### Changed
+
+- [nf-core/pacvar#83](https://github.com/nf-core/pacvar/pull/83): Clarified that Conda and Mamba are unsupported for WGS runs using DeepVariant and removed Conda from the nf-test CI matrix. (@chaochaowong, reviewed by @mashehu)
+- [nf-core/pacvar#73](https://github.com/nf-core/pacvar/pull/73): Updated the `hiphase` module to co-phase SNV and SV calls in a single HiPhase run, while supporting SNV-only or SV-only phasing when SV or SNV calling is skipped, respectively. (@chaochaowong, reviewed by @erikrikarddaniel)
+- [nf-core/pacvar#72](https://github.com/nf-core/pacvar/pull/72): Updated the `pbmm2`, `bcftools`, and `deepvariant` modules and brought the pipeline into compliance with nf-core/tools 4.1.0. (@chaochaowong, reviewed by @erikrikarddaniel)
+- Clarified that Conda and Mamba are unsupported for WGS runs using DeepVariant and removed Conda from the nf-test CI matrix.
+
+### Added
+
+- Added an nf-test that consolidates DeepVariant, Sawfish, and HiPhase integration testing.
+- Added configuration and nf-test coverage for the PBSV workflow.
+
+### Fixed
+
+- [nf-core/pacvar#69](https://github.com/nf-core/pacvar/issues/69): Updated the HiPhase module to correct phased VCF filename extensions and generate the associated index files.
+- [nf-core/pacvar#68](https://github.com/nf-core/pacvar/issues/68): Updated the `pbmm2` module to resolve failures when processing PacBio Vega data.
+
+### Dependencies
+
+| Tool        | Previous version | New version |
+| ----------- | ---------------- | ----------- |
+| hiphase     | 1.5.0            | 1.6.0       |
+| pbmm2       | 1.14.99          | 26.2.0      |
+| bcftools    | 1.22             | 1.23.1      |
+| deepvariant | 1.9.0            | 1.10.0      |
+
+### Removed
+
+- Removed the unused, deprecated top-level `deepvariant` module.
+
 ## [1.1.0] - Neon tetra [2026-06-05]
 
 Neon tetra expands the WGS workflow with new copy number variant, structural variant, methylation, Fiber-seq, and variant annotation capabilities. This release also updates the pipeline template to nf-core/tools 4.0.2 and refreshes core nf-core modules and infrastructure.

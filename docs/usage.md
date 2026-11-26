@@ -34,11 +34,17 @@ CONTROL_REP1,NA03697B2_02.bam,NA03697B2_02.bam, NA03697B2_02.bam,NA03697B2_02.pb
 
 ## Running the pipeline
 
+> [!WARNING]
+> Conda and Mamba are not supported when the WGS workflow uses DeepVariant
+> (`--snv_caller deepvariant`). The nf-core DeepVariant modules require a
+> supported container runtime such as Docker, Singularity/Apptainer, or Podman.
+> Conda may still be used for pipeline routes that do not invoke DeepVariant.
+
 The typical command for running the pipeline is as follows for the wgs workflow:
 
 ```bash
-nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome 'GATK.GRCh38' -profile <docker/singularity/conda> --barcodes barcodes.fasta --intervals intervals.bed --workflow wgs --snv_caller deepvariant --sv_caller sawfish
-nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome  'GATK.GRCh38' -profile <docker/singularity/conda> --barcodes barcodes.fasta --intervals intervals.bed --workflow repeat --repeat_id repeat-id
+nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome 'GATK.GRCh38' -profile <docker/singularity/apptainer/podman> --barcodes barcodes.fasta --intervals intervals.bed --workflow wgs --snv_caller deepvariant --sv_caller sawfish
+nextflow run nf-core/pacvar --input ./samplesheet.csv --outdir ./results --genome  'GATK.GRCh38' -profile <docker/singularity/conda/apptainer/podman> --barcodes barcodes.fasta --intervals intervals.bed --workflow repeat --repeat_id repeat-id
 ```
 
 > See below for more information about profiles.
@@ -110,7 +116,8 @@ Use this parameter to choose a configuration profile. Profiles can give configur
 Several generic profiles are bundled with the pipeline which instruct the pipeline to use software packaged using different methods (Docker, Singularity, Podman, Shifter, Charliecloud, Apptainer, Conda) - see below.
 
 > [!IMPORTANT]
-> We highly recommend the use of Docker or Singularity containers for full pipeline reproducibility, however when this is not possible, Conda is also supported.
+> We highly recommend Docker or Singularity for full pipeline reproducibility.
+> Conda may be used only for pipeline routes that do not invoke DeepVariant.
 
 The pipeline also dynamically loads configurations from [https://github.com/nf-core/configs](https://github.com/nf-core/configs) when it runs, making multiple config profiles for various institutional clusters available at run time. For more information and to check if your system is supported, please see the [nf-core/configs documentation](https://github.com/nf-core/configs#documentation).
 
@@ -135,7 +142,7 @@ If `-profile` is not specified, the pipeline will run locally and expect all sof
 - `apptainer`
   - A generic configuration profile to be used with [Apptainer](https://apptainer.org/)
 - `wave`
-  - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow ` 24.03.0-edge` or later).
+  - A generic configuration profile to enable [Wave](https://seqera.io/wave/) containers. Use together with one of the above (requires Nextflow `24.03.0-edge` or later).
 - `conda`
   - A generic configuration profile to be used with [Conda](https://conda.io/docs/). Please only use Conda as a last resort i.e. when it's not possible to run the pipeline with Docker, Singularity, Podman, Shifter, Charliecloud, or Apptainer.
 

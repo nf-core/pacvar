@@ -1,13 +1,13 @@
 lint:
+  # files_exist:
+  #   - .github/workflows/linting_comment.yml
   files_unchanged:
     - .gitignore
     - assets/nf-core-pacvar_logo_light.png
     - docs/images/nf-core-pacvar_logo_light.png
-    - .github/workflows/branch.yml
-    - .github/workflows/linting.yml
-  files_exist:
-    - .github/workflows/linting_comment.yml
-nf_core_version: 4.0.2
+    # - .github/workflows/branch.yml
+    # - .github/workflows/linting.yml
+nf_core_version: 4.1.0
 repository_type: pipeline
 template:
   author: Tanya Sarkin Jain
@@ -17,4 +17,4 @@ template:
   name: pacvar
   org: nf-core
   outdir: .
-  version: 1.1.0
+  version: 1.2.0

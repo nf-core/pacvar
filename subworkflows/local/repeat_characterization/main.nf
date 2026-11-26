@@ -16,8 +16,6 @@ workflow  REPEAT_CHARACTERIZATION{
     bed
 
     main:
-    ch_versions = channel.empty()
-
     bam_bai_ch = sorted_bam
         .join(sorted_bai)
         .map{ meta, bam, bai -> [meta, bam, bai, meta.karyotype] }
@@ -46,7 +44,7 @@ workflow  REPEAT_CHARACTERIZATION{
     BCFTOOLS_INDEX(BCFTOOLS_SORT.out.vcf)
 
     bam_bai_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index)
-    bam_bai_vcf_tbi_ch =  SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.csi)
+    bam_bai_vcf_tbi_ch = SAMTOOLS_SORT_TRGT.out.bam.join(SAMTOOLS_INDEX_TRGT.out.index).join(BCFTOOLS_SORT.out.vcf).join(BCFTOOLS_INDEX.out.index)
 
     //add repeat_id to channel
     bam_bai_vcf_tbi_repeat_ch = bam_bai_vcf_tbi_ch.map { meta, bam, bai, vcf, tbi -> [meta, bam, bai, vcf, tbi, meta.repeat_id] }
@@ -57,9 +55,4 @@ workflow  REPEAT_CHARACTERIZATION{
         fasta_fai,
         bed)
 
-    // NOTE: all TRGT and SAMTOOLS modules are updated to version topic
-    ch_versions = ch_versions.mix(BCFTOOLS_SORT.out.versions.first())
-
-    emit:
-    versions       = ch_versions
 }

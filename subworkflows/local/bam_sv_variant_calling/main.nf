@@ -36,12 +36,11 @@ workflow BAM_SV_VARIANT_CALLING {
         TABIX_BGZIP(PBSV_CALL.out.vcf)
         BCFTOOLS_INDEX(TABIX_BGZIP.out.output)
 
-        vcf_ch = TABIX_BGZIP.out.output.join(BCFTOOLS_INDEX.out.csi)
+        vcf_ch = TABIX_BGZIP.out.output.join(BCFTOOLS_INDEX.out.index)
 
         ch_versions = ch_versions.mix(PBSV_DISCOVER.out.versions)
         ch_versions = ch_versions.mix(PBSV_CALL.out.versions)
         ch_versions = ch_versions.mix(TABIX_BGZIP.out.versions)
-        ch_versions = ch_versions.mix(BCFTOOLS_INDEX.out.versions)
     }
 
     if (params.sv_caller == 'sawfish') {

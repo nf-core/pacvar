@@ -21,11 +21,10 @@ workflow BAM_CNV_VARIANT_CALLING {
     )
 
     BCFTOOLS_INDEX(HIFICNV.out.vcf)
-    // Join VCF with CSI index
-    ch_vcf_indexed = HIFICNV.out.vcf.join(BCFTOOLS_INDEX.out.csi)
+    // Join VCF with its index
+    ch_vcf_indexed = HIFICNV.out.vcf.join(BCFTOOLS_INDEX.out.index)
 
     ch_versions = ch_versions.mix(HIFICNV.out.versions)
-    ch_versions = ch_versions.mix(BCFTOOLS_INDEX.out.versions)
 
     emit:
     vcf_indexed    = ch_vcf_indexed          // channel: tuple val(meta), path("*.vcf.gz"), path("*.vcf.gz.csi")
